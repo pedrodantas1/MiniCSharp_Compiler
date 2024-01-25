@@ -1,5 +1,6 @@
 import ply.lex as lex
 
+# fmt: off
 tokens = []
 
 keyword_list = [
@@ -11,10 +12,10 @@ keyword_list = [
     'throw', 'true', 'try', 'typeof', 'uint', 'ulong', 'ushort', 'void', 'while'
 ]
 
-reserved_words = {}
+reserved = {}
 for keyword in keyword_list:
     name = keyword.upper()
-    reserved_words[keyword] = name
+    reserved[keyword] = name
     tokens.append(name)
 
 tokens += [
@@ -25,7 +26,7 @@ tokens += [
     
     'EQUAL', 'PLUSEQUAL', 'MINUSEQUAL', 'STAREQUAL', 'SLASHEQUAL', 'PERCENTEQUAL',
     'AMPEREQUAL', 'PIPEEQUAL', 'CIRCUMEQUAL',
-    'LSHIFTEQUAL', 'RSHIFTEQUAL', 'URSHIFTEQUAL',
+    'LSHIFTEQUAL', 'RSHIFTEQUAL',
     'HOOKHOOK', 'HOOKHOOKEQUAL',
     
     'COLON', 'COMMA', 'SEMI', 'DOT',
@@ -38,3 +39,97 @@ tokens += [
     'ID'
 ]
 
+t_PLUSPLUS = r'\+\+'
+t_MINUSMINUS = r'--'
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_STAR = r'\*'
+t_SLASH = r'/'
+t_PERCENT = r'%'
+
+t_BANG = r'!'
+t_AMPER = r'&'
+t_CIRCUMFLEX = r'\^'
+t_PIPE = r'\|'
+t_AMPERAMPER = r'&&'  #Talvez mudar a ordem
+t_PIPEPIPE = r'\|\|'
+
+t_TILDE = r'~'
+t_LSHIFT = r'<<'
+t_RSHIFT = r'>>'
+
+t_EQEQUAL = r'=='
+t_NOTEQUAL = r'!='
+t_LT = r'<'
+t_GT = r'>'
+t_LEQ = r'<='
+t_GEQ = r'>='
+
+t_EQUAL = r'='
+t_PLUSEQUAL = r'\+='
+t_MINUSEQUAL = r'-='
+t_STAREQUAL = r'\*='
+t_SLASHEQUAL = r'/='
+t_PERCENTEQUAL = r'%='
+t_AMPEREQUAL = r'&='
+t_PIPEEQUAL = r'\|='
+t_CIRCUMEQUAL = r'\^='
+t_LSHIFTEQUAL = r'<<='
+t_RSHIFTEQUAL = r'>>='
+t_HOOKHOOK = r'\?\?'
+t_HOOKHOOKEQUAL = r'\?\?='
+
+t_COLON = r':'
+t_COMMA = r','
+t_SEMI = r';'
+t_DOT = r'\.'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
+t_LSB = r'\['
+t_RSB = r'\]'
+
+
+def t_INTNUM(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
+
+
+def t_FLOATNUM(t):
+    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[fF]$'
+    return t
+
+
+def t_DOUBLENUM(t):
+    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[dD]*$'
+    return t
+
+
+def t_DECIMALNUM(t):
+    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[mM]$'
+    return t
+
+
+def t_BINARYNUM(t):
+    r'0[bB]([0-1]+)'
+    return t
+
+
+def t_HEXADECIMALNUM(t):
+    r'0[xX]([0-9a-fA-F]+)'
+    return t
+
+
+def t_CHARLITERAL(t):
+    #Falta especificar os caracteres com escape
+    r'\'[^\'\\\u000D\u000A\u0085\u2028\u2029]\''
+    return t
+
+
+def t_STRINGLITERAL(t):
+    r'\"([^\\]|(\\.))*?\"' #Testar ainda
+    return t
+
+lexer = lex.lex()

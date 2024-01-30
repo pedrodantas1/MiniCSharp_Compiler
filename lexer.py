@@ -129,7 +129,47 @@ def t_CHARLITERAL(t):
 
 
 def t_STRINGLITERAL(t):
-    r'\"([^\\]|(\\.))*?\"' #Testar ainda
+    r'\"([^\\]|(\\.))*?\"'
     return t
 
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, 'ID')
+    return t
+
+
+def t_comment(t):
+  r'(\/\/.*)|(\/\*(.|\n)*?\*\/)'
+  pass
+
+
+def t_newline(t):
+  r'\n+'
+  t.lexer.lineno += len(t.value)
+
+
+def t_error(t):
+    msg = "\n# ERROR: Illegal character '%s' at line %d\n" % (t.value[0], t.lineno)
+    print(msg)
+    t.lexer.skip(1)
+
+t_ignore = ' \t'
+
 lexer = lex.lex()
+lexer.input("""
+    while (5 < 10){
+        int num = 20;
+        num *= 10;
+    }
+    bool flag = false;
+    for (int i=0; i<10; i++){
+        if (i%2 == 0)
+            flag = true;
+    }
+    """
+)
+t = lexer.token()
+while t:
+	print(t)
+	t = lexer.token()

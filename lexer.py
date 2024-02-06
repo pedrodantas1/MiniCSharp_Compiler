@@ -51,7 +51,7 @@ t_BANG = r'!'
 t_AMPER = r'&'
 t_CIRCUMFLEX = r'\^'
 t_PIPE = r'\|'
-t_AMPERAMPER = r'&&'  #Talvez mudar a ordem
+t_AMPERAMPER = r'&&'
 t_PIPEPIPE = r'\|\|'
 
 t_TILDE = r'~'
@@ -91,24 +91,8 @@ t_LSB = r'\['
 t_RSB = r'\]'
 
 
-def t_INTNUM(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
-
-def t_FLOATNUM(t):
-    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[fF]$'
-    return t
-
-
-def t_DOUBLENUM(t):
-    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[dD]*$'
-    return t
-
-
-def t_DECIMALNUM(t):
-    r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)[mM]$'
+def t_HEXADECIMALNUM(t):
+    r'0[xX]([0-9a-fA-F]+)'
     return t
 
 
@@ -117,19 +101,34 @@ def t_BINARYNUM(t):
     return t
 
 
-def t_HEXADECIMALNUM(t):
-    r'0[xX]([0-9a-fA-F]+)'
+def t_FLOATNUM(t):
+    r'[+-]?(([0-9]+[.][0-9]+)|([.][0-9]+))[fF]'
+    return t
+
+
+def t_DECIMALNUM(t):
+    r'[+-]?(([0-9]+[.][0-9]+)|([.][0-9]+))[mM]'
+    return t
+
+
+def t_DOUBLENUM(t):
+    r'[+-]?(([0-9]+[.][0-9]+)|([.][0-9]+))[dD]?'
+    return t
+
+
+def t_INTNUM(t):
+    r'[+-]?\d+'
+    t.value = int(t.value)
     return t
 
 
 def t_CHARLITERAL(t):
-    #Falta especificar os caracteres com escape
-    r'\'[^\'\\\u000D\u000A\u0085\u2028\u2029]\''
+    r'\'([^\'\\\u000D\u000A]|\\\'|\\\\|\\"|\\0|\\a|\\b|\\f|\\n|\\r|\\t|\\v)\''
     return t
 
 
 def t_STRINGLITERAL(t):
-    r'\"([^\\]|(\\.))*?\"'
+    r'\"([^\"\\\u000D\u000A]|(\\.))*?\"'
     return t
 
 
@@ -154,21 +153,13 @@ def t_error(t):
     print(msg)
     t.lexer.skip(1)
 
+
 t_ignore = ' \t'
 
+
+f = open("teste1.txt", "r")
 lexer = lex.lex()
-lexer.input("""
-    while (5 < 10){
-        int num = 20;
-        num *= 10;
-    }
-    bool flag = false;
-    for (int i=0; i<10; i++){
-        if (i%2 == 0)
-            flag = true;
-    }
-    """
-)
+lexer.input(f.read())
 t = lexer.token()
 while t:
 	print(t)

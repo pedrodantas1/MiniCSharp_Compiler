@@ -1,0 +1,23 @@
+++ -- + - * / %
+! & ^ | && ||
+~ << >>
+== != < > <= >=
+= += -= /= %= &= |= ^= <<= >>= ?? ??=
+: , ; . () {} []
+0x12A
+0b11001
+-1.4f
+44.34343M
+32.13
+123
+'c'
+"teste"
+id_teste
+//comentario de linha
+/* comentario multilinha
+*
+*
+*/
+if while for switch case break bool true false
+do new private class string int double enum else
+void try finally static float null

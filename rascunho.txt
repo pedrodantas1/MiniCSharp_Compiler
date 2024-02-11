@@ -17,7 +17,6 @@ finally
 float
 for
 foreach
-goto
 if
 in
 int

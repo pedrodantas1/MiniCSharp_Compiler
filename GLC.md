@@ -22,8 +22,7 @@ embedded_statement -> block |
                       exp_statement |
                       selection_statement |
                       iteration_statement |
-
-
+                      jump_statement
 
 const_declaration -> CONST ID const_declarators
 
@@ -118,11 +117,38 @@ while_statement -> WHILE '(' exp ')' embedded_statement
 
 do_statement -> DO embedded_statement WHILE '(' exp ')' ';'
 
-for_statement -> FOR '(' for_initializer ';' for_condition? ';' for_iterator? ')' embedded_statement
+for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' embedded_statement |
+                 FOR '(' for_initializer ';' for_condition ';' ')' embedded_statement |
+                 FOR '(' for_initializer ';' ';' for_iterator ')' embedded_statement |
+                 FOR '(' for_initializer ';' ';' ')' embedded_statement |
+                 FOR '(' ';' for_condition ';' for_iterator ')' embedded_statement |
+                 FOR '(' ';' for_condition ';' ')' embedded_statement |
+                 FOR '(' ';' ';' for_iterator ')' embedded_statement |
+                 FOR '(' ';' ';' ')' embedded_statement
 
 for_initializer -> var_declaration |
                    statement_exp_list
 
+for_condition -> exp
+
+for_iterator -> statement_exp_list
+
+statement_exp_list -> statement_exp |
+                      statement_exp ',' statement_exp_list
+
+<!-- type + id -->
+foreach_statement -> FOREACH '(' ID ID IN exp ')' embedded_statement
+
+jump_statement -> break_statement |
+                  continue_statement |
+                  return_statement
+
+break_statement -> BREAK ';'
+
+continue_statement -> CONTINUE ';'
+
+return_statement -> RETURN ';' |
+                    RETURN exp ';'
 
 primary_exp -> TRUE | FALSE | NULL
                INTNUM | FLOATNUM | DOUBLENUM | DECIMALNUM |

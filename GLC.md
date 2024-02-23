@@ -8,13 +8,24 @@ type -> reference_type |
 
 reference_type -> class_type | 
                   interface_type |
-                  <!-- array_type -->
+                  array_type
 
 class_type -> type_name |
               OBJECT | 
               STRING
 
 interface_type -> type_name
+
+array_type -> non_array_type rank_specifiers
+
+non_array_type -> value_type |
+                  class_type |
+                  interface_type
+
+rank_specifier -> '[' ']'
+
+rank_specifiers -> rank_specifier |
+                   rank_specifier rank_specifiers
 
 value_type -> struct_type
 
@@ -75,7 +86,8 @@ var_declarators -> var_declarator |
                    var_declarator ',' var_declarators
 
 var_declarator -> ID |
-                  ID '=' exp
+                  ID '=' exp |
+                  ID '=' array_initializer
 
 embedded_statement -> block |
                       empty_statement |
@@ -188,24 +200,27 @@ arg_list -> argument |
 
 argument -> exp
 
-primary_exp -> TRUE | FALSE | NULL
-               INTNUM | HEXADECIMALNUM| BINARYNUM | 
-               FLOATNUM | DOUBLENUM | DECIMALNUM |
-               CHARLITERAL | STRINGLITERAL |
-               ID |
-               parenthesized_exp |
-               tuple_exp |
-               <!-- member_access |  -->
-               <!-- null_conditional_member_access | -->
-               invocation_exp |
-               <!-- element_access --> |
-               THIS |
-               post_increment_exp |
-               post_decrement_exp |
-               object_creation_exp |
-               typeof_exp |
-               <!-- sizeof_exp | -->
-               default_exp
+primary_exp -> primary_no_array_creation_exp |
+               array_creation_exp
+
+primary_no_array_creation_exp -> TRUE | FALSE | NULL
+                                 INTNUM | HEXADECIMALNUM| BINARYNUM | 
+                                 FLOATNUM | DOUBLENUM | DECIMALNUM |
+                                 CHARLITERAL | STRINGLITERAL |
+                                 ID |
+                                 parenthesized_exp |
+                                 tuple_exp |
+                                 <!-- member_access |  -->
+                                 <!-- null_conditional_member_access | -->
+                                 invocation_exp |
+                                 <!-- element_access --> |
+                                 THIS |
+                                 post_increment_exp |
+                                 post_decrement_exp |
+                                 object_creation_exp |
+                                 typeof_exp |
+                                 <!-- sizeof_exp | -->
+                                 default_exp
 
 parenthesized_exp -> '(' exp ')'
 
@@ -226,6 +241,22 @@ typeof_exp -> TYPEOF '(' type ')'
 
 default_exp -> DEFAULT |
                DEFAULT '(' type ')'
+
+exp_list -> exp |
+            exp_list ',' exp
+
+array_creation_exp -> NEW non_array_type '[' exp_list ']' |
+                      NEW non_array_type '[' exp_list ']' rank_specifiers |
+                      NEW non_array_type '[' exp_list ']' array_initializer |
+                      NEW non_array_type '[' exp_list ']' rank_specifiers array_initializer
+
+array_initializer -> '{' variable_initializer_list '}'
+
+variable_initializer_list -> variable_initializer |
+                             variable_initializer ',' variable_initializer_list
+
+variable_initializer -> exp |
+                        array_initializer
 
 unary_exp -> primary_exp |
              '+' unary_exp |

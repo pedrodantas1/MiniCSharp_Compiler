@@ -6,10 +6,11 @@ tokens = []
 keyword_list = [
     'bool', 'break', 'case', 'catch', 'char', 'class', 'const', 'continue', 'decimal',
     'default', 'do', 'double', 'else', 'enum', 'false', 'finally', 'float', 'for',
-    'foreach', 'if', 'in', 'int', 'interface', 'is', 'long', 'namespace', 'new',
-    'null', 'out', 'override', 'params', 'private', 'protected', 'public', 'readonly',
-    'ref', 'return', 'short', 'sizeof', 'static', 'string', 'struct', 'switch', 'this',
-    'throw', 'true', 'try', 'typeof', 'uint', 'ulong', 'ushort', 'void', 'while'
+    'foreach', 'if', 'in', 'int', 'interface', 'is', 'long', 'namespace', 'new', 
+    'object', 'null', 'out', 'override', 'params', 'private', 'protected', 'public', 
+    'readonly', 'ref', 'return', 'short', 'sizeof', 'static', 'string', 'struct', 
+    'switch', 'this', 'throw', 'true', 'try', 'typeof', 'uint', 'ulong', 'ushort', 
+    'void', 'while'
 ]
 
 reserved = {}

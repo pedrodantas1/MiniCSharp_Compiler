@@ -25,6 +25,7 @@ is
 long
 namespace
 new
+object
 null
 out
 override

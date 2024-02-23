@@ -1,5 +1,47 @@
 # GLC da linguagem de programação Mini C#
 ```
+type_name -> ID |
+             type_name '.' ID
+
+type -> reference_type | 
+        value_type
+
+reference_type -> class_type | 
+                  interface_type |
+                  <!-- array_type -->
+
+class_type -> type_name |
+              OBJECT | 
+              STRING
+
+interface_type -> type_name
+
+value_type -> struct_type
+
+struct_type -> type_name |
+               simple_type | 
+               tuple_type
+
+simple_type -> numeric_type |
+               BOOL
+
+numeric_type -> integral_type | 
+                floating_point_type
+
+integral_type -> SHORT | USHORT | INT | UINT | LONG | ULONG | CHAR
+
+floating_point_type -> FLOAT | DOUBLE | DECIMAL
+
+tuple_type -> '(' tuple_type_part ')'
+
+tuple_type_part -> tuple_type_element tuple_type_final
+
+tuple_type_element -> type |
+                      type ID
+
+tuple_type_final -> ',' tuple_type_element |
+                    ',' tuple_type_element tuple_type_final
+
 program -> func_declaration |
            func_declaration program
 
@@ -14,8 +56,26 @@ param_list -> ID ID |
 statement -> declaration_statement |
              embedded_statement
 
+statement_list -> statement |
+                  statement statement_list
+
 declaration_statement -> const_declaration ';' |
                          var_declaration ';'
+
+const_declaration -> CONST type const_declarators
+
+const_declarators -> constant_declarator |
+                     constant_declarator ',' constant_declarators
+
+constant_declarator -> ID '=' exp
+
+var_declaration -> type var_declarators
+
+var_declarators -> var_declarator |
+                   var_declarator ',' var_declarators
+
+var_declarator -> ID |
+                  ID '=' exp
 
 embedded_statement -> block |
                       empty_statement |
@@ -24,26 +84,8 @@ embedded_statement -> block |
                       iteration_statement |
                       jump_statement
 
-const_declaration -> CONST ID const_declarators
-
-const_declarators -> constant_declarator |
-                     constant_declarator ',' constant_declarators
-
-constant_declarator -> ID '=' exp
-
-var_declaration -> ID var_declarators
-
-var_declarators -> var_declarator |
-                   var_declarator ',' var_declarators
-
-var_declarator -> ID |
-                  ID '=' exp
-
 block -> '{' statement_list '}' |
          '{' '}'
-
-statement_list -> statement |
-                  statement statement_list
 
 empty_statement -> ';'
 
@@ -57,26 +99,18 @@ statement_exp -> invocation_exp |
                  pre_increment_expression |
                  pre_decrement_expression
 
-<!-- Source: §12.8.16.2 -->
-object_creation_exp -> NEW ID '(' ')' |
-                       NEW ID '(' arg_list ')' |
-                       NEW ID '(' ')' object_initializer
-                       NEW ID '(' arg_list ')' object_initializer
+object_creation_exp -> NEW type '(' ')' |
+                       NEW type '(' arg_list ')' |
+                       NEW type '(' ')' object_initializer
+                       NEW type '(' arg_list ')' object_initializer
 
 object_initializer -> '{' '}' |
-                      '{' member_initializer_list '}' |
-                      '{' member_initializer_list ',' '}'
+                      '{' member_initializer_list '}'
 
 member_initializer_list -> member_initializer |
                            member_initializer ',' member_initializer_list
 
-member_initializer -> initializer_target '=' initializer_value
-
-initializer_target -> ID | 
-                      '[' arg_list ']'
-
-initializer_value -> expression | 
-                     object_initializer
+member_initializer -> ID '=' exp
 
 post_increment_exp -> primary_exp '++'
 
@@ -136,8 +170,7 @@ for_iterator -> statement_exp_list
 statement_exp_list -> statement_exp |
                       statement_exp ',' statement_exp_list
 
-<!-- type + id -->
-foreach_statement -> FOREACH '(' ID ID IN exp ')' embedded_statement
+foreach_statement -> FOREACH '(' type ID IN exp ')' embedded_statement
 
 jump_statement -> break_statement |
                   continue_statement |
@@ -150,15 +183,29 @@ continue_statement -> CONTINUE ';'
 return_statement -> RETURN ';' |
                     RETURN exp ';'
 
+arg_list -> argument |
+            argument ',' arg_list
+
+argument -> exp
+
 primary_exp -> TRUE | FALSE | NULL
-               INTNUM | FLOATNUM | DOUBLENUM | DECIMALNUM |
+               INTNUM | HEXADECIMALNUM| BINARYNUM | 
+               FLOATNUM | DOUBLENUM | DECIMALNUM |
                CHARLITERAL | STRINGLITERAL |
+               ID |
                parenthesized_exp |
                tuple_exp |
                <!-- member_access |  -->
                <!-- null_conditional_member_access | -->
                invocation_exp |
-               >> continuar e analisar oq colocar
+               <!-- element_access --> |
+               THIS |
+               post_increment_exp |
+               post_decrement_exp |
+               object_creation_exp |
+               typeof_exp |
+               <!-- sizeof_exp | -->
+               default_exp
 
 parenthesized_exp -> '(' exp ')'
 
@@ -172,14 +219,13 @@ tuple_final_part -> ',' tuple_element |
 tuple_element -> exp |
                  ID ':' exp
 
-<!-- ID no lugar de primary_exp -->
 invocation_exp -> primary_exp '(' ')' |
                   primary_exp '(' arg_list ')'
 
-arg_list -> argument |
-            argument ',' arg_list
+typeof_exp -> TYPEOF '(' type ')'
 
-argument -> exp  <!-- talvez mude -->
+default_exp -> DEFAULT |
+               DEFAULT '(' type ')'
 
 
 
@@ -192,11 +238,9 @@ argument -> exp  <!-- talvez mude -->
 exp -> non_assignment_exp |
        assignment
 
-non_assignment_exp -> declaration_exp
+non_assignment_exp -> type ID
 
-declaration_exp -> ID ID  <!-- tipo + identificador -->
-
-assignment -> ID assignment_operator exp
+assignment -> unary_exp assignment_operator exp
 
 assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
                        '|=' | '^=' | '<<=' | '>>='

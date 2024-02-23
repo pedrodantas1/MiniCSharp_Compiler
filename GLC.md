@@ -227,26 +227,76 @@ typeof_exp -> TYPEOF '(' type ')'
 default_exp -> DEFAULT |
                DEFAULT '(' type ')'
 
+unary_exp -> primary_exp |
+             '+' unary_exp |
+             '-' unary_exp |
+             '!' unary_exp |
+             '~' unary_exp |
+             pre_increment_exp |
+             pre_decrement_exp |
+             cast_exp
 
+cast_exp -> '(' type ')' unary_exp
 
+conditional_exp -> null_coalescing_exp |
+                   null_coalescing_exp '?' exp ':' exp
 
+null_coalescing_exp -> conditional_or_exp |
+                       conditional_or_exp '??' null_coalescing_exp
 
+conditional_or_exp -> conditional_and_exp |
+                      conditional_or_exp '||' conditional_and_expr
 
+conditional_and_exp -> inclusive_or_exp |
+                       conditional_and_exp '&&' inclusive_or_exp
 
+inclusive_or_exp -> exclusive_or_exp |
+                    inclusive_or_exp '|' exclusive_or_exp
 
+exclusive_or_exp -> and_exp |
+                    exclusive_or_exp '^' and_exp
+
+and_exp -> equality_exp |
+           and_exp '&' equality_exp
+
+equality_exp -> relational_exp |
+                equality_exp '==' relational_exp |
+                equality_exp '!=' relational_exp
+
+relational_exp -> shift_expression |
+                  relational_exp '<' shift_exp |
+                  relational_exp '>' shift_exp |
+                  relational_exp '<=' shift_exp |
+                  relational_exp '>=' shift_exp |
+                  relational_exp 'is' type
+
+shift_expression -> additive_exp |
+                    shift_exp '<<' additive_exp |
+                    shift_exp '>>' additive_exp
+
+additive_exp -> multiplicative_exp |
+                additive_exp '+' multiplicative_exp |
+                additive_exp '-' multiplicative_exp
+
+multiplicative_exp -> unary_exp |
+                      multiplicative_exp '*' unary_exp |
+                      multiplicative_exp '/' unary_exp |
+                      multiplicative_exp '%' unary_exp
 
 exp -> non_assignment_exp |
        assignment
 
-non_assignment_exp -> type ID
+non_assignment_exp -> declaration_exp |
+                      conditional_exp
+
+declaration_exp -> type ID
 
 assignment -> unary_exp assignment_operator exp
 
 assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
                        '|=' | '^=' | '<<=' | '>>='
 
-<!-- talvez remover primary_exp -->
-unary_exp -> primary_exp |
+
              
 
 

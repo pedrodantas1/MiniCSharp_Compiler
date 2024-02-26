@@ -210,16 +210,15 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  ID |
                                  parenthesized_exp |
                                  tuple_exp |
-                                 <!-- member_access |  -->
-                                 <!-- null_conditional_member_access | -->
+                                 member_access |
                                  invocation_exp |
-                                 <!-- element_access --> |
+                                 element_access |
                                  THIS |
                                  post_increment_exp |
                                  post_decrement_exp |
                                  object_creation_exp |
                                  typeof_exp |
-                                 <!-- sizeof_exp | -->
+                                 sizeof_exp |
                                  default_exp
 
 parenthesized_exp -> '(' exp ')'
@@ -234,10 +233,16 @@ tuple_final_part -> ',' tuple_element |
 tuple_element -> exp |
                  ID ':' exp
 
+member_access -> primary_exp '.' ID
+
 invocation_exp -> primary_exp '(' ')' |
                   primary_exp '(' arg_list ')'
 
+element_access -> primary_no_array_creation_exp '[' arg_list ']'
+
 typeof_exp -> TYPEOF '(' type ')'
+
+sizeof_exp -> SIZEOF '(' value_type ')'
 
 default_exp -> DEFAULT |
                DEFAULT '(' type ')'
@@ -326,10 +331,4 @@ assignment -> unary_exp assignment_operator exp
 
 assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
                        '|=' | '^=' | '<<=' | '>>='
-
-
-             
-
-
-
 ```

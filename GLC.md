@@ -58,17 +58,17 @@ program -> func_declaration |
 
 func_declaration -> signature block
 
-signature -> ID ID '(' param_list ')' |
-             ID ID '(' ')'
+signature -> type ID '(' param_list ')' |
+             type ID '(' ')'
 
-param_list -> ID ID |
-              ID ID ',' param_list
-
-statement -> declaration_statement |
-             embedded_statement
+param_list -> type ID |
+              type ID ',' param_list
 
 statement_list -> statement |
                   statement statement_list
+
+statement -> declaration_statement |
+             embedded_statement
 
 declaration_statement -> const_declaration ';' |
                          var_declaration ';'

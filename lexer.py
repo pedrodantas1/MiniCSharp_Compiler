@@ -158,10 +158,10 @@ def t_error(t):
 t_ignore = ' \t'
 
 
-f = open("teste1.txt", "r")
-lexer = lex.lex()
-lexer.input(f.read())
-t = lexer.token()
-while t:
-	print(t)
-	t = lexer.token()
+# f = open("teste1.txt", "r")
+# lexer = lex.lex()
+# lexer.input(f.read())
+# t = lexer.token()
+# while t:
+# 	print(t)
+# 	t = lexer.token()

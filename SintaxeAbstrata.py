@@ -548,3 +548,344 @@ class PreDecrementExpConcrete(PreDecrementExp):
 
     def accept(self, visitor):
         visitor.visitPreDecrementExpConcrete(self)
+
+
+class SelectionStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SelectionStmtIf(SelectionStmt):
+    def __init__(self, if_statement):
+        self.if_statement = if_statement
+
+    def accept(self, visitor):
+        visitor.visitSelectionStmtIf(self)
+
+
+class SelectionStmtSwitch(SelectionStmt):
+    def __init__(self, switch_statement):
+        self.switch_statement = switch_statement
+
+    def accept(self, visitor):
+        visitor.visitSelectionStmtSwitch(self)
+
+
+class IfStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleIfStmt(IfStmt):
+    def __init__(self, exp, embedded_stmt):
+        self.exp = exp
+        self.embedded_stmt = embedded_stmt
+
+    def accept(self, visitor):
+        visitor.visitSimpleIfStmt(self)
+
+
+class IfElseStmt(IfStmt):
+    def __init__(self, exp, embedded_stmt1, embedded_stmt2):
+        self.exp = exp
+        self.embedded_stmt1 = embedded_stmt1
+        self.embedded_stmt2 = embedded_stmt2
+
+    def accept(self, visitor):
+        visitor.visitIfElseStmt(self)
+
+
+class SwitchStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SwitchStmtConcrete(SwitchStmt):
+    def __init__(self, exp, switch_block):
+        self.exp = exp
+        self.switch_block = switch_block
+
+    def accept(self, visitor):
+        visitor.visitSwitchStmtConcrete(self)
+
+
+class SwitchBlock(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SwitchBlockConcrete(SwitchBlock):
+    def __init__(self, switch_body):
+        self.switch_body = switch_body
+
+    def accept(self, visitor):
+        visitor.visitSwitchBlockConcrete(self)
+
+
+class SwitchBody(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleSwitchBody(SwitchBody):
+    def __init__(self, switch_section):
+        self.switch_section = switch_section
+
+    def accept(self, visitor):
+        visitor.visitSimpleSwitchBody(self)
+
+
+class CompoundSwitchBody(SwitchBody):
+    def __init__(self, switch_section, switch_body):
+        self.switch_section = switch_section
+        self.switch_body = switch_body
+
+    def accept(self, visitor):
+        visitor.visitCompoundSwitchBody(self)
+
+
+class SwitchSection(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleSwitchSection(SwitchSection):
+    def __init__(self, switch_label, stmt_list):
+        self.switch_label = switch_label
+        self.stmt_list = stmt_list
+
+    def accept(self, visitor):
+        visitor.visitSimpleSwitchSection(self)
+
+
+class CompoundSwitchSection(SwitchSection):
+    def __init__(self, switch_label, switch_section):
+        self.switch_label = switch_label
+        self.switch_section = switch_section
+
+    def accept(self, visitor):
+        visitor.visitCompoundSwitchSection(self)
+
+
+class SwitchLabel(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SwitchLabelCase(SwitchLabel):
+    def __init__(self, pattern):
+        self.pattern = pattern
+
+    def accept(self, visitor):
+        visitor.visitSwitchLabelCase(self)
+
+
+class SwitchLabelDefault(SwitchLabel):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitSwitchLabelDefault(self)
+
+
+class Pattern(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class PatternConcrete(Pattern):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitPatternConcrete(self)
+
+
+class IterationStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class IterationStmtWhile(IterationStmt):
+    def __init__(self, while_statement):
+        self.while_statement = while_statement
+
+    def accept(self, visitor):
+        visitor.visitIterationStmtWhile(self)
+
+
+class IterationStmtDo(IterationStmt):
+    def __init__(self, do_statement):
+        self.do_statement = do_statement
+
+    def accept(self, visitor):
+        visitor.visitIterationStmtDo(self)
+
+
+class IterationStmtFor(IterationStmt):
+    def __init__(self, for_statement):
+        self.for_statement = for_statement
+
+    def accept(self, visitor):
+        visitor.visitIterationStmtFor(self)
+
+
+class IterationStmtForeach(IterationStmt):
+    def __init__(self, foreach_statement):
+        self.foreach_statement = foreach_statement
+
+    def accept(self, visitor):
+        visitor.visitIterationStmtForeach(self)
+
+
+class WhileStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class WhileStmtConcrete(WhileStmt):
+    def __init__(self, exp, embedded_stmt):
+        self.exp = exp
+        self.embedded_stmt = embedded_stmt
+
+    def accept(self, visitor):
+        visitor.visitWhileStmtConcrete(self)
+
+
+class DoStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class DoStmtConcrete(DoStmt):
+    def __init__(self, embedded_stmt, exp):
+        self.embedded_stmt = embedded_stmt
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitDoStmtConcrete(self)
+
+
+class ForStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ForStmtConcrete(ForStmt):
+    def __init__(self, for_initializer, for_condition, for_iterator, embedded_stmt):
+        self.for_initializer = for_initializer
+        self.for_condition = for_condition
+        self.for_iterator = for_iterator
+        self.embedded_stmt = embedded_stmt
+
+    def accept(self, visitor):
+        visitor.visitForStmtConcrete(self)
+
+
+class ForInitializer(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleForInitializer(ForInitializer):
+    def __init__(self, var_declaration):
+        self.var_declaration = var_declaration
+
+    def accept(self, visitor):
+        visitor.visitSimpleForInitializer(self)
+
+
+class CompoundForInitializer(ForInitializer):
+    def __init__(self, var_declaration, for_initializer):
+        self.var_declaration = var_declaration
+        self.for_initializer = for_initializer
+
+    def accept(self, visitor):
+        visitor.visitCompoundForInitializer(self)
+
+
+class ForCondition(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ForConditionConcrete(ForCondition):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitForConditionConcrete(self)
+
+
+class ForIterator(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ForIteratorConcrete(ForIterator):
+    def __init__(self, stmt_exp_list):
+        self.stmt_exp_list = stmt_exp_list
+
+    def accept(self, visitor):
+        visitor.visitForIteratorConcrete(self)
+
+
+class StmtExpList(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleStmtExpList(StmtExpList):
+    def __init__(self, exp_stmt):
+        self.exp_stmt = exp_stmt
+
+    def accept(self, visitor):
+        visitor.visitSimpleStmtExpList(self)
+
+
+class CompoundStmtExpList(StmtExpList):
+    def __init__(self, exp_stmt, stmt_exp_list):
+        self.exp_stmt = exp_stmt
+        self.stmt_exp_list = stmt_exp_list
+
+    def accept(self, visitor):
+        visitor.visitCompoundStmtExpList(self)
+
+
+class ForeachStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ForeachStmtConcrete(ForeachStmt):
+    def __init__(self, type, id, exp, embedded_stmt):
+        self.type = type
+        self.id = id
+        self.exp = exp
+        self.embedded_stmt = embedded_stmt
+
+    def accept(self, visitor):
+        visitor.visitForeachStmtConcrete(self)
+
+
+class JumpStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass

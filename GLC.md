@@ -173,7 +173,7 @@ for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' 
                  FOR '(' ';' ';' ')' embedded_statement
 
 for_initializer -> var_declaration |
-                   statement_exp_list
+                   var_declaration ',' for_initializer
 
 for_condition -> exp
 

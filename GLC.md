@@ -75,10 +75,10 @@ declaration_statement -> const_declaration ';' |
 
 const_declaration -> CONST type const_declarators
 
-const_declarators -> constant_declarator |
-                     constant_declarator ',' constant_declarators
+const_declarators -> const_declarator |
+                     const_declarator ',' const_declarators
 
-constant_declarator -> ID '=' exp
+const_declarator -> ID '=' exp
 
 var_declaration -> type var_declarators
 
@@ -107,13 +107,13 @@ statement_exp -> invocation_exp |
                  object_creation_exp |
                  assignment |
                  post_increment_exp |
-                 post_decrement_expression |
-                 pre_increment_expression |
-                 pre_decrement_expression
+                 post_decrement_exp |
+                 pre_increment_exp |
+                 pre_decrement_exp
 
 object_creation_exp -> NEW type '(' ')' |
+                       NEW type '(' ')' object_initializer |
                        NEW type '(' arg_list ')' |
-                       NEW type '(' ')' object_initializer
                        NEW type '(' arg_list ')' object_initializer
 
 object_initializer -> '{' '}' |
@@ -128,9 +128,9 @@ post_increment_exp -> primary_exp '++'
 
 post_decrement_exp -> primary_exp '--'
 
-pre_increment_expression -> '++' unary_exp
+pre_increment_exp -> '++' unary_exp
 
-pre_decrement_expression -> '--' unary_exp
+pre_decrement_exp -> '--' unary_exp
 
 selection_statement -> if_statement |
                        switch_statement
@@ -299,14 +299,14 @@ equality_exp -> relational_exp |
                 equality_exp '==' relational_exp |
                 equality_exp '!=' relational_exp
 
-relational_exp -> shift_expression |
+relational_exp -> shift_exp |
                   relational_exp '<' shift_exp |
                   relational_exp '>' shift_exp |
                   relational_exp '<=' shift_exp |
                   relational_exp '>=' shift_exp |
                   relational_exp 'is' type
 
-shift_expression -> additive_exp |
+shift_exp -> additive_exp |
                     shift_exp '<<' additive_exp |
                     shift_exp '>>' additive_exp
 

@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 
+import SintaxeAbstrata as sa
 from lexer import *
 
 # fmt: off

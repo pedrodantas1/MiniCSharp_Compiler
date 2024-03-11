@@ -195,10 +195,8 @@ continue_statement -> CONTINUE ';'
 return_statement -> RETURN ';' |
                     RETURN exp ';'
 
-arg_list -> argument |
-            argument ',' arg_list
-
-argument -> exp
+arg_list -> exp |
+            exp ',' arg_list
 
 primary_exp -> primary_no_array_creation_exp |
                array_creation_exp
@@ -238,7 +236,7 @@ member_access -> primary_exp '.' ID
 invocation_exp -> primary_exp '(' ')' |
                   primary_exp '(' arg_list ')'
 
-element_access -> primary_no_array_creation_exp '[' arg_list ']'
+element_access -> primary_no_array_creation_exp '[' exp ']'
 
 typeof_exp -> TYPEOF '(' type ')'
 

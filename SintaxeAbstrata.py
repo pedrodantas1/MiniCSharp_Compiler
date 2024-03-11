@@ -1,6 +1,12 @@
 from abc import ABC, abstractmethod
 
 
+class NoArrayCreationExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
 class FuncDecl(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -406,7 +412,7 @@ class ObjectCreationExp(ABC):
         pass
 
 
-class NoArgsObjectCreation(ObjectCreationExp):
+class NoArgsObjectCreation(ObjectCreationExp, NoArrayCreationExp):
     def __init__(self, type):
         self.type = type
 
@@ -414,7 +420,7 @@ class NoArgsObjectCreation(ObjectCreationExp):
         visitor.visitNoArgsObjectCreation(self)
 
 
-class NoArgsWithInitializerObjectCreation(ObjectCreationExp):
+class NoArgsWithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
     def __init__(self, type, object_initializer):
         self.type = type
         self.object_initializer = object_initializer
@@ -423,7 +429,7 @@ class NoArgsWithInitializerObjectCreation(ObjectCreationExp):
         visitor.visitNoArgsWithInitializerObjectCreation(self)
 
 
-class ObjectCreation(ObjectCreationExp):
+class ObjectCreation(ObjectCreationExp, NoArrayCreationExp):
     def __init__(self, type, arg_list):
         self.type = type
         self.arg_list = arg_list
@@ -432,7 +438,7 @@ class ObjectCreation(ObjectCreationExp):
         visitor.visitObjectCreation(self)
 
 
-class WithInitializerObjectCreation(ObjectCreationExp):
+class WithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
     def __init__(self, type, arg_list, object_initializer):
         self.type = type
         self.arg_list = arg_list
@@ -500,7 +506,7 @@ class PostIncrementExp(ABC):
         pass
 
 
-class PostIncrementExpConcrete(PostIncrementExp):
+class PostIncrementExpConcrete(PostIncrementExp, NoArrayCreationExp):
     def __init__(self, primary_exp):
         self.primary_exp = primary_exp
 
@@ -514,7 +520,7 @@ class PostDecrementExp(ABC):
         pass
 
 
-class PostDecrementExpConcrete(PostDecrementExp):
+class PostDecrementExpConcrete(PostDecrementExp, NoArrayCreationExp):
     def __init__(self, primary_exp):
         self.primary_exp = primary_exp
 
@@ -889,3 +895,293 @@ class JumpStmt(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
+
+
+class JumpStmtBreak(JumpStmt):
+    def __init__(self, break_stmt):
+        self.break_stmt = break_stmt
+
+    def accept(self, visitor):
+        visitor.visitJumpStmtBreak(self)
+
+
+class JumpStmtContinue(JumpStmt):
+    def __init__(self, continue_stmt):
+        self.continue_stmt = continue_stmt
+
+    def accept(self, visitor):
+        visitor.visitJumpStmtContinue(self)
+
+
+class JumpStmtReturn(JumpStmt):
+    def __init__(self, return_stmt):
+        self.return_stmt = return_stmt
+
+    def accept(self, visitor):
+        visitor.visitJumpStmtReturn(self)
+
+
+class BreakStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class BreakStmtConcrete(BreakStmt):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitBreakStmtConcrete(self)
+
+
+class ContinueStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ContinueStmtConcrete(ContinueStmt):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitContinueStmtConcrete(self)
+
+
+class ReturnStmt(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ReturnStmtConcrete(ReturnStmt):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitReturnStmtConcrete(self)
+
+
+# Lista de argumentos
+class ArgList(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleArgList(ArgList):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitSimpleArgList(self)
+
+
+class CompoundArgList(ArgList):
+    def __init__(self, exp, arg_list):
+        self.exp = exp
+        self.arg_list = arg_list
+
+    def accept(self, visitor):
+        visitor.visitCompoundArgList(self)
+
+
+# Expressoes primarias
+class PrimaryExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class PrimaryExpNoArrayCreation(PrimaryExp):
+    def __init__(self, no_array_creation_exp):
+        self.no_array_creation_exp = no_array_creation_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryExpNoArrayCreation(self)
+
+
+class PrimaryExpArrayCreation(PrimaryExp):
+    def __init__(self, array_creation_exp):
+        self.array_creation_exp = array_creation_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryExpArrayCreation(self)
+
+
+# class NoArrayCreationExp(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
+
+
+class BooleanExp(NoArrayCreationExp):
+    def __init__(self, bool_value):
+        self.bool_value = bool_value
+
+    def accept(self, visitor):
+        visitor.visitBooleanExp(self)
+
+
+class NullExp(NoArrayCreationExp):
+    def __init__(self, null_value):
+        self.null_value = null_value
+
+    def accept(self, visitor):
+        visitor.visitNullExp(self)
+
+
+class IntNumExp(NoArrayCreationExp):
+    def __init__(self, int_value):
+        self.int_value = int_value
+
+    def accept(self, visitor):
+        visitor.visitIntNumExp(self)
+
+
+class HexNumExp(NoArrayCreationExp):
+    def __init__(self, hex_value):
+        self.hex_value = hex_value
+
+    def accept(self, visitor):
+        visitor.visitHexNumExp(self)
+
+
+class BinNumExp(NoArrayCreationExp):
+    def __init__(self, bin_value):
+        self.bin_value = bin_value
+
+    def accept(self, visitor):
+        visitor.visitBinNumExp(self)
+
+
+class FloatNumExp(NoArrayCreationExp):
+    def __init__(self, float_value):
+        self.float_value = float_value
+
+    def accept(self, visitor):
+        visitor.visitFloatNumExp(self)
+
+
+class DoubleNumExp(NoArrayCreationExp):
+    def __init__(self, double_value):
+        self.double_value = double_value
+
+    def accept(self, visitor):
+        visitor.visitDoubleNumExp(self)
+
+
+class DecimalNumExp(NoArrayCreationExp):
+    def __init__(self, decimal_value):
+        self.decimal_value = decimal_value
+
+    def accept(self, visitor):
+        visitor.visitDecimalNumExp(self)
+
+
+class CharExp(NoArrayCreationExp):
+    def __init__(self, char_literal):
+        self.char_literal = char_literal
+
+    def accept(self, visitor):
+        visitor.visitCharExp(self)
+
+
+class StringExp(NoArrayCreationExp):
+    def __init__(self, string_literal):
+        self.string_literal = string_literal
+
+    def accept(self, visitor):
+        visitor.visitStringExp(self)
+
+
+class IdExp(NoArrayCreationExp):
+    def __init__(self, id):
+        self.id = id
+
+    def accept(self, visitor):
+        visitor.visitIdExp(self)
+
+
+class ParenthesizedExp(NoArrayCreationExp):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitParenthesizedExp(self)
+
+
+class TupleExpDefinition(NoArrayCreationExp):
+    def __init__(self, tuple_exp):
+        self.tuple_exp = tuple_exp
+
+    def accept(self, visitor):
+        visitor.visitTupleExpDefinition(self)
+
+
+class MemberAccessExp(NoArrayCreationExp):
+    def __init__(self, primary_exp, id):
+        self.primary_exp = primary_exp
+        self.id = id
+
+    def accept(self, visitor):
+        visitor.visitMemberAccessExp(self)
+
+
+class InvocationExp(NoArrayCreationExp):
+    def __init__(self, primary_exp, arg_list):
+        self.primary_exp = primary_exp
+        self.arg_list = arg_list
+
+    def accept(self, visitor):
+        visitor.visitInvocationExp(self)
+
+
+class ElementAccessExp(NoArrayCreationExp):
+    def __init__(self, no_array_creation_exp, exp):
+        self.no_array_creation_exp = no_array_creation_exp
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitElementAccessExp(self)
+
+
+class ThisExp(NoArrayCreationExp):
+    def __init__(self, this_value):
+        self.this_value = this_value
+
+    def accept(self, visitor):
+        visitor.visitThisExp(self)
+
+
+class ThisExp(NoArrayCreationExp):
+    def __init__(self, this_value):
+        self.this_value = this_value
+
+    def accept(self, visitor):
+        visitor.visitThisExp(self)
+
+
+class TypeofExp(NoArrayCreationExp):
+    def __init__(self, type):
+        self.type = type
+
+    def accept(self, visitor):
+        visitor.visitTypeofExp(self)
+
+
+class SizeofExp(NoArrayCreationExp):
+    def __init__(self, value_type):
+        self.value_type = value_type
+
+    def accept(self, visitor):
+        visitor.visitSizeofExp(self)
+
+
+class DefaultExp(NoArrayCreationExp):
+    def __init__(self, type):
+        self.type = type
+
+    def accept(self, visitor):
+        visitor.visitDefaultExp(self)

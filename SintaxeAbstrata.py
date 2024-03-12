@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 
+# Herdado por mais de uma classe (talvez mudar)
 class NoArrayCreationExp(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -32,7 +33,7 @@ class SignatureConcrete(Signature):
     def __init__(self, type, id, param_list):
         self.type = type
         self.id = id
-        self.param_list = param_list
+        self.param_list = param_list  # Pode ser None
 
     def accept(self, visitor):
         return visitor.visitSignatureConcrete(self)
@@ -321,7 +322,7 @@ class BlockStmt(ABC):
 
 class BlockStmtConcrete(BlockStmt):
     def __init__(self, stmt_list):
-        self.stmt_list = stmt_list
+        self.stmt_list = stmt_list  # Pode ser None
 
     def accept(self, visitor):
         visitor.visitBlockStmtConcrete(self)
@@ -421,9 +422,9 @@ class NoArgsObjectCreation(ObjectCreationExp, NoArrayCreationExp):
 
 
 class NoArgsWithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
-    def __init__(self, type, object_initializer):
+    def __init__(self, type, member_initializer_list):
         self.type = type
-        self.object_initializer = object_initializer
+        self.member_initializer_list = member_initializer_list
 
     def accept(self, visitor):
         visitor.visitNoArgsWithInitializerObjectCreation(self)
@@ -439,27 +440,27 @@ class ObjectCreation(ObjectCreationExp, NoArrayCreationExp):
 
 
 class WithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
-    def __init__(self, type, arg_list, object_initializer):
+    def __init__(self, type, arg_list, member_initializer_list):
         self.type = type
         self.arg_list = arg_list
-        self.object_initializer = object_initializer
+        self.member_initializer_list = member_initializer_list
 
     def accept(self, visitor):
         visitor.visitWithInitializerObjectCreation(self)
 
 
-class ObjectInitializer(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
+# class ObjectInitializer(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
 
 
-class ObjectInitializerConcrete(ObjectInitializer):
-    def __init__(self, member_initializer_list):
-        self.member_initializer_list = member_initializer_list
+# class ObjectInitializerConcrete(ObjectInitializer):
+#     def __init__(self, member_initializer_list):
+#         self.member_initializer_list = member_initializer_list
 
-    def accept(self, visitor):
-        visitor.visitObjectInitializerConcrete(self)
+#     def accept(self, visitor):
+#         visitor.visitObjectInitializerConcrete(self)
 
 
 class MemberInitializerList(ABC):
@@ -610,26 +611,26 @@ class SwitchStmt(ABC):
 
 
 class SwitchStmtConcrete(SwitchStmt):
-    def __init__(self, exp, switch_block):
+    def __init__(self, exp, switch_body):
         self.exp = exp
-        self.switch_block = switch_block
+        self.switch_body = switch_body
 
     def accept(self, visitor):
         visitor.visitSwitchStmtConcrete(self)
 
 
-class SwitchBlock(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
+# class SwitchBlock(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
 
 
-class SwitchBlockConcrete(SwitchBlock):
-    def __init__(self, switch_body):
-        self.switch_body = switch_body
+# class SwitchBlockConcrete(SwitchBlock):
+#     def __init__(self, switch_body):
+#         self.switch_body = switch_body
 
-    def accept(self, visitor):
-        visitor.visitSwitchBlockConcrete(self)
+#     def accept(self, visitor):
+#         visitor.visitSwitchBlockConcrete(self)
 
 
 class SwitchBody(ABC):
@@ -791,9 +792,9 @@ class ForStmt(ABC):
 
 class ForStmtConcrete(ForStmt):
     def __init__(self, for_initializer, for_condition, for_iterator, embedded_stmt):
-        self.for_initializer = for_initializer
-        self.for_condition = for_condition
-        self.for_iterator = for_iterator
+        self.for_initializer = for_initializer  # Pode ser None
+        self.for_condition = for_condition  # Pode ser None
+        self.for_iterator = for_iterator  # Pode ser None
         self.embedded_stmt = embedded_stmt
 
     def accept(self, visitor):
@@ -957,7 +958,7 @@ class ReturnStmt(ABC):
 
 class ReturnStmtConcrete(ReturnStmt):
     def __init__(self, exp):
-        self.exp = exp
+        self.exp = exp  # Pode ser None
 
     def accept(self, visitor):
         visitor.visitReturnStmtConcrete(self)
@@ -1129,10 +1130,10 @@ class MemberAccessExp(NoArrayCreationExp):
         visitor.visitMemberAccessExp(self)
 
 
-class InvocationExp(NoArrayCreationExp):
+class InvocationExp(NoArrayCreationExp, ExpStmt):
     def __init__(self, primary_exp, arg_list):
         self.primary_exp = primary_exp
-        self.arg_list = arg_list
+        self.arg_list = arg_list  # Pode ser None
 
     def accept(self, visitor):
         visitor.visitInvocationExp(self)
@@ -1145,14 +1146,6 @@ class ElementAccessExp(NoArrayCreationExp):
 
     def accept(self, visitor):
         visitor.visitElementAccessExp(self)
-
-
-class ThisExp(NoArrayCreationExp):
-    def __init__(self, this_value):
-        self.this_value = this_value
-
-    def accept(self, visitor):
-        visitor.visitThisExp(self)
 
 
 class ThisExp(NoArrayCreationExp):
@@ -1181,7 +1174,48 @@ class SizeofExp(NoArrayCreationExp):
 
 class DefaultExp(NoArrayCreationExp):
     def __init__(self, type):
-        self.type = type
+        self.type = type  # Pode ser None
 
     def accept(self, visitor):
         visitor.visitDefaultExp(self)
+
+
+class ExpList(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SingleExpList(ExpList):
+    def __init__(self, exp):
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitSingleExpList(self)
+
+
+class CompoundExpList(ExpList):
+    def __init__(self, exp_list, exp):
+        self.exp_list = exp_list
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitCompoundExpList(self)
+
+
+class ArrayCreationExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+# Pensar ainda
+# class ArrayCreationExp(ArrayCreationExp):
+#     def __init__(self, exp):
+#         self.exp = exp
+
+#     def accept(self, visitor):
+#         visitor.visitSingleExpList(self)
+
+
+# Pensar em remover tuplas

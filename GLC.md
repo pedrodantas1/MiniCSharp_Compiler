@@ -262,24 +262,17 @@ variable_initializer -> exp |
                         array_initializer
 
 unary_exp -> primary_exp |
-             '+' unary_exp |
-             '-' unary_exp |
-             '!' unary_exp |
-             '~' unary_exp |
              pre_increment_exp |
              pre_decrement_exp |
              cast_exp
 
 cast_exp -> '(' type ')' unary_exp
 
-conditional_exp -> null_coalescing_exp |
-                   null_coalescing_exp '?' exp ':' exp
-
-null_coalescing_exp -> conditional_or_exp |
-                       conditional_or_exp '??' null_coalescing_exp
+conditional_exp -> conditional_or_exp |
+                   conditional_or_exp '?' exp ':' exp
 
 conditional_or_exp -> conditional_and_exp |
-                      conditional_or_exp '||' conditional_and_expr
+                      conditional_or_exp '||' conditional_and_exp
 
 conditional_and_exp -> inclusive_or_exp |
                        conditional_and_exp '&&' inclusive_or_exp

@@ -14,6 +14,12 @@ class UnaryExp(ABC):
         pass
 
 
+class Exp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
 class FuncDecl(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -253,13 +259,13 @@ class VarDeclaratorIdExp(VarDeclarator):
         visitor.visitVarDeclaratorIdExp(self)
 
 
-class VarDeclaratorIdArray(VarDeclarator):
-    def __init__(self, id, array_initializer):
-        self.id = id
-        self.array_initializer = array_initializer
+# class VarDeclaratorIdArray(VarDeclarator):
+#     def __init__(self, id, array_initializer):
+#         self.id = id
+#         self.array_initializer = array_initializer
 
-    def accept(self, visitor):
-        visitor.visitVarDeclaratorIdArray(self)
+#     def accept(self, visitor):
+#         visitor.visitVarDeclaratorIdArray(self)
 
 
 # Comandos integrados
@@ -1009,12 +1015,12 @@ class PrimaryExpNoArrayCreation(PrimaryExp, UnaryExp):
         visitor.visitPrimaryExpNoArrayCreation(self)
 
 
-class PrimaryExpArrayCreation(PrimaryExp, UnaryExp):
-    def __init__(self, array_creation_exp):
-        self.array_creation_exp = array_creation_exp
+# class PrimaryExpArrayCreation(PrimaryExp, UnaryExp):
+#     def __init__(self, array_creation_exp):
+#         self.array_creation_exp = array_creation_exp
 
-    def accept(self, visitor):
-        visitor.visitPrimaryExpArrayCreation(self)
+#     def accept(self, visitor):
+#         visitor.visitPrimaryExpArrayCreation(self)
 
 
 # class NoArrayCreationExp(ABC):
@@ -1119,12 +1125,12 @@ class ParenthesizedExp(NoArrayCreationExp):
         visitor.visitParenthesizedExp(self)
 
 
-class TupleExpDefinition(NoArrayCreationExp):
-    def __init__(self, tuple_exp):
-        self.tuple_exp = tuple_exp
+# class TupleExpDefinition(NoArrayCreationExp):
+#     def __init__(self, tuple_exp):
+#         self.tuple_exp = tuple_exp
 
-    def accept(self, visitor):
-        visitor.visitTupleExpDefinition(self)
+#     def accept(self, visitor):
+#         visitor.visitTupleExpDefinition(self)
 
 
 class MemberAccessExp(NoArrayCreationExp):
@@ -1209,7 +1215,6 @@ class CompoundExpList(ExpList):
         visitor.visitCompoundExpList(self)
 
 
-# Pensar ainda
 # class ArrayCreationExp(ABC):
 #     @abstractmethod
 #     def accept(self, visitor):
@@ -1223,8 +1228,6 @@ class CompoundExpList(ExpList):
 #     def accept(self, visitor):
 #         visitor.visitSingleExpList(self)
 
-
-# Pensar em remover tuplas
 
 # Conversao explicita de tipo
 class CastExp(UnaryExp):
@@ -1242,7 +1245,7 @@ class ConditionalExp(ABC):
         pass
 
 
-class TernaryExp(ConditionalExp):
+class TernaryExp(ConditionalExp, Exp):
     def __init__(self, conditional_or_exp, exp1, exp2):
         self.conditional_or_exp = conditional_or_exp
         self.exp1 = exp1
@@ -1252,7 +1255,7 @@ class TernaryExp(ConditionalExp):
         visitor.visitTernaryExp(self)
 
 
-class ConditionalExpNext(ConditionalExp):
+class ConditionalExpNext(ConditionalExp, Exp):
     def __init__(self, conditional_or_exp):
         self.conditional_or_exp = conditional_or_exp
 
@@ -1266,13 +1269,13 @@ class ConditionalOrExp(ABC):
         pass
 
 
-class OrExp(ConditionalOrExp):
+class ConditionalOrExpConcrete(ConditionalOrExp):
     def __init__(self, conditional_or_exp, conditional_and_exp):
         self.conditional_or_exp = conditional_or_exp
         self.conditional_and_exp = conditional_and_exp
 
     def accept(self, visitor):
-        visitor.visitOrExp(self)
+        visitor.visitConditionalOrExpConcrete(self)
 
 
 class ConditionalOrExpNext(ConditionalOrExp):
@@ -1289,13 +1292,13 @@ class ConditionalAndExp(ABC):
         pass
 
 
-class AndExp(ConditionalAndExp):
+class ConditionalAndExpConcrete(ConditionalAndExp):
     def __init__(self, conditional_and_exp, inclusive_or_exp):
         self.conditional_and_exp = conditional_and_exp
         self.inclusive_or_exp = inclusive_or_exp
 
     def accept(self, visitor):
-        visitor.visitAndExp(self)
+        visitor.visitConditionalAndExpConcrete(self)
 
 
 class ConditionalAndExpNext(ConditionalAndExp):
@@ -1304,3 +1307,286 @@ class ConditionalAndExpNext(ConditionalAndExp):
 
     def accept(self, visitor):
         visitor.visitConditionalAndExpNext(self)
+
+
+class InclusiveOrExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class InclusiveOrExpConcrete(InclusiveOrExp):
+    def __init__(self, inclusive_or_exp, exclusive_or_exp):
+        self.inclusive_or_exp = inclusive_or_exp
+        self.exclusive_or_exp = exclusive_or_exp
+
+    def accept(self, visitor):
+        visitor.visitInclusiveOrExpConcrete(self)
+
+
+class InclusiveOrExpNext(InclusiveOrExp):
+    def __init__(self, exclusive_or_exp):
+        self.exclusive_or_exp = exclusive_or_exp
+
+    def accept(self, visitor):
+        visitor.visitInclusiveOrExpNext(self)
+
+
+class ExclusiveOrExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ExclusiveOrExpConcrete(ExclusiveOrExp):
+    def __init__(self, exclusive_or_exp, and_exp):
+        self.exclusive_or_exp = exclusive_or_exp
+        self.and_exp = and_exp
+
+    def accept(self, visitor):
+        visitor.visitExclusiveOrExpConcrete(self)
+
+
+class ExclusiveOrExpNext(ExclusiveOrExp):
+    def __init__(self, and_exp):
+        self.and_exp = and_exp
+
+    def accept(self, visitor):
+        visitor.visitExclusiveOrExpNext(self)
+
+
+class AndExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class AndExpConcrete(AndExp):
+    def __init__(self, and_exp, equality_exp):
+        self.and_exp = and_exp
+        self.equality_exp = equality_exp
+
+    def accept(self, visitor):
+        visitor.visitAndExpConcrete(self)
+
+
+class AndExpNext(AndExp):
+    def __init__(self, equality_exp):
+        self.equality_exp = equality_exp
+
+    def accept(self, visitor):
+        visitor.visitAndExpNext(self)
+
+
+class EqualityExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class EqualExp(EqualityExp):
+    def __init__(self, equality_exp, relational_exp):
+        self.equality_exp = equality_exp
+        self.relational_exp = relational_exp
+
+    def accept(self, visitor):
+        visitor.visitEqualExp(self)
+
+
+class NotEqualExp(EqualityExp):
+    def __init__(self, equality_exp, relational_exp):
+        self.equality_exp = equality_exp
+        self.relational_exp = relational_exp
+
+    def accept(self, visitor):
+        visitor.visitNotEqualExp(self)
+
+
+class EqualityExpNext(EqualityExp):
+    def __init__(self, relational_exp):
+        self.relational_exp = relational_exp
+
+    def accept(self, visitor):
+        visitor.visitEqualityExpNext(self)
+
+
+class RelationalExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class LessExp(RelationalExp):
+    def __init__(self, relational_exp, shift_exp):
+        self.relational_exp = relational_exp
+        self.shift_exp = shift_exp
+
+    def accept(self, visitor):
+        visitor.visitLessExp(self)
+
+
+class GreaterExp(RelationalExp):
+    def __init__(self, relational_exp, shift_exp):
+        self.relational_exp = relational_exp
+        self.shift_exp = shift_exp
+
+    def accept(self, visitor):
+        visitor.visitGreaterExp(self)
+
+
+class LessEqualExp(RelationalExp):
+    def __init__(self, relational_exp, shift_exp):
+        self.relational_exp = relational_exp
+        self.shift_exp = shift_exp
+
+    def accept(self, visitor):
+        visitor.visitLessEqualExp(self)
+
+
+class GreaterEqualExp(RelationalExp):
+    def __init__(self, relational_exp, shift_exp):
+        self.relational_exp = relational_exp
+        self.shift_exp = shift_exp
+
+    def accept(self, visitor):
+        visitor.visitGreaterEqualExp(self)
+
+
+class IsTypeExp(RelationalExp):
+    def __init__(self, relational_exp, type):
+        self.relational_exp = relational_exp
+        self.type = type
+
+    def accept(self, visitor):
+        visitor.visitIsTypeExp(self)
+
+
+class RelationalExpNext(RelationalExp):
+    def __init__(self, shift_exp):
+        self.shift_exp = shift_exp
+
+    def accept(self, visitor):
+        visitor.visitRelationalExpNext(self)
+
+
+class ShiftExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class LeftShiftExp(ShiftExp):
+    def __init__(self, shift_exp, additive_exp):
+        self.shift_exp = shift_exp
+        self.additive_exp = additive_exp
+
+    def accept(self, visitor):
+        visitor.visitLeftShiftExp(self)
+
+
+class RightShiftExp(ShiftExp):
+    def __init__(self, shift_exp, additive_exp):
+        self.shift_exp = shift_exp
+        self.additive_exp = additive_exp
+
+    def accept(self, visitor):
+        visitor.visitRightShiftExp(self)
+
+
+class ShiftExpNext(ShiftExp):
+    def __init__(self, additive_exp):
+        self.additive_exp = additive_exp
+
+    def accept(self, visitor):
+        visitor.visitShiftExpNext(self)
+
+
+class AdditiveExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SumExp(AdditiveExp):
+    def __init__(self, additive_exp, multiplicative_exp):
+        self.additive_exp = additive_exp
+        self.multiplicative_exp = multiplicative_exp
+
+    def accept(self, visitor):
+        visitor.visitSumExp(self)
+
+
+class SubExp(AdditiveExp):
+    def __init__(self, additive_exp, multiplicative_exp):
+        self.additive_exp = additive_exp
+        self.multiplicative_exp = multiplicative_exp
+
+    def accept(self, visitor):
+        visitor.visitSubExp(self)
+
+
+class AdditiveExpNext(AdditiveExp):
+    def __init__(self, multiplicative_exp):
+        self.multiplicative_exp = multiplicative_exp
+
+    def accept(self, visitor):
+        visitor.visitAdditiveExpNext(self)
+
+
+class MultiplicativeExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MultExp(MultiplicativeExp):
+    def __init__(self, multiplicative_exp, unary_exp):
+        self.multiplicative_exp = multiplicative_exp
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitMultExp(self)
+
+
+class DivExp(MultiplicativeExp):
+    def __init__(self, multiplicative_exp, unary_exp):
+        self.multiplicative_exp = multiplicative_exp
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitDivExp(self)
+
+
+class ModExp(MultiplicativeExp):
+    def __init__(self, multiplicative_exp, unary_exp):
+        self.multiplicative_exp = multiplicative_exp
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitModExp(self)
+
+
+class MultiplicativeExpNext(MultiplicativeExp):
+    def __init__(self, unary_exp):
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitMultiplicativeExpNext(self)
+
+
+class DeclarationExp(Exp):
+    def __init__(self, type, id):
+        self.type = type
+        self.id = id
+
+    def accept(self, visitor):
+        visitor.visitDeclarationExp(self)
+
+
+class AssignExp(Exp):
+    def __init__(self, unary_exp, exp):
+        self.unary_exp = unary_exp
+        self.exp = exp
+
+    def accept(self, visitor):
+        visitor.visitAssignExp(self)

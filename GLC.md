@@ -268,47 +268,47 @@ unary_exp -> primary_exp |
 
 cast_exp -> '(' type ')' unary_exp
 
-conditional_exp -> conditional_or_exp |
-                   conditional_or_exp '?' exp ':' exp
+conditional_exp -> conditional_or_exp '?' exp ':' exp |
+                   conditional_or_exp
 
-conditional_or_exp -> conditional_and_exp |
-                      conditional_or_exp '||' conditional_and_exp
+conditional_or_exp -> conditional_or_exp '||' conditional_and_exp |
+                      conditional_and_exp
 
-conditional_and_exp -> inclusive_or_exp |
-                       conditional_and_exp '&&' inclusive_or_exp
+conditional_and_exp -> conditional_and_exp '&&' inclusive_or_exp |
+                       inclusive_or_exp
 
-inclusive_or_exp -> exclusive_or_exp |
-                    inclusive_or_exp '|' exclusive_or_exp
+inclusive_or_exp -> inclusive_or_exp '|' exclusive_or_exp |
+                    exclusive_or_exp
 
-exclusive_or_exp -> and_exp |
-                    exclusive_or_exp '^' and_exp
+exclusive_or_exp -> exclusive_or_exp '^' and_exp |
+                    and_exp
 
-and_exp -> equality_exp |
-           and_exp '&' equality_exp
+and_exp -> and_exp '&' equality_exp |
+           equality_exp
 
-equality_exp -> relational_exp |
-                equality_exp '==' relational_exp |
-                equality_exp '!=' relational_exp
+equality_exp -> equality_exp '==' relational_exp |
+                equality_exp '!=' relational_exp |
+                relational_exp
 
-relational_exp -> shift_exp |
-                  relational_exp '<' shift_exp |
+relational_exp -> relational_exp '<' shift_exp |
                   relational_exp '>' shift_exp |
                   relational_exp '<=' shift_exp |
                   relational_exp '>=' shift_exp |
-                  relational_exp 'is' type
+                  relational_exp 'is' type |
+                  shift_exp
 
-shift_exp -> additive_exp |
-                    shift_exp '<<' additive_exp |
-                    shift_exp '>>' additive_exp
+shift_exp -> shift_exp '<<' additive_exp |
+             shift_exp '>>' additive_exp |
+             additive_exp
 
-additive_exp -> multiplicative_exp |
-                additive_exp '+' multiplicative_exp |
-                additive_exp '-' multiplicative_exp
+additive_exp -> additive_exp '+' multiplicative_exp |
+                additive_exp '-' multiplicative_exp |
+                multiplicative_exp
 
-multiplicative_exp -> unary_exp |
-                      multiplicative_exp '*' unary_exp |
+multiplicative_exp -> multiplicative_exp '*' unary_exp |
                       multiplicative_exp '/' unary_exp |
-                      multiplicative_exp '%' unary_exp
+                      multiplicative_exp '%' unary_exp |
+                      unary_exp
 
 exp -> non_assignment_exp |
        assignment

@@ -16,42 +16,28 @@ class_type -> type_name |
 
 interface_type -> type_name
 
+@
 array_type -> non_array_type rank_specifiers
 
+@
 non_array_type -> value_type |
                   class_type |
                   interface_type
 
+@
 rank_specifier -> '[' ']'
 
+@
 rank_specifiers -> rank_specifier |
                    rank_specifier rank_specifiers
 
-value_type -> struct_type
+value_type -> integral_type |
+              floating_point_type |
+              BOOL
 
-struct_type -> type_name |
-               simple_type | 
-               tuple_type
-
-simple_type -> numeric_type |
-               BOOL
-
-numeric_type -> integral_type | 
-                floating_point_type
-
-integral_type -> SHORT | USHORT | INT | UINT | LONG | ULONG | CHAR
+integral_type -> INT | LONG | CHAR
 
 floating_point_type -> FLOAT | DOUBLE | DECIMAL
-
-tuple_type -> '(' tuple_type_part ')'
-
-tuple_type_part -> tuple_type_element tuple_type_final
-
-tuple_type_element -> type |
-                      type ID
-
-tuple_type_final -> ',' tuple_type_element |
-                    ',' tuple_type_element tuple_type_final
 
 program -> func_declaration |
            func_declaration program
@@ -207,7 +193,6 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  CHARLITERAL | STRINGLITERAL |
                                  ID |
                                  parenthesized_exp |
-                                 tuple_exp |
                                  member_access |
                                  invocation_exp |
                                  element_access |
@@ -220,16 +205,6 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  default_exp
 
 parenthesized_exp -> '(' exp ')'
-
-tuple_exp -> '(' tuple_part ')'
-
-tuple_part -> tuple_element tuple_final_part
-
-tuple_final_part -> ',' tuple_element |
-                    ',' tuple_element tuple_final_part
-
-tuple_element -> exp |
-                 ID ':' exp
 
 member_access -> primary_exp '.' ID
 
@@ -248,16 +223,20 @@ default_exp -> DEFAULT |
 exp_list -> exp |
             exp_list ',' exp
 
+@
 array_creation_exp -> NEW non_array_type '[' exp_list ']' |
                       NEW non_array_type '[' exp_list ']' rank_specifiers |
                       NEW non_array_type '[' exp_list ']' array_initializer |
                       NEW non_array_type '[' exp_list ']' rank_specifiers array_initializer
 
+@
 array_initializer -> '{' variable_initializer_list '}'
 
+@
 variable_initializer_list -> variable_initializer |
                              variable_initializer ',' variable_initializer_list
 
+@
 variable_initializer -> exp |
                         array_initializer
 

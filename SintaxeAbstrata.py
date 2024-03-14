@@ -20,6 +20,165 @@ class Exp(ABC):
         pass
 
 
+class TypeName(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SingleTypeName(TypeName):
+    def __init__(self, id):
+        self.id = id
+
+    def accept(self, visitor):
+        return visitor.visitSingleTypeName(self)
+
+
+class CompoundTypeName(TypeName):
+    def __init__(self, type_name, id):
+        self.type_name = type_name
+        self.id = id
+
+    def accept(self, visitor):
+        return visitor.visitCompoundTypeName(self)
+
+
+class Type(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class GenericClassType(Type):
+    def __init__(self, type_name):
+        self.type_name = type_name
+
+    def accept(self, visitor):
+        return visitor.visitGenericClassType(self)
+
+
+class ObjectClassType(Type):
+    def __init__(self, type_object):
+        self.type_object = type_object
+
+    def accept(self, visitor):
+        return visitor.visitObjectClassType(self)
+
+
+class StringClassType(Type):
+    def __init__(self, type_object):
+        self.type_object = type_object
+
+    def accept(self, visitor):
+        return visitor.visitStringClassType(self)
+
+
+class InterfaceType(Type):
+    def __init__(self, type_name):
+        self.type_name = type_name
+
+    def accept(self, visitor):
+        return visitor.visitInterfaceType(self)
+
+
+class ValueTypeRef(Type):
+    def __init__(self, value_type):
+        self.value_type = value_type
+
+    def accept(self, visitor):
+        return visitor.visitValueTypeRef(self)
+
+
+class ValueType(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class IntegralTypeRef(ValueType):
+    def __init__(self, integral_type):
+        self.integral_type = integral_type
+
+    def accept(self, visitor):
+        return visitor.visitIntegralTypeRef(self)
+
+
+class FloatingPointTypeRef(ValueType):
+    def __init__(self, floating_point_type):
+        self.floating_point_type = floating_point_type
+
+    def accept(self, visitor):
+        return visitor.visitFloatingPointTypeRef(self)
+
+
+class BoolType(ValueType):
+    def __init__(self, bool_type):
+        self.bool_type = bool_type
+
+    def accept(self, visitor):
+        return visitor.visitBoolType(self)
+
+
+class IntegralType(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class IntType(IntegralType):
+    def __init__(self, int_type):
+        self.int_type = int_type
+
+    def accept(self, visitor):
+        return visitor.visitIntType(self)
+
+
+class LongType(IntegralType):
+    def __init__(self, long_type):
+        self.long_type = long_type
+
+    def accept(self, visitor):
+        return visitor.visitLongType(self)
+
+
+class CharType(IntegralType):
+    def __init__(self, char_type):
+        self.char_type = char_type
+
+    def accept(self, visitor):
+        return visitor.visitCharType(self)
+
+
+class FloatingPointType(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class FloatType(FloatingPointType):
+    def __init__(self, float_type):
+        self.float_type = float_type
+
+    def accept(self, visitor):
+        return visitor.visitFloatType(self)
+
+
+class DoubleType(FloatingPointType):
+    def __init__(self, double_type):
+        self.double_type = double_type
+
+    def accept(self, visitor):
+        return visitor.visitDoubleType(self)
+
+
+class DecimalType(FloatingPointType):
+    def __init__(self, decimal_type):
+        self.decimal_type = decimal_type
+
+    def accept(self, visitor):
+        return visitor.visitDecimalType(self)
+
+
 class FuncDecl(ABC):
     @abstractmethod
     def accept(self, visitor):

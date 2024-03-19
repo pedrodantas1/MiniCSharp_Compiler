@@ -1,0 +1,276 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPER
+    AMPERAMPER
+    AMPEREQUAL
+    BANG
+    BINARYNUM
+    BOOL
+    BREAK
+    CASE
+    CATCH
+    CHAR
+    CHARLITERAL
+    CIRCUMEQUAL
+    CIRCUMFLEX
+    CLASS
+    COLON
+    CONTINUE
+    DECIMAL
+    DECIMALNUM
+    DEFAULT
+    DO
+    DOT
+    DOUBLE
+    DOUBLENUM
+    ELSE
+    ENUM
+    EQEQUAL
+    FALSE
+    FINALLY
+    FLOAT
+    FLOATNUM
+    FOR
+    FOREACH
+    GEQ
+    GT
+    HEXADECIMALNUM
+    HOOKHOOK
+    HOOKHOOKEQUAL
+    IF
+    IN
+    INT
+    INTERFACE
+    INTNUM
+    IS
+    LEQ
+    LONG
+    LSB
+    LSHIFT
+    LSHIFTEQUAL
+    LT
+    MINUS
+    MINUSEQUAL
+    MINUSMINUS
+    NAMESPACE
+    NEW
+    NOTEQUAL
+    NULL
+    OBJECT
+    OUT
+    OVERRIDE
+    PARAMS
+    PERCENT
+    PERCENTEQUAL
+    PIPE
+    PIPEEQUAL
+    PIPEPIPE
+    PLUS
+    PLUSEQUAL
+    PLUSPLUS
+    PRIVATE
+    PROTECTED
+    PUBLIC
+    READONLY
+    REF
+    RETURN
+    RSB
+    RSHIFT
+    RSHIFTEQUAL
+    SHORT
+    SIZEOF
+    SLASH
+    SLASHEQUAL
+    STAR
+    STAREQUAL
+    STATIC
+    STRING
+    STRINGLITERAL
+    STRUCT
+    SWITCH
+    THIS
+    THROW
+    TILDE
+    TRUE
+    TRY
+    TYPEOF
+    UINT
+    ULONG
+    USHORT
+    VOID
+    WHILE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> func_declaration
+Rule 2     program -> func_declaration program
+Rule 3     func_declaration -> signature block
+Rule 4     signature -> type ID LPAREN param_list RPAREN
+Rule 5     signature -> type ID LPAREN RPAREN
+Rule 6     param_list -> type ID
+Rule 7     param_list -> type ID COMMA param_list
+Rule 8     statement_list -> statement
+Rule 9     statement_list -> statement statement_list
+Rule 10    statement -> declaration_statement
+Rule 11    statement -> embedded_statement
+Rule 12    declaration_statement -> const_declaration SEMI
+Rule 13    declaration_statement -> var_declaration SEMI
+Rule 14    const_declaration -> CONST type const_declarators
+Rule 15    const_declarators -> const_declarator
+Rule 16    const_declarators -> const_declarator COMMA const_declarators
+Rule 17    const_declarator -> ID EQUAL exp
+Rule 18    var_declaration -> type var_declarators
+Rule 19    var_declarators -> var_declarator
+Rule 20    var_declarators -> var_declarator COMMA var_declarators
+Rule 21    var_declarator -> ID
+Rule 22    var_declarator -> ID EQUAL exp
+Rule 23    embedded_statement -> block
+Rule 24    embedded_statement -> empty_statement
+Rule 25    embedded_statement -> exp_statement
+Rule 26    embedded_statement -> selection_statement
+Rule 27    embedded_statement -> iteration_statement
+Rule 28    embedded_statement -> jump_statement
+Rule 29    block -> LBRACE statement_list RBRACE
+Rule 30    block -> LBRACE RBRACE
+Rule 31    empty_statement -> SEMI
+
+Terminals, with rules where they appear
+
+AMPER                : 
+AMPERAMPER           : 
+AMPEREQUAL           : 
+BANG                 : 
+BINARYNUM            : 
+BOOL                 : 
+BREAK                : 
+CASE                 : 
+CATCH                : 
+CHAR                 : 
+CHARLITERAL          : 
+CIRCUMEQUAL          : 
+CIRCUMFLEX           : 
+CLASS                : 
+COLON                : 
+COMMA                : 7 16 20
+CONST                : 14
+CONTINUE             : 
+DECIMAL              : 
+DECIMALNUM           : 
+DEFAULT              : 
+DO                   : 
+DOT                  : 
+DOUBLE               : 
+DOUBLENUM            : 
+ELSE                 : 
+ENUM                 : 
+EQEQUAL              : 
+EQUAL                : 17 22
+FALSE                : 
+FINALLY              : 
+FLOAT                : 
+FLOATNUM             : 
+FOR                  : 
+FOREACH              : 
+GEQ                  : 
+GT                   : 
+HEXADECIMALNUM       : 
+HOOKHOOK             : 
+HOOKHOOKEQUAL        : 
+ID                   : 4 5 6 7 17 21 22
+IF                   : 
+IN                   : 
+INT                  : 
+INTERFACE            : 
+INTNUM               : 
+IS                   : 
+LBRACE               : 29 30
+LEQ                  : 
+LONG                 : 
+LPAREN               : 4 5
+LSB                  : 
+LSHIFT               : 
+LSHIFTEQUAL          : 
+LT                   : 
+MINUS                : 
+MINUSEQUAL           : 
+MINUSMINUS           : 
+NAMESPACE            : 
+NEW                  : 
+NOTEQUAL             : 
+NULL                 : 
+OBJECT               : 
+OUT                  : 
+OVERRIDE             : 
+PARAMS               : 
+PERCENT              : 
+PERCENTEQUAL         : 
+PIPE                 : 
+PIPEEQUAL            : 
+PIPEPIPE             : 
+PLUS                 : 
+PLUSEQUAL            : 
+PLUSPLUS             : 
+PRIVATE              : 
+PROTECTED            : 
+PUBLIC               : 
+RBRACE               : 29 30
+READONLY             : 
+REF                  : 
+RETURN               : 
+RPAREN               : 4 5
+RSB                  : 
+RSHIFT               : 
+RSHIFTEQUAL          : 
+SEMI                 : 12 13 31
+SHORT                : 
+SIZEOF               : 
+SLASH                : 
+SLASHEQUAL           : 
+STAR                 : 
+STAREQUAL            : 
+STATIC               : 
+STRING               : 
+STRINGLITERAL        : 
+STRUCT               : 
+SWITCH               : 
+THIS                 : 
+THROW                : 
+TILDE                : 
+TRUE                 : 
+TRY                  : 
+TYPEOF               : 
+UINT                 : 
+ULONG                : 
+USHORT               : 
+VOID                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+block                : 3 23
+const_declaration    : 12
+const_declarator     : 15 16
+const_declarators    : 14 16
+declaration_statement : 10
+embedded_statement   : 11
+empty_statement      : 24
+exp                  : 17 22
+exp_statement        : 25
+func_declaration     : 1 2
+iteration_statement  : 27
+jump_statement       : 28
+param_list           : 4 7
+program              : 2 0
+selection_statement  : 26
+signature            : 3
+statement            : 8 9
+statement_list       : 9 29
+type                 : 4 5 6 7 14 18
+var_declaration      : 13
+var_declarator       : 19 20
+var_declarators      : 18 20
+

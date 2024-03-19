@@ -593,9 +593,9 @@ class NoArgsObjectCreation(ObjectCreationExp, NoArrayCreationExp):
 
 
 class NoArgsWithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
-    def __init__(self, type, member_initializer_list):
+    def __init__(self, type, object_initializer):
         self.type = type
-        self.member_initializer_list = member_initializer_list
+        self.object_initializer = object_initializer
 
     def accept(self, visitor):
         visitor.visitNoArgsWithInitializerObjectCreation(self)
@@ -611,27 +611,27 @@ class ObjectCreation(ObjectCreationExp, NoArrayCreationExp):
 
 
 class WithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
-    def __init__(self, type, arg_list, member_initializer_list):
+    def __init__(self, type, arg_list, object_initializer):
         self.type = type
         self.arg_list = arg_list
-        self.member_initializer_list = member_initializer_list
+        self.object_initializer = object_initializer
 
     def accept(self, visitor):
         visitor.visitWithInitializerObjectCreation(self)
 
 
-# class ObjectInitializer(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
+class ObjectInitializer(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
 
 
-# class ObjectInitializerConcrete(ObjectInitializer):
-#     def __init__(self, member_initializer_list):
-#         self.member_initializer_list = member_initializer_list
+class ObjectInitializerConcrete(ObjectInitializer):
+    def __init__(self, member_initializer_list):
+        self.member_initializer_list = member_initializer_list
 
-#     def accept(self, visitor):
-#         visitor.visitObjectInitializerConcrete(self)
+    def accept(self, visitor):
+        visitor.visitObjectInitializerConcrete(self)
 
 
 class MemberInitializerList(ABC):

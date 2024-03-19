@@ -125,9 +125,92 @@ def p_empty_stmt(p):
     '''empty_statement : SEMI'''        
     p[0] = sa.EmptyStmtConcrete()
 
+def p_exp_statement(p):
+    '''exp_statement : statement_exp SEMI'''
+    if (isinstance(p[1], sa.InvocationExp)):
+        p[0] = sa.ExpStmtInvocation(p[1])
+    elif (isinstance(p[1], sa.ObjectCreationExp)):
+        p[0] = sa.ExpStmtObjectCreation(p[1])
+    elif (isinstance(p[1], sa.AssignExp)):
+        p[0] = sa.ExpStmtAssignment(p[1])
+    elif (isinstance(p[1], sa.PostIncrementExp)):
+        p[0] = sa.ExpStmtPostIncrement(p[1])
+    elif (isinstance(p[1], sa.PostDecrementExp)):
+        p[0] = sa.ExpStmtPostDecrement(p[1])
+    elif (isinstance(p[1], sa.PreIncrementExp)):
+        p[0] = sa.ExpStmtPreIncrement(p[1])
+    elif (isinstance(p[1], sa.PreDecrementExp)):
+        p[0] = sa.ExpStmtPreDecrement(p[1])
 
-        
-        
+def p_object_creation(p):
+    '''object_creation_exp : NEW type LPAREN RPAREN
+                           | NEW type LPAREN RPAREN object_initializer
+                           | NEW type LPAREN arg_list RPAREN
+                           | NEW type LPAREN arg_list RPAREN object_initializer'''
+    if (isinstance(len(p) == 5)):
+        p[0] = sa.NoArgsObjectCreation(p[2])
+    elif (len(p) == 6):
+        if (isinstance(p[5], sa.ObjectInitializer)):
+            p[0] = sa.NoArgsWithInitializerObjectCreation(p[2], p[5])
+        elif (isinstance(p[4], sa.ArgList)):
+            p[0] = sa.ObjectCreation(p[2], p[4])
+    elif (len(p) == 7):
+        p[0] = sa.WithInitializerObjectCreation(p[2], p[4], p[6])
+
+def p_object_initializer(p):
+    '''object_initializer : LBRACE RBRACE
+                          | LBRACE member_initializer_list RBRACE'''
+    if (len(p) == 3):
+        p[0] = sa.ObjectInitializerConcrete(None)
+    else:
+        p[0] = sa.ObjectInitializerConcrete(p[2])
+
+def p_member_initializer_list(p):
+    '''member_initializer_list : member_initializer
+                               | member_initializer COMMA member_initializer_list'''
+    if (len(p) == 2):
+        p[0] = sa.SingleMemberInitializerList(p[1])
+    else:
+        p[0] = sa.CompoundMemberInitializerList(p[1], p[3])
+
+def p_member_initializer(p):
+    '''member_initializer : ID EQUAL exp'''
+    p[0] = sa.MemberInitializerConcrete(p[1], p[3])
+
+def p_post_increment_exp(p):
+    '''post_increment_exp : primary_exp PLUSPLUS'''
+    p[0] = sa.PostIncrementExpConcrete(p[1])
+
+def p_post_decrement_exp(p):
+    '''post_decrement_exp : primary_exp MINUSMINUS'''
+    p[0] = sa.PostDecrementExpConcrete(p[1])
+
+def p_pre_increment_exp(p):
+    '''pre_increment_exp : PLUSPLUS unary_exp'''
+    p[0] = sa.PreIncrementExpConcrete(p[2])
+
+def p_pre_decrement_exp(p):
+    '''pre_decrement_exp : MINUSMINUS unary_exp'''
+    p[0] = sa.PreDecrementExpConcrete(p[2])
+
+def p_selection_statement(p):
+    '''selection_statement : if_statement
+                           | switch_statement'''
+    if (isinstance(p[1], sa.IfStmt)):
+        p[0] = sa.SelectionStmtIf(p[1])
+    else:
+        p[0] = sa.SelectionStmtSwitch(p[1])
+
+
+
+
+
+
+
+
+
+
+
 
 
 

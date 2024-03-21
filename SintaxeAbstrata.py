@@ -96,8 +96,8 @@ class ObjectClassType(ClassType):
 
 
 class StringClassType(ClassType):
-    def __init__(self, type_object):
-        self.type_object = type_object
+    def __init__(self, type_string):
+        self.type_string = type_string
 
     def accept(self, visitor):
         return visitor.visitStringClassType(self)

@@ -122,9 +122,9 @@ selection_statement -> if_statement |
 if_statement -> IF '(' exp ')' embedded_statement |
                 IF '(' exp ')' embedded_statement ELSE embedded_statement
 
-switch_statement -> SWITCH '(' exp ')' switch_block
+switch_statement -> SWITCH '(' exp ')' '{' switch_body '}'
 
-switch_block -> '{' switch_body '}'
+<!-- switch_block -> '{' switch_body '}' -->
 
 switch_body -> switch_section |
                switch_section switch_body
@@ -132,7 +132,7 @@ switch_body -> switch_section |
 switch_section -> switch_label statement_list |
                   switch_label switch_section
 
-switch_label -> CASE pattern ':' | 
+switch_label -> CASE pattern ':' |
                 DEFAULT ':'
 
 <!-- Talvez precise retirar o switch -->

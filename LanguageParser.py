@@ -13,7 +13,7 @@ def p_type_name(p):
     else:
         p[0] = sa.CompoundTypeName(p[1], p[3])
 
-def p_type_class(p):
+def p_type(p):
     '''type : class_type
             | interface_type
             | value_type'''
@@ -23,6 +23,56 @@ def p_type_class(p):
         p[0] = sa.TypeInterface(p[1])
     elif (isinstance(p[1], sa.ValueType)):
         p[0] = sa.TypeValue(p[1])
+
+def p_class_type(p):
+    '''class_type : type_name
+                  | OBJECT
+                  | STRING'''
+    if (isinstance(p[1], sa.TypeName)):
+        p[0] = sa.GenericClassType(p[1])
+    elif(p[1] == 'object'):
+        p[0] = sa.ObjectClassType(p[1])
+    elif(p[1] == 'string'):
+        p[0] = sa.StringClassType(p[1])
+
+def p_interface_type(p):
+    '''interface_type : type_name'''
+    p[0] = sa.InterfaceType(p[1])
+
+def p_value_type(p):
+    '''value_type : integral_type
+                  | floating_point_type
+                  | BOOL'''
+    if (isinstance(p[1], sa.IntegralType)):
+        p[0] = sa.IntegralTypeRef(p[1])
+    elif (isinstance(p[1], sa.FloatingPointType)):
+        p[0] = sa.FloatingPointTypeRef(p[1])
+    elif (p[1] == 'bool'):
+        p[0] = sa.BoolType(p[1])
+
+def p_integral_type_int(p):
+    '''integral_type : INT'''
+    p[0] = sa.IntType(p[1])
+
+def p_integral_type_long(p):
+    '''integral_type : LONG'''
+    p[0] = sa.LongType(p[1])
+
+def p_integral_type_char(p):
+    '''integral_type : CHAR'''
+    p[0] = sa.CharType(p[1])
+
+def p_integral_type_float(p):
+    '''floating_point_type : FLOAT'''
+    p[0] = sa.FloatType(p[1])
+
+def p_integral_type_double(p):
+    '''floating_point_type : DOUBLE'''
+    p[0] = sa.DoubleType(p[1])
+
+def p_integral_type_decimal(p):
+    '''floating_point_type : DECIMAL'''
+    p[0] = sa.DecimalType(p[1])
 
 def p_program(p):
     '''program : func_declaration
@@ -220,6 +270,159 @@ def p_selection_statement(p):
     else:
         p[0] = sa.SelectionStmtSwitch(p[1])
 
+def p_if_statement(p):
+    '''if_statement : IF LPAREN exp RPAREN embedded_statement
+                    | IF LPAREN exp RPAREN embedded_statement ELSE embedded_statement'''
+    if (len(p) == 6):
+        p[0] = sa.SimpleIfStmt(p[3], p[5])
+    else:
+        p[0] = sa.IfElseStmt(p[3], p[5], p[7])
+
+def p_switch_statement(p):
+    '''switch_statement : SWITCH LPAREN exp RPAREN LBRACE switch_body RBRACE'''
+    p[0] = sa.SwitchStmtConcrete(p[3], p[6])
+
+def p_switch_body(p):
+    '''switch_body : switch_section
+                   | switch_section switch_body'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleSwitchBody(p[1])
+    else:
+        p[0] = sa.CompoundSwitchBody(p[1], p[2])
+
+def p_switch_section_simple(p):
+    '''switch_section : switch_label statement_list'''
+    p[0] = sa.SimpleSwitchSection(p[1], p[2])
+
+def p_switch_section_compound(p):
+    '''switch_section : switch_label switch_section'''
+    p[0] = sa.CompoundSwitchSection(p[1], p[2])
+
+def p_switch_label(p):
+    '''switch_label : CASE pattern COLON
+                    | DEFAULT COLON'''
+    if (len(p) == 4):
+        p[0] = sa.SwitchLabelCase(p[2])
+    else:
+        p[0] = sa.SwitchLabelDefault()
+
+def p_pattern(p):
+    '''pattern : exp'''
+    p[0] = sa.PatternConcrete(p[1])
+
+def p_iteration_statement(p):
+    '''iteration_statement : while_statement
+                           | do_statement
+                           | for_statement
+                           | foreach_statement'''
+    if (isinstance(p[1], sa.WhileStmt)):
+        p[0] = sa.IterationStmtWhile(p[1])
+    elif (isinstance(p[1], sa.DoStmt)):
+        p[0] = sa.IterationStmtDo(p[1])
+    elif (isinstance(p[1], sa.ForStmt)):
+        p[0] = sa.IterationStmtFor(p[1])
+    elif (isinstance(p[1], sa.ForeachStmt)):
+        p[0] = sa.IterationStmtForeach(p[1])
+
+def p_while_statement(p):
+    '''while_statement : WHILE LPAREN exp RPAREN embedded_statement'''
+    p[0] = sa.WhileStmtConcrete(p[3], p[5])
+
+def p_do_statement(p):
+    '''do_statement : DO embedded_statement WHILE LPAREN exp RPAREN SEMI'''
+    p[0] = sa.DoStmtConcrete(p[2], p[5])
+
+def p_for_statement_full(p):
+    '''FOR LPAREN for_initializer SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(p[2], p[4], p[6], p[8])
+
+def p_for_statement_12(p):
+    '''FOR LPAREN for_initializer SEMI for_condition SEMI RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(p[2], p[4], None, p[7])
+
+def p_for_statement_13(p):
+    '''FOR LPAREN for_initializer SEMI SEMI for_iterator RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(p[2], None, p[5], p[7])
+
+def p_for_statement_1(p):
+    '''FOR LPAREN for_initializer SEMI SEMI RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(p[2], None, None, p[6])
+
+def p_for_statement_23(p):
+    '''FOR LPAREN SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(None, p[3], p[5], p[7])
+
+def p_for_statement_2(p):
+    '''FOR LPAREN SEMI for_condition SEMI RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(None, p[3], None, p[6])
+
+def p_for_statement_3(p):
+    '''FOR LPAREN SEMI SEMI for_iterator RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(None, None, p[4], p[6])
+
+def p_for_statement_empty(p):
+    '''FOR LPAREN SEMI SEMI RPAREN embedded_statement'''
+    p[0] = sa.ForStmtConcrete(None, None, None, p[5])
+
+def p_for_initializer(p):
+    '''for_initializer : var_declaration
+                       | var_declaration COMMA for_initializer'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleForInitializer(p[1])
+    else:
+        p[0] = sa.CompoundForInitializer(p[1], p[3])
+
+def p_for_condition(p):
+    '''for_condition : exp'''
+    p[0] = sa.ForConditionConcrete(p[1])
+
+def p_for_iterator(p):
+    '''for_iterator : statement_exp_list'''
+    p[0] = sa.ForIteratorConcrete(p[1])
+
+def p_statement_exp_list(p):
+    '''statement_exp_list : statement_exp
+                          | statement_exp COMMA statement_exp_list'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleStmtExpList(p[1])
+    else:
+        p[0] = sa.CompoundStmtExpList(p[1], p[3])
+
+def p_foreach_statement(p):
+    '''foreach_statement : FOREACH LPAREN type ID IN exp RPAREN embedded_statement'''
+    p[0] = sa.ForeachStmtConcrete(p[3], p[4], p[6], p[8])
+
+def p_jump_statement(p):
+    '''jump_statement : break_statement
+                      | continue_statement
+                      | return_statement'''
+    if (isinstance(p[1], sa.BreakStmt)):
+        p[0] = sa.JumpStmtBreak(p[1])
+    elif (isinstance(p[1], sa.ContinueStmt)):
+        p[0] = sa.JumpStmtContinue(p[1])
+    elif (isinstance(p[1], sa.ReturnStmt)):
+        p[0] = sa.JumpStmtReturn(p[1])
+
+def p_break_statement(p):
+    '''break_statement : BREAK SEMI'''
+    p[0] = sa.BreakStmtConcrete()
+
+def p_continue_statement(p):
+    '''continue_statement : CONTINUE SEMI'''
+    p[0] = sa.ContinueStmtConcrete()
+
+def p_return_statement(p):
+    '''return_statement : RETURN SEMI
+                        | RETURN exp SEMI'''
+    if (len(p) == 3):
+        p[0] = sa.ReturnStmtConcrete(None)
+    else:
+        p[0] = sa.ReturnStmtConcrete(p[2])
+
+
+
+
+    
 
 
 

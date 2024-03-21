@@ -7,30 +7,24 @@ Unused terminals:
     AMPEREQUAL
     BANG
     BINARYNUM
-    BOOL
     BREAK
     CASE
     CATCH
-    CHAR
     CHARLITERAL
     CIRCUMEQUAL
     CIRCUMFLEX
     CLASS
     COLON
     CONTINUE
-    DECIMAL
     DECIMALNUM
     DEFAULT
     DO
-    DOT
-    DOUBLE
     DOUBLENUM
     ELSE
     ENUM
     EQEQUAL
     FALSE
     FINALLY
-    FLOAT
     FLOATNUM
     FOR
     FOREACH
@@ -41,24 +35,19 @@ Unused terminals:
     HOOKHOOKEQUAL
     IF
     IN
-    INT
     INTERFACE
     INTNUM
     IS
     LEQ
-    LONG
     LSB
     LSHIFT
     LSHIFTEQUAL
     LT
     MINUS
     MINUSEQUAL
-    MINUSMINUS
     NAMESPACE
-    NEW
     NOTEQUAL
     NULL
-    OBJECT
     OUT
     OVERRIDE
     PARAMS
@@ -69,7 +58,6 @@ Unused terminals:
     PIPEPIPE
     PLUS
     PLUSEQUAL
-    PLUSPLUS
     PRIVATE
     PROTECTED
     PUBLIC
@@ -86,7 +74,6 @@ Unused terminals:
     STAR
     STAREQUAL
     STATIC
-    STRING
     STRINGLITERAL
     STRUCT
     SWITCH
@@ -104,38 +91,72 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> program
-Rule 1     program -> func_declaration
-Rule 2     program -> func_declaration program
-Rule 3     func_declaration -> signature block
-Rule 4     signature -> type ID LPAREN param_list RPAREN
-Rule 5     signature -> type ID LPAREN RPAREN
-Rule 6     param_list -> type ID
-Rule 7     param_list -> type ID COMMA param_list
-Rule 8     statement_list -> statement
-Rule 9     statement_list -> statement statement_list
-Rule 10    statement -> declaration_statement
-Rule 11    statement -> embedded_statement
-Rule 12    declaration_statement -> const_declaration SEMI
-Rule 13    declaration_statement -> var_declaration SEMI
-Rule 14    const_declaration -> CONST type const_declarators
-Rule 15    const_declarators -> const_declarator
-Rule 16    const_declarators -> const_declarator COMMA const_declarators
-Rule 17    const_declarator -> ID EQUAL exp
-Rule 18    var_declaration -> type var_declarators
-Rule 19    var_declarators -> var_declarator
-Rule 20    var_declarators -> var_declarator COMMA var_declarators
-Rule 21    var_declarator -> ID
-Rule 22    var_declarator -> ID EQUAL exp
-Rule 23    embedded_statement -> block
-Rule 24    embedded_statement -> empty_statement
-Rule 25    embedded_statement -> exp_statement
-Rule 26    embedded_statement -> selection_statement
-Rule 27    embedded_statement -> iteration_statement
-Rule 28    embedded_statement -> jump_statement
-Rule 29    block -> LBRACE statement_list RBRACE
-Rule 30    block -> LBRACE RBRACE
-Rule 31    empty_statement -> SEMI
+Rule 0     S' -> type_name
+Rule 1     type_name -> ID
+Rule 2     type_name -> type_name DOT ID
+Rule 3     type -> class_type
+Rule 4     type -> interface_type
+Rule 5     type -> value_type
+Rule 6     class_type -> type_name
+Rule 7     class_type -> OBJECT
+Rule 8     class_type -> STRING
+Rule 9     interface_type -> type_name
+Rule 10    value_type -> integral_type
+Rule 11    value_type -> floating_point_type
+Rule 12    value_type -> BOOL
+Rule 13    integral_type -> INT
+Rule 14    integral_type -> LONG
+Rule 15    integral_type -> CHAR
+Rule 16    floating_point_type -> FLOAT
+Rule 17    floating_point_type -> DOUBLE
+Rule 18    floating_point_type -> DECIMAL
+Rule 19    program -> func_declaration
+Rule 20    program -> func_declaration program
+Rule 21    func_declaration -> signature block
+Rule 22    signature -> type ID LPAREN param_list RPAREN
+Rule 23    signature -> type ID LPAREN RPAREN
+Rule 24    param_list -> type ID
+Rule 25    param_list -> type ID COMMA param_list
+Rule 26    statement_list -> statement
+Rule 27    statement_list -> statement statement_list
+Rule 28    statement -> declaration_statement
+Rule 29    statement -> embedded_statement
+Rule 30    declaration_statement -> const_declaration SEMI
+Rule 31    declaration_statement -> var_declaration SEMI
+Rule 32    const_declaration -> CONST type const_declarators
+Rule 33    const_declarators -> const_declarator
+Rule 34    const_declarators -> const_declarator COMMA const_declarators
+Rule 35    const_declarator -> ID EQUAL exp
+Rule 36    var_declaration -> type var_declarators
+Rule 37    var_declarators -> var_declarator
+Rule 38    var_declarators -> var_declarator COMMA var_declarators
+Rule 39    var_declarator -> ID
+Rule 40    var_declarator -> ID EQUAL exp
+Rule 41    embedded_statement -> block
+Rule 42    embedded_statement -> empty_statement
+Rule 43    embedded_statement -> exp_statement
+Rule 44    embedded_statement -> selection_statement
+Rule 45    embedded_statement -> iteration_statement
+Rule 46    embedded_statement -> jump_statement
+Rule 47    block -> LBRACE statement_list RBRACE
+Rule 48    block -> LBRACE RBRACE
+Rule 49    empty_statement -> SEMI
+Rule 50    exp_statement -> statement_exp SEMI
+Rule 51    object_creation_exp -> NEW type LPAREN RPAREN
+Rule 52    object_creation_exp -> NEW type LPAREN RPAREN object_initializer
+Rule 53    object_creation_exp -> NEW type LPAREN arg_list RPAREN
+Rule 54    object_creation_exp -> NEW type LPAREN arg_list RPAREN object_initializer
+Rule 55    object_initializer -> LBRACE RBRACE
+Rule 56    object_initializer -> LBRACE member_initializer_list RBRACE
+Rule 57    member_initializer_list -> member_initializer
+Rule 58    member_initializer_list -> member_initializer COMMA member_initializer_list
+Rule 59    member_initializer -> ID EQUAL exp
+Rule 60    post_increment_exp -> primary_exp PLUSPLUS
+Rule 61    post_decrement_exp -> primary_exp MINUSMINUS
+Rule 62    pre_increment_exp -> PLUSPLUS unary_exp
+Rule 63    pre_decrement_exp -> MINUSMINUS unary_exp
+Rule 64    selection_statement -> if_statement
+Rule 65    selection_statement -> switch_statement
 
 Terminals, with rules where they appear
 
@@ -144,33 +165,33 @@ AMPERAMPER           :
 AMPEREQUAL           : 
 BANG                 : 
 BINARYNUM            : 
-BOOL                 : 
+BOOL                 : 12
 BREAK                : 
 CASE                 : 
 CATCH                : 
-CHAR                 : 
+CHAR                 : 15
 CHARLITERAL          : 
 CIRCUMEQUAL          : 
 CIRCUMFLEX           : 
 CLASS                : 
 COLON                : 
-COMMA                : 7 16 20
-CONST                : 14
+COMMA                : 25 34 38 58
+CONST                : 32
 CONTINUE             : 
-DECIMAL              : 
+DECIMAL              : 18
 DECIMALNUM           : 
 DEFAULT              : 
 DO                   : 
-DOT                  : 
-DOUBLE               : 
+DOT                  : 2
+DOUBLE               : 17
 DOUBLENUM            : 
 ELSE                 : 
 ENUM                 : 
 EQEQUAL              : 
-EQUAL                : 17 22
+EQUAL                : 35 40 59
 FALSE                : 
 FINALLY              : 
-FLOAT                : 
+FLOAT                : 16
 FLOATNUM             : 
 FOR                  : 
 FOREACH              : 
@@ -179,29 +200,29 @@ GT                   :
 HEXADECIMALNUM       : 
 HOOKHOOK             : 
 HOOKHOOKEQUAL        : 
-ID                   : 4 5 6 7 17 21 22
+ID                   : 1 2 22 23 24 25 35 39 40 59
 IF                   : 
 IN                   : 
-INT                  : 
+INT                  : 13
 INTERFACE            : 
 INTNUM               : 
 IS                   : 
-LBRACE               : 29 30
+LBRACE               : 47 48 55 56
 LEQ                  : 
-LONG                 : 
-LPAREN               : 4 5
+LONG                 : 14
+LPAREN               : 22 23 51 52 53 54
 LSB                  : 
 LSHIFT               : 
 LSHIFTEQUAL          : 
 LT                   : 
 MINUS                : 
 MINUSEQUAL           : 
-MINUSMINUS           : 
+MINUSMINUS           : 61 63
 NAMESPACE            : 
-NEW                  : 
+NEW                  : 51 52 53 54
 NOTEQUAL             : 
 NULL                 : 
-OBJECT               : 
+OBJECT               : 7
 OUT                  : 
 OVERRIDE             : 
 PARAMS               : 
@@ -212,19 +233,19 @@ PIPEEQUAL            :
 PIPEPIPE             : 
 PLUS                 : 
 PLUSEQUAL            : 
-PLUSPLUS             : 
+PLUSPLUS             : 60 62
 PRIVATE              : 
 PROTECTED            : 
 PUBLIC               : 
-RBRACE               : 29 30
+RBRACE               : 47 48 55 56
 READONLY             : 
 REF                  : 
 RETURN               : 
-RPAREN               : 4 5
+RPAREN               : 22 23 51 52 53 54
 RSB                  : 
 RSHIFT               : 
 RSHIFTEQUAL          : 
-SEMI                 : 12 13 31
+SEMI                 : 30 31 49 50
 SHORT                : 
 SIZEOF               : 
 SLASH                : 
@@ -232,7 +253,7 @@ SLASHEQUAL           :
 STAR                 : 
 STAREQUAL            : 
 STATIC               : 
-STRING               : 
+STRING               : 8
 STRINGLITERAL        : 
 STRUCT               : 
 SWITCH               : 
@@ -251,26 +272,46 @@ error                :
 
 Nonterminals, with rules where they appear
 
-block                : 3 23
-const_declaration    : 12
-const_declarator     : 15 16
-const_declarators    : 14 16
-declaration_statement : 10
-embedded_statement   : 11
-empty_statement      : 24
-exp                  : 17 22
-exp_statement        : 25
-func_declaration     : 1 2
-iteration_statement  : 27
-jump_statement       : 28
-param_list           : 4 7
-program              : 2 0
-selection_statement  : 26
-signature            : 3
-statement            : 8 9
-statement_list       : 9 29
-type                 : 4 5 6 7 14 18
-var_declaration      : 13
-var_declarator       : 19 20
-var_declarators      : 18 20
+arg_list             : 53 54
+block                : 21 41
+class_type           : 3
+const_declaration    : 30
+const_declarator     : 33 34
+const_declarators    : 32 34
+declaration_statement : 28
+embedded_statement   : 29
+empty_statement      : 42
+exp                  : 35 40 59
+exp_statement        : 43
+floating_point_type  : 11
+func_declaration     : 19 20
+if_statement         : 64
+integral_type        : 10
+interface_type       : 4
+iteration_statement  : 45
+jump_statement       : 46
+member_initializer   : 57 58
+member_initializer_list : 56 58
+object_creation_exp  : 
+object_initializer   : 52 54
+param_list           : 22 25
+post_decrement_exp   : 
+post_increment_exp   : 
+pre_decrement_exp    : 
+pre_increment_exp    : 
+primary_exp          : 60 61
+program              : 20
+selection_statement  : 44
+signature            : 21
+statement            : 26 27
+statement_exp        : 50
+statement_list       : 27 47
+switch_statement     : 65
+type                 : 22 23 24 25 32 36 51 52 53 54
+type_name            : 2 6 9 0
+unary_exp            : 62 63
+value_type           : 5
+var_declaration      : 31
+var_declarator       : 37 38
+var_declarators      : 36 38
 

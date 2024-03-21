@@ -3,12 +3,10 @@
 type_name -> ID |
              type_name '.' ID
 
-type -> reference_type | 
+type -> class_type | 
+        interface_type |
+        array_type |
         value_type
-
-reference_type -> class_type | 
-                  interface_type |
-                  array_type
 
 class_type -> type_name |
               OBJECT | 

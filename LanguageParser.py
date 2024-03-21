@@ -5,6 +5,25 @@ from lexer import *
 
 # fmt: off
 
+def p_type_name(p):
+    '''type_name : ID
+                 | type_name DOT ID'''
+    if (len(p) == 2):
+        p[0] = sa.SingleTypeName(p[1])
+    else:
+        p[0] = sa.CompoundTypeName(p[1], p[3])
+
+def p_type_class(p):
+    '''type : class_type
+            | interface_type
+            | value_type'''
+    if (isinstance(p[1], sa.ClassType)):
+        p[0] = sa.TypeClass(p[1])
+    elif (isinstance(p[1], sa.InterfaceType)):
+        p[0] = sa.TypeInterface(p[1])
+    elif (isinstance(p[1], sa.ValueType)):
+        p[0] = sa.TypeValue(p[1])
+
 def p_program(p):
     '''program : func_declaration
                | func_declaration program'''

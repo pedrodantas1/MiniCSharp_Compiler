@@ -49,7 +49,37 @@ class Type(ABC):
         pass
 
 
-class GenericClassType(Type):
+class TypeClass(Type):
+    def __init__(self, class_type):
+        self.class_type = class_type
+
+    def accept(self, visitor):
+        return visitor.visitTypeClass(self)
+
+
+class TypeInterface(Type):
+    def __init__(self, interface_type):
+        self.interface_type = interface_type
+
+    def accept(self, visitor):
+        return visitor.visitTypeInterface(self)
+
+
+class TypeValue(Type):
+    def __init__(self, value_type):
+        self.value_type = value_type
+
+    def accept(self, visitor):
+        return visitor.visitTypeValue(self)
+
+
+class ClassType(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class GenericClassType(ClassType):
     def __init__(self, type_name):
         self.type_name = type_name
 
@@ -57,7 +87,7 @@ class GenericClassType(Type):
         return visitor.visitGenericClassType(self)
 
 
-class ObjectClassType(Type):
+class ObjectClassType(ClassType):
     def __init__(self, type_object):
         self.type_object = type_object
 
@@ -65,7 +95,7 @@ class ObjectClassType(Type):
         return visitor.visitObjectClassType(self)
 
 
-class StringClassType(Type):
+class StringClassType(ClassType):
     def __init__(self, type_object):
         self.type_object = type_object
 
@@ -79,14 +109,6 @@ class InterfaceType(Type):
 
     def accept(self, visitor):
         return visitor.visitInterfaceType(self)
-
-
-class ValueTypeRef(Type):
-    def __init__(self, value_type):
-        self.value_type = value_type
-
-    def accept(self, visitor):
-        return visitor.visitValueTypeRef(self)
 
 
 class ValueType(ABC):

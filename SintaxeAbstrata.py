@@ -1306,14 +1306,6 @@ class ParenthesizedExp(NoArrayCreationExp):
         visitor.visitParenthesizedExp(self)
 
 
-# class TupleExpDefinition(NoArrayCreationExp):
-#     def __init__(self, tuple_exp):
-#         self.tuple_exp = tuple_exp
-
-#     def accept(self, visitor):
-#         visitor.visitTupleExpDefinition(self)
-
-
 class MemberAccessExp(NoArrayCreationExp):
     def __init__(self, primary_exp, id):
         self.primary_exp = primary_exp

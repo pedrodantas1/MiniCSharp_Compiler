@@ -419,6 +419,93 @@ def p_return_statement(p):
     else:
         p[0] = sa.ReturnStmtConcrete(p[2])
 
+def p_arg_list(p):
+    '''arg_list : exp
+                | exp COMMA arg_list'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleArgList(p[1])
+    else:
+        p[0] = sa.CompoundArgList(p[1], p[3])
+
+def p_primary_exp(p):
+    '''primary_exp : primary_no_array_creation_exp'''
+    p[0] = sa.PrimaryExpNoArrayCreation(p[1])
+
+def p_boolean_exp(p):
+    '''primary_no_array_creation_exp : TRUE
+                                     | FALSE'''
+    p[0] = sa.BooleanExp(p[1])
+
+def p_null_exp(p):
+    '''primary_no_array_creation_exp : NULL'''
+    p[0] = sa.NullExp(p[1])
+
+def p_intnum_exp(p):
+    '''primary_no_array_creation_exp : INTNUM'''
+    p[0] = sa.IntNumExp(p[1])
+
+def p_hexnum_exp(p):
+    '''primary_no_array_creation_exp : HEXADECIMALNUM'''
+    p[0] = sa.HexNumExp(p[1])
+
+def p_binnum_exp(p):
+    '''primary_no_array_creation_exp : BINARYNUM'''
+    p[0] = sa.BinNumExp(p[1])
+
+def p_floatnum_exp(p):
+    '''primary_no_array_creation_exp : FLOATNUM'''
+    p[0] = sa.FloatNumExp(p[1])
+
+def p_doublenum_exp(p):
+    '''primary_no_array_creation_exp : DOUBLENUM'''
+    p[0] = sa.DoubleNumExp(p[1])
+
+def p_decimalnum_exp(p):
+    '''primary_no_array_creation_exp : DECIMALNUM'''
+    p[0] = sa.DecimalNumExp(p[1])
+
+def p_charliteral_exp(p):
+    '''primary_no_array_creation_exp : CHARLITERAL'''
+    p[0] = sa.CharExp(p[1])
+
+def p_stringliteral_exp(p):
+    '''primary_no_array_creation_exp : STRINGLITERAL'''
+    p[0] = sa.StringExp(p[1])
+
+def p_id_exp(p):
+    '''primary_no_array_creation_exp : ID'''
+    p[0] = sa.IdExp(p[1])
+
+def p_id_exp(p):
+    '''primary_no_array_creation_exp : ID'''
+    p[0] = sa.IdExp(p[1])
+
+def p_parent_exp(p):
+    '''primary_no_array_creation_exp : LPAREN exp RPAREN'''
+    p[0] = sa.ParenthesizedExp(p[2])
+
+def p_member_acess_exp(p):
+    '''primary_no_array_creation_exp : primary_exp DOT ID'''
+    p[0] = sa.MemberAccessExp(p[1], p[3])
+
+def p_invocation_exp(p):
+    '''primary_no_array_creation_exp : primary_exp LPAREN RPAREN
+                                     | primary_exp LPAREN arg_list RPAREN'''
+    if (len(p) == 4):
+        p[0] = sa.InvocationExp(p[1], None)
+    else:
+        p[0] = sa.InvocationExp(p[1], p[3])
+
+def p_element_access_exp(p):
+    '''primary_no_array_creation_exp : primary_no_array_creation_exp LSB exp RSB'''
+    p[0] = sa.ElementAccessExp(p[1], p[3])
+
+def p_this_exp(p):
+    '''primary_no_array_creation_exp : THIS'''
+    p[0] = sa.ThisExp(p[1])
+
+
+        
 
 
 

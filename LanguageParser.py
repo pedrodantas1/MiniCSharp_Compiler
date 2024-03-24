@@ -196,20 +196,30 @@ def p_empty_stmt(p):
 
 def p_exp_statement(p):
     '''exp_statement : statement_exp SEMI'''
+    p[0] = sa.ExpStmtConcrete(p[1])
+
+def p_statement_exp(p):
+    '''statement_exp : invocation_exp
+                     | object_creation_exp
+                     | assignment
+                     | post_increment_exp
+                     | post_decrement_exp
+                     | pre_increment_exp
+                     | pre_decrement_exp'''
     if (isinstance(p[1], sa.InvocationExp)):
-        p[0] = sa.ExpStmtInvocation(p[1])
+        p[0] = sa.StmtExpInvocation(p[1])
     elif (isinstance(p[1], sa.ObjectCreationExp)):
-        p[0] = sa.ExpStmtObjectCreation(p[1])
+        p[0] = sa.StmtExpObjectCreation(p[1])
     elif (isinstance(p[1], sa.AssignExp)):
-        p[0] = sa.ExpStmtAssignment(p[1])
+        p[0] = sa.StmtExpAssignment(p[1])
     elif (isinstance(p[1], sa.PostIncrementExp)):
-        p[0] = sa.ExpStmtPostIncrement(p[1])
+        p[0] = sa.StmtExpPostIncrement(p[1])
     elif (isinstance(p[1], sa.PostDecrementExp)):
-        p[0] = sa.ExpStmtPostDecrement(p[1])
+        p[0] = sa.StmtExpPostDecrement(p[1])
     elif (isinstance(p[1], sa.PreIncrementExp)):
-        p[0] = sa.ExpStmtPreIncrement(p[1])
+        p[0] = sa.StmtExpPreIncrement(p[1])
     elif (isinstance(p[1], sa.PreDecrementExp)):
-        p[0] = sa.ExpStmtPreDecrement(p[1])
+        p[0] = sa.StmtExpPreDecrement(p[1])
 
 def p_object_creation(p):
     '''object_creation_exp : NEW type LPAREN RPAREN
@@ -480,7 +490,7 @@ def p_parent_exp(p):
     '''primary_no_array_creation_exp : LPAREN exp RPAREN'''
     p[0] = sa.ParenthesizedExp(p[2])
 
-def p_member_acess_exp(p):
+def p_member_access_exp(p):
     '''primary_no_array_creation_exp : primary_exp DOT ID'''
     p[0] = sa.MemberAccessExp(p[1], p[3])
 
@@ -550,10 +560,143 @@ def p_unary_pre_decrement_exp(p):
 def p_cast_exp(p):
     '''unary_exp : LPAREN type RPAREN unary_exp'''
     p[0] = sa.CastExp(p[2], p[4])
+
+def p_exp_non_assignment_exp(p):
+    '''exp : non_assignment_exp'''
+    p[0] = sa.ExpNonAssignment(p[1])
+
+def p_exp_assignment_exp(p):
+    '''exp : assignment'''
+    p[0] = sa.ExpAssignment(p[1])
+
+def p_non_assignment_conditional_exp(p):
+    '''non_assignment_exp : conditional_exp'''
+    p[0] = sa.NonAssignmentConditionalExp([1])
+
+def p_conditional_exp(p):
+    '''conditional_exp : conditional_or_exp HOOK exp COLON exp
+                       | conditional_or_exp'''
+    if (len(p) == 2):
+        p[0] = sa.ConditionalExpNext(p[2])
+    else:
+        p[0] = sa.TernaryExp(p[1], p[3], p[5])
+
+def p_conditional_or_exp(p):
+    '''conditional_or_exp : conditional_or_exp PIPEPIPE conditional_and_exp
+                          | conditional_and_exp'''
+    if (len(p) == 2):
+        p[0] = sa.ConditionalOrExpNext(p[2])
+    else:
+        p[0] = sa.ConditionalOrExpConcrete(p[1], p[3])
+
+def p_conditional_and_exp(p):
+    '''conditional_and_exp : conditional_and_exp AMPERAMPER inclusive_or_exp
+                           | inclusive_or_exp'''
+    if (len(p) == 2):
+        p[0] = sa.ConditionalAndExpNext(p[2])
+    else:
+        p[0] = sa.ConditionalAndExpConcrete(p[1], p[3])
+
+def p_inclusive_or_exp(p):
+    '''inclusive_or_exp : inclusive_or_exp PIPE exclusive_or_exp
+                        | exclusive_or_exp'''
+    if (len(p) == 2):
+        p[0] = sa.InclusiveOrExpNext(p[2])
+    else:
+        p[0] = sa.InclusiveOrExpConcrete(p[1], p[3])
+
+def p_exclusive_or_exp(p):
+    '''exclusive_or_exp : exclusive_or_exp CIRCUMFLEX and_exp
+                        | and_exp'''
+    if (len(p) == 2):
+        p[0] = sa.ExclusiveOrExpNext(p[2])
+    else:
+        p[0] = sa.ExclusiveOrExpConcrete(p[1], p[3])
+
+def p_and_exp(p):
+    '''and_exp : and_exp AMPER equality_exp
+               | equality_exp'''
+    if (len(p) == 2):
+        p[0] = sa.AndExpNext(p[2])
+    else:
+        p[0] = sa.AndExpConcrete(p[1], p[3])
+
+def p_equality_exp(p):
+    '''equality_exp : equality_exp EQEQUAL relational_exp
+                    | equality_exp NOTEQUAL relational_exp
+                    | relational_exp'''
+    if (len(p) == 2):
+        p[0] = sa.EqualityExpNext(p[2])
+    elif (p[2] == '=='):
+        p[0] = sa.EqualExp(p[1], p[3])
+    elif (p[2] == '!='):
+        p[0] = sa.NotEqualExp(p[1], p[3])
+
+def p_relational_exp(p):
+    '''relational_exp : relational_exp LT shift_exp
+                      | relational_exp GT shift_exp
+                      | relational_exp LEQ shift_exp
+                      | relational_exp GEQ shift_exp
+                      | relational_exp IS type
+                      | shift_exp'''
+    if (len(p) == 2):
+        p[0] = sa.RelationalExpNext(p[1])
+    elif (p[2] == '<'):
+        p[0] = sa.LessExp(p[1], p[3])
+    elif (p[2] == '>'):
+        p[0] = sa.GreaterExp(p[1], p[3])
+    elif (p[2] == '<='):
+        p[0] = sa.LessEqualExp(p[1], p[3])
+    elif (p[2] == '>='):
+        p[0] = sa.GreaterEqualExp(p[1], p[3])
+    elif (p[2] == 'is'):
+        p[0] = sa.IsTypeExp(p[1], p[3])
+
+def p_shift_exp(p):
+    '''shift_exp : shift_exp LSHIFT additive_exp
+                 | shift_exp RSHIFT additive_exp
+                 | additive_exp'''
+    if (len(p) == 2):
+        p[0] = sa.ShiftExpNext(p[1])
+    elif (p[2] == '<<'):
+        p[0] = sa.LeftShiftExp(p[1], p[3])
+    elif (p[2] == '>>'):
+        p[0] = sa.RightShiftExp(p[1], p[3])
+
+def p_additive_exp(p):
+    '''additive_exp : additive_exp PLUS multiplicative_exp
+                    | additive_exp MINUS multiplicative_exp
+                    | multiplicative_exp'''
+    if (len(p) == 2):
+        p[0] = sa.AdditiveExpNext(p[1])
+    elif (p[2] == '+'):
+        p[0] = sa.SumExp(p[1], p[3])
+    elif (p[2] == '-'):
+        p[0] = sa.SubExp(p[1], p[3])
+
+def p_multiplicative_exp(p):
+    '''multiplicative_exp : multiplicative_exp STAR unary_exp
+                          | multiplicative_exp SLASH unary_exp
+                          | multiplicative_exp PERCENT unary_exp
+                          | unary_exp'''
+    if (len(p) == 2):
+        p[0] = sa.MultiplicativeExpNext(p[1])
+    elif (p[2] == '*'):
+        p[0] = sa.MultExp(p[1], p[3])
+    elif (p[2] == '/'):
+        p[0] = sa.DivExp(p[1], p[3])
+    elif (p[2] == '%'):
+        p[0] = sa.ModExp(p[1], p[3])
+
+def p_assignment_simple(p):
+    '''assignment : unary_exp EQUAL exp'''
+    p[0] = sa.AssignExp(p[1], p[3])
+    
+
     
 
 
-        
+
 
 
 

@@ -14,12 +14,6 @@ class UnaryExp(ABC):
         pass
 
 
-class Exp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
 class TypeName(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -536,67 +530,80 @@ class EmptyStmtConcrete(EmptyStmt):
         visitor.visitEmptyStmtConcrete(self)
 
 
-# Comando de expressao
 class ExpStmt(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
 
 
-class ExpStmtInvocation(ExpStmt):
+class ExpStmtConcrete(ExpStmt):
+    def __init__(self, statement_exp):
+        self.statement_exp = statement_exp
+
+    def accept(self, visitor):
+        visitor.visitExpStmtConcrete(self)
+
+
+class StmtExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class StmtExpInvocation(StmtExp):
     def __init__(self, invocation_exp):
         self.invocation_exp = invocation_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtInvocation(self)
+        visitor.visitStmtExpInvocation(self)
 
 
-class ExpStmtObjectCreation(ExpStmt):
+class StmtExpObjectCreation(StmtExp):
     def __init__(self, object_creation_exp):
         self.object_creation_exp = object_creation_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtObjectCreation(self)
+        visitor.visitStmtExpObjectCreation(self)
 
 
-class ExpStmtAssignment(ExpStmt):
+class StmtExpAssignment(StmtExp):
     def __init__(self, assignment):
         self.assignment = assignment
 
     def accept(self, visitor):
-        visitor.visitExpStmtAssignment(self)
+        visitor.visitStmtExpAssignment(self)
 
 
-class ExpStmtPostIncrement(ExpStmt):
+class StmtExpPostIncrement(StmtExp):
     def __init__(self, post_increment_exp):
         self.post_increment_exp = post_increment_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtPostIncrement(self)
+        visitor.visitStmtExpPostIncrement(self)
 
 
-class ExpStmtPostDecrement(ExpStmt):
+class StmtExpPostDecrement(StmtExp):
     def __init__(self, post_decrement_exp):
         self.post_decrement_exp = post_decrement_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtPostDecrement(self)
+        visitor.visitStmtExpPostDecrement(self)
 
 
-class ExpStmtPreIncrement(ExpStmt):
+class StmtExpPreIncrement(StmtExp):
     def __init__(self, pre_increment_exp):
         self.pre_increment_exp = pre_increment_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtPreIncrement(self)
+        visitor.visitStmtExpPreIncrement(self)
 
 
-class ExpStmtPreDecrement(ExpStmt):
+class StmtExpPreDecrement(StmtExp):
     def __init__(self, pre_decrement_exp):
         self.pre_decrement_exp = pre_decrement_exp
 
     def accept(self, visitor):
-        visitor.visitExpStmtPreDecrement(self)
+        visitor.visitStmtExpPreDecrement(self)
 
 
 # Comando para criacao de objetos
@@ -1315,7 +1322,7 @@ class MemberAccessExp(NoArrayCreationExp):
         visitor.visitMemberAccessExp(self)
 
 
-class InvocationExp(NoArrayCreationExp, ExpStmt):
+class InvocationExp(NoArrayCreationExp, StmtExp):
     def __init__(self, primary_exp, arg_list):
         self.primary_exp = primary_exp
         self.arg_list = arg_list  # Pode ser None
@@ -1459,13 +1466,49 @@ class CastExp(UnaryExp):
         visitor.visitCastExp(self)
 
 
+class Exp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ExpNonAssignment(Exp):
+    def __init__(self, non_assignment_exp):
+        self.non_assignment_exp = non_assignment_exp
+
+    def accept(self, visitor):
+        visitor.visitExpNonAssignment(self)
+
+
+class ExpAssignment(Exp):
+    def __init__(self, assignment):
+        self.assignment = assignment
+
+    def accept(self, visitor):
+        visitor.visitExpAssignment(self)
+
+
+class NonAssignmentExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class NonAssignmentConditionalExp(NonAssignmentExp):
+    def __init__(self, conditional_exp):
+        self.conditional_exp = conditional_exp
+
+    def accept(self, visitor):
+        visitor.visitNonAssignmentConditionalExp(self)
+
+
 class ConditionalExp(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
 
 
-class TernaryExp(ConditionalExp, Exp):
+class TernaryExp(ConditionalExp):
     def __init__(self, conditional_or_exp, exp1, exp2):
         self.conditional_or_exp = conditional_or_exp
         self.exp1 = exp1
@@ -1475,7 +1518,7 @@ class TernaryExp(ConditionalExp, Exp):
         visitor.visitTernaryExp(self)
 
 
-class ConditionalExpNext(ConditionalExp, Exp):
+class ConditionalExpNext(ConditionalExp):
     def __init__(self, conditional_or_exp):
         self.conditional_or_exp = conditional_or_exp
 
@@ -1792,15 +1835,6 @@ class MultiplicativeExpNext(MultiplicativeExp):
 
     def accept(self, visitor):
         visitor.visitMultiplicativeExpNext(self)
-
-
-class DeclarationExp(Exp):
-    def __init__(self, type, id):
-        self.type = type
-        self.id = id
-
-    def accept(self, visitor):
-        visitor.visitDeclarationExp(self)
 
 
 class AssignExp(Exp):

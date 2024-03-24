@@ -244,6 +244,11 @@ unary_exp -> primary_exp |
 
 cast_exp -> '(' type ')' unary_exp
 
+exp -> non_assignment_exp |
+       assignment
+
+non_assignment_exp -> conditional_exp
+
 conditional_exp -> conditional_or_exp '?' exp ':' exp |
                    conditional_or_exp
 
@@ -285,14 +290,6 @@ multiplicative_exp -> multiplicative_exp '*' unary_exp |
                       multiplicative_exp '/' unary_exp |
                       multiplicative_exp '%' unary_exp |
                       unary_exp
-
-exp -> non_assignment_exp |
-       assignment
-
-non_assignment_exp -> declaration_exp |
-                      conditional_exp
-
-declaration_exp -> type ID
 
 assignment -> unary_exp assignment_operator exp
 

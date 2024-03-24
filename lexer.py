@@ -30,7 +30,7 @@ tokens += [
     'LSHIFTEQUAL', 'RSHIFTEQUAL',
     'HOOKHOOK', 'HOOKHOOKEQUAL',
     
-    'COLON', 'COMMA', 'SEMI', 'DOT',
+    'HOOK', 'COLON', 'COMMA', 'SEMI', 'DOT',
     'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LSB', 'RSB',
     
     'INTNUM', 'FLOATNUM', 'DOUBLENUM', 'DECIMALNUM',
@@ -80,6 +80,7 @@ t_RSHIFTEQUAL = r'>>='
 t_HOOKHOOK = r'\?\?'
 t_HOOKHOOKEQUAL = r'\?\?='
 
+t_HOOK = r'\?'
 t_COLON = r':'
 t_COMMA = r','
 t_SEMI = r';'

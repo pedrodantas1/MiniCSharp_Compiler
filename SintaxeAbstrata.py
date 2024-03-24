@@ -135,6 +135,14 @@ class BoolType(ValueType):
         return visitor.visitBoolType(self)
 
 
+class VoidType(ValueType):
+    def __init__(self, void_type):
+        self.void_type = void_type
+
+    def accept(self, visitor):
+        return visitor.visitVoidType(self)
+
+
 class IntegralType(ABC):
     @abstractmethod
     def accept(self, visitor):

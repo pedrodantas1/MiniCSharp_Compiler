@@ -50,13 +50,16 @@ def p_interface_type(p):
 def p_value_type(p):
     '''value_type : integral_type
                   | floating_point_type
-                  | BOOL'''
+                  | BOOL
+                  | VOID'''
     if (isinstance(p[1], sa.IntegralType)):
         p[0] = sa.IntegralTypeRef(p[1])
     elif (isinstance(p[1], sa.FloatingPointType)):
         p[0] = sa.FloatingPointTypeRef(p[1])
     elif (p[1] == 'bool'):
         p[0] = sa.BoolType(p[1])
+    elif (p[1] == 'void'):
+        p[0] = sa.VoidType(p[1])
 
 def p_integral_type_int(p):
     '''integral_type : INT'''

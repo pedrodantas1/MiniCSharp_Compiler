@@ -31,7 +31,8 @@ rank_specifiers -> rank_specifier |
 
 value_type -> integral_type |
               floating_point_type |
-              BOOL
+              BOOL |
+              VOID
 
 integral_type -> INT | LONG | CHAR
 
@@ -156,6 +157,7 @@ for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' 
                  FOR '(' ';' ';' for_iterator ')' embedded_statement |
                  FOR '(' ';' ';' ')' embedded_statement
 
+@ Analisar o conflito state 100 - COMMA
 for_initializer -> var_declaration |
                    var_declaration ',' for_initializer
 

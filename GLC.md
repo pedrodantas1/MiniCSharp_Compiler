@@ -215,8 +215,7 @@ typeof_exp -> TYPEOF '(' type ')'
 
 sizeof_exp -> SIZEOF '(' value_type ')'
 
-default_exp -> DEFAULT |
-               DEFAULT '(' type ')'
+default_exp -> DEFAULT '(' type ')'
 
 exp_list -> exp |
             exp_list ',' exp

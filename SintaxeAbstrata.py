@@ -606,7 +606,7 @@ class ObjectCreationExp(ABC):
         pass
 
 
-class NoArgsObjectCreation(ObjectCreationExp, NoArrayCreationExp):
+class NoArgsObjectCreation(ObjectCreationExp):
     def __init__(self, type):
         self.type = type
 
@@ -614,7 +614,7 @@ class NoArgsObjectCreation(ObjectCreationExp, NoArrayCreationExp):
         visitor.visitNoArgsObjectCreation(self)
 
 
-class NoArgsWithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
+class NoArgsWithInitializerObjectCreation(ObjectCreationExp):
     def __init__(self, type, object_initializer):
         self.type = type
         self.object_initializer = object_initializer
@@ -623,7 +623,7 @@ class NoArgsWithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp)
         visitor.visitNoArgsWithInitializerObjectCreation(self)
 
 
-class ObjectCreation(ObjectCreationExp, NoArrayCreationExp):
+class ObjectCreation(ObjectCreationExp):
     def __init__(self, type, arg_list):
         self.type = type
         self.arg_list = arg_list
@@ -632,7 +632,7 @@ class ObjectCreation(ObjectCreationExp, NoArrayCreationExp):
         visitor.visitObjectCreation(self)
 
 
-class WithInitializerObjectCreation(ObjectCreationExp, NoArrayCreationExp):
+class WithInitializerObjectCreation(ObjectCreationExp):
     def __init__(self, type, arg_list, object_initializer):
         self.type = type
         self.arg_list = arg_list
@@ -700,7 +700,7 @@ class PostIncrementExp(ABC):
         pass
 
 
-class PostIncrementExpConcrete(PostIncrementExp, NoArrayCreationExp):
+class PostIncrementExpConcrete(PostIncrementExp):
     def __init__(self, primary_exp):
         self.primary_exp = primary_exp
 
@@ -714,7 +714,7 @@ class PostDecrementExp(ABC):
         pass
 
 
-class PostDecrementExpConcrete(PostDecrementExp, NoArrayCreationExp):
+class PostDecrementExpConcrete(PostDecrementExp):
     def __init__(self, primary_exp):
         self.primary_exp = primary_exp
 
@@ -728,7 +728,7 @@ class PreIncrementExp(ABC):
         pass
 
 
-class PreIncrementExpConcrete(PreIncrementExp, UnaryExp):
+class PreIncrementExpConcrete(PreIncrementExp):
     def __init__(self, unary_exp):
         self.unary_exp = unary_exp
 
@@ -742,7 +742,7 @@ class PreDecrementExp(ABC):
         pass
 
 
-class PreDecrementExpConcrete(PreDecrementExp, UnaryExp):
+class PreDecrementExpConcrete(PreDecrementExp):
     def __init__(self, unary_exp):
         self.unary_exp = unary_exp
 
@@ -1188,7 +1188,7 @@ class PrimaryExp(ABC):
         pass
 
 
-class PrimaryExpNoArrayCreation(PrimaryExp, UnaryExp):
+class PrimaryExpNoArrayCreation(PrimaryExp):
     def __init__(self, no_array_creation_exp):
         self.no_array_creation_exp = no_array_creation_exp
 
@@ -1196,7 +1196,7 @@ class PrimaryExpNoArrayCreation(PrimaryExp, UnaryExp):
         visitor.visitPrimaryExpNoArrayCreation(self)
 
 
-# class PrimaryExpArrayCreation(PrimaryExp, UnaryExp):
+# class PrimaryExpArrayCreation(PrimaryExp):
 #     def __init__(self, array_creation_exp):
 #         self.array_creation_exp = array_creation_exp
 
@@ -1341,6 +1341,30 @@ class ThisExp(NoArrayCreationExp):
         visitor.visitThisExp(self)
 
 
+class PrimaryPostIncrementExp(NoArrayCreationExp):
+    def __init__(self, post_increment_exp):
+        self.post_increment_exp = post_increment_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryPostIncrementExp(self)
+
+
+class PrimaryPostDecrementExp(NoArrayCreationExp):
+    def __init__(self, post_decrement_exp):
+        self.post_decrement_exp = post_decrement_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryPostDecrementExp(self)
+
+
+class PrimaryObjectCreationExp(NoArrayCreationExp):
+    def __init__(self, object_creation_exp):
+        self.object_creation_exp = object_creation_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryObjectCreationExp(self)
+
+
 class TypeofExp(NoArrayCreationExp):
     def __init__(self, type):
         self.type = type
@@ -1359,7 +1383,7 @@ class SizeofExp(NoArrayCreationExp):
 
 class DefaultExp(NoArrayCreationExp):
     def __init__(self, type):
-        self.type = type  # Pode ser None
+        self.type = type
 
     def accept(self, visitor):
         visitor.visitDefaultExp(self)
@@ -1402,7 +1426,30 @@ class CompoundExpList(ExpList):
 #         visitor.visitSingleExpList(self)
 
 
-# Conversao explicita de tipo
+class UnaryPrimaryExp(UnaryExp):
+    def __init__(self, primary_exp):
+        self.primary_exp = primary_exp
+
+    def accept(self, visitor):
+        visitor.visitUnaryPrimaryExp(self)
+
+
+class UnaryPreIncrementExp(UnaryExp):
+    def __init__(self, pre_increment_exp):
+        self.pre_increment_exp = pre_increment_exp
+
+    def accept(self, visitor):
+        visitor.visitUnaryPreIncrementExp(self)
+
+
+class UnaryPreDecrementExp(UnaryExp):
+    def __init__(self, pre_decrement_exp):
+        self.pre_decrement_exp = pre_decrement_exp
+
+    def accept(self, visitor):
+        visitor.visitUnaryPreDecrementExp(self)
+
+
 class CastExp(UnaryExp):
     def __init__(self, type, unary_exp):
         self.type = type

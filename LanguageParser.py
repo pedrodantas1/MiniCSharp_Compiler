@@ -333,35 +333,35 @@ def p_do_statement(p):
     p[0] = sa.DoStmtConcrete(p[2], p[5])
 
 def p_for_statement_full(p):
-    '''FOR LPAREN for_initializer SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN for_initializer SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(p[2], p[4], p[6], p[8])
 
 def p_for_statement_12(p):
-    '''FOR LPAREN for_initializer SEMI for_condition SEMI RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN for_initializer SEMI for_condition SEMI RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(p[2], p[4], None, p[7])
 
 def p_for_statement_13(p):
-    '''FOR LPAREN for_initializer SEMI SEMI for_iterator RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN for_initializer SEMI SEMI for_iterator RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(p[2], None, p[5], p[7])
 
 def p_for_statement_1(p):
-    '''FOR LPAREN for_initializer SEMI SEMI RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN for_initializer SEMI SEMI RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(p[2], None, None, p[6])
 
 def p_for_statement_23(p):
-    '''FOR LPAREN SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN SEMI for_condition SEMI for_iterator RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(None, p[3], p[5], p[7])
 
 def p_for_statement_2(p):
-    '''FOR LPAREN SEMI for_condition SEMI RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN SEMI for_condition SEMI RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(None, p[3], None, p[6])
 
 def p_for_statement_3(p):
-    '''FOR LPAREN SEMI SEMI for_iterator RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN SEMI SEMI for_iterator RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(None, None, p[4], p[6])
 
 def p_for_statement_empty(p):
-    '''FOR LPAREN SEMI SEMI RPAREN embedded_statement'''
+    '''for_statement : FOR LPAREN SEMI SEMI RPAREN embedded_statement'''
     p[0] = sa.ForStmtConcrete(None, None, None, p[5])
 
 def p_for_initializer(p):
@@ -476,10 +476,6 @@ def p_id_exp(p):
     '''primary_no_array_creation_exp : ID'''
     p[0] = sa.IdExp(p[1])
 
-def p_id_exp(p):
-    '''primary_no_array_creation_exp : ID'''
-    p[0] = sa.IdExp(p[1])
-
 def p_parent_exp(p):
     '''primary_no_array_creation_exp : LPAREN exp RPAREN'''
     p[0] = sa.ParenthesizedExp(p[2])
@@ -503,6 +499,58 @@ def p_element_access_exp(p):
 def p_this_exp(p):
     '''primary_no_array_creation_exp : THIS'''
     p[0] = sa.ThisExp(p[1])
+
+# @
+def p_primary_post_increment_exp(p):
+    '''primary_no_array_creation_exp : post_increment_exp'''
+    p[0] = sa.PrimaryPostIncrementExp(p[1])
+
+# @
+def p_primary_post_decrement_exp(p):
+    '''primary_no_array_creation_exp : post_decrement_exp'''
+    p[0] = sa.PrimaryPostDecrementExp(p[1])
+
+# @
+def p_primary_object_creation_exp(p):
+    '''primary_no_array_creation_exp : object_creation_exp'''
+    p[0] = sa.PrimaryObjectCreationExp(p[1])
+
+def p_typeof_exp(p):
+    '''primary_no_array_creation_exp : TYPEOF LPAREN type RPAREN'''
+    p[0] = sa.TypeofExp(p[3])
+
+def p_sizeof_exp(p):
+    '''primary_no_array_creation_exp : SIZEOF LPAREN value_type RPAREN'''
+    p[0] = sa.SizeofExp(p[3])
+
+def p_default_exp(p):
+    '''primary_no_array_creation_exp : DEFAULT LPAREN type RPAREN'''
+    p[0] = sa.DefaultExp(p[3])
+
+def p_exp_list(p):
+    '''exp_list : exp
+                | exp_list COMMA exp'''
+    if (len(p) == 2):
+        p[0] = sa.SingleExpList(p[1])
+    else:
+        p[0] = sa.CompoundExpList(p[1], p[3])
+
+def p_unary_primary_exp(p):
+    '''unary_exp : primary_exp'''
+    p[0] = sa.UnaryPrimaryExp(p[1])
+
+def p_unary_pre_increment_exp(p):
+    '''unary_exp : pre_increment_exp'''
+    p[0] = sa.UnaryPreIncrementExp(p[1])
+
+def p_unary_pre_decrement_exp(p):
+    '''unary_exp : pre_decrement_exp'''
+    p[0] = sa.UnaryPreDecrementExp(p[1])
+
+def p_cast_exp(p):
+    '''unary_exp : LPAREN type RPAREN unary_exp'''
+    p[0] = sa.CastExp(p[2], p[4])
+    
 
 
         

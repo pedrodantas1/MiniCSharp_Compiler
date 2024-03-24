@@ -6,40 +6,20 @@ Unused terminals:
     AMPERAMPER
     AMPEREQUAL
     BANG
-    BINARYNUM
-    BREAK
-    CASE
     CATCH
-    CHARLITERAL
     CIRCUMEQUAL
     CIRCUMFLEX
     CLASS
-    COLON
-    CONTINUE
-    DECIMALNUM
-    DEFAULT
-    DO
-    DOUBLENUM
-    ELSE
     ENUM
     EQEQUAL
-    FALSE
     FINALLY
-    FLOATNUM
-    FOR
-    FOREACH
     GEQ
     GT
-    HEXADECIMALNUM
     HOOKHOOK
     HOOKHOOKEQUAL
-    IF
-    IN
     INTERFACE
-    INTNUM
     IS
     LEQ
-    LSB
     LSHIFT
     LSHIFTEQUAL
     LT
@@ -47,7 +27,6 @@ Unused terminals:
     MINUSEQUAL
     NAMESPACE
     NOTEQUAL
-    NULL
     OUT
     OVERRIDE
     PARAMS
@@ -63,8 +42,6 @@ Unused terminals:
     PUBLIC
     READONLY
     REF
-    RETURN
-    RSB
     RSHIFT
     RSHIFTEQUAL
     SHORT
@@ -74,20 +51,15 @@ Unused terminals:
     STAR
     STAREQUAL
     STATIC
-    STRINGLITERAL
     STRUCT
-    SWITCH
-    THIS
     THROW
     TILDE
-    TRUE
     TRY
     TYPEOF
     UINT
     ULONG
     USHORT
     VOID
-    WHILE
 
 Grammar
 
@@ -157,6 +129,67 @@ Rule 62    pre_increment_exp -> PLUSPLUS unary_exp
 Rule 63    pre_decrement_exp -> MINUSMINUS unary_exp
 Rule 64    selection_statement -> if_statement
 Rule 65    selection_statement -> switch_statement
+Rule 66    if_statement -> IF LPAREN exp RPAREN embedded_statement
+Rule 67    if_statement -> IF LPAREN exp RPAREN embedded_statement ELSE embedded_statement
+Rule 68    switch_statement -> SWITCH LPAREN exp RPAREN LBRACE switch_body RBRACE
+Rule 69    switch_body -> switch_section
+Rule 70    switch_body -> switch_section switch_body
+Rule 71    switch_section -> switch_label statement_list
+Rule 72    switch_section -> switch_label switch_section
+Rule 73    switch_label -> CASE pattern COLON
+Rule 74    switch_label -> DEFAULT COLON
+Rule 75    pattern -> exp
+Rule 76    iteration_statement -> while_statement
+Rule 77    iteration_statement -> do_statement
+Rule 78    iteration_statement -> for_statement
+Rule 79    iteration_statement -> foreach_statement
+Rule 80    while_statement -> WHILE LPAREN exp RPAREN embedded_statement
+Rule 81    do_statement -> DO embedded_statement WHILE LPAREN exp RPAREN SEMI
+Rule 82    for_statement -> FOR LPAREN for_initializer SEMI for_condition SEMI for_iterator RPAREN embedded_statement
+Rule 83    for_statement -> FOR LPAREN for_initializer SEMI for_condition SEMI RPAREN embedded_statement
+Rule 84    for_statement -> FOR LPAREN for_initializer SEMI SEMI for_iterator RPAREN embedded_statement
+Rule 85    for_statement -> FOR LPAREN for_initializer SEMI SEMI RPAREN embedded_statement
+Rule 86    for_statement -> FOR LPAREN SEMI for_condition SEMI for_iterator RPAREN embedded_statement
+Rule 87    for_statement -> FOR LPAREN SEMI for_condition SEMI RPAREN embedded_statement
+Rule 88    for_statement -> FOR LPAREN SEMI SEMI for_iterator RPAREN embedded_statement
+Rule 89    for_statement -> FOR LPAREN SEMI SEMI RPAREN embedded_statement
+Rule 90    for_initializer -> var_declaration
+Rule 91    for_initializer -> var_declaration COMMA for_initializer
+Rule 92    for_condition -> exp
+Rule 93    for_iterator -> statement_exp_list
+Rule 94    statement_exp_list -> statement_exp
+Rule 95    statement_exp_list -> statement_exp COMMA statement_exp_list
+Rule 96    foreach_statement -> FOREACH LPAREN type ID IN exp RPAREN embedded_statement
+Rule 97    jump_statement -> break_statement
+Rule 98    jump_statement -> continue_statement
+Rule 99    jump_statement -> return_statement
+Rule 100   break_statement -> BREAK SEMI
+Rule 101   continue_statement -> CONTINUE SEMI
+Rule 102   return_statement -> RETURN SEMI
+Rule 103   return_statement -> RETURN exp SEMI
+Rule 104   arg_list -> exp
+Rule 105   arg_list -> exp COMMA arg_list
+Rule 106   primary_exp -> primary_no_array_creation_exp
+Rule 107   primary_no_array_creation_exp -> TRUE
+Rule 108   primary_no_array_creation_exp -> FALSE
+Rule 109   primary_no_array_creation_exp -> NULL
+Rule 110   primary_no_array_creation_exp -> INTNUM
+Rule 111   primary_no_array_creation_exp -> HEXADECIMALNUM
+Rule 112   primary_no_array_creation_exp -> BINARYNUM
+Rule 113   primary_no_array_creation_exp -> FLOATNUM
+Rule 114   primary_no_array_creation_exp -> DOUBLENUM
+Rule 115   primary_no_array_creation_exp -> DECIMALNUM
+Rule 116   primary_no_array_creation_exp -> CHARLITERAL
+Rule 117   primary_no_array_creation_exp -> STRINGLITERAL
+Rule 118   primary_no_array_creation_exp -> ID
+Rule 119   primary_no_array_creation_exp -> LPAREN exp RPAREN
+Rule 120   primary_no_array_creation_exp -> primary_exp DOT ID
+Rule 121   primary_no_array_creation_exp -> primary_exp LPAREN RPAREN
+Rule 122   primary_no_array_creation_exp -> primary_exp LPAREN arg_list RPAREN
+Rule 123   primary_no_array_creation_exp -> primary_no_array_creation_exp LSB exp RSB
+Rule 124   primary_no_array_creation_exp -> THIS
+Rule 125   primary_no_array_creation_exp -> post_increment_exp
+Rule 126   primary_no_array_creation_exp -> post_decrement_exp
 
 Terminals, with rules where they appear
 
@@ -164,54 +197,54 @@ AMPER                :
 AMPERAMPER           : 
 AMPEREQUAL           : 
 BANG                 : 
-BINARYNUM            : 
+BINARYNUM            : 112
 BOOL                 : 12
-BREAK                : 
-CASE                 : 
+BREAK                : 100
+CASE                 : 73
 CATCH                : 
 CHAR                 : 15
-CHARLITERAL          : 
+CHARLITERAL          : 116
 CIRCUMEQUAL          : 
 CIRCUMFLEX           : 
 CLASS                : 
-COLON                : 
-COMMA                : 25 34 38 58
+COLON                : 73 74
+COMMA                : 25 34 38 58 91 95 105
 CONST                : 32
-CONTINUE             : 
+CONTINUE             : 101
 DECIMAL              : 18
-DECIMALNUM           : 
-DEFAULT              : 
-DO                   : 
-DOT                  : 2
+DECIMALNUM           : 115
+DEFAULT              : 74
+DO                   : 81
+DOT                  : 2 120
 DOUBLE               : 17
-DOUBLENUM            : 
-ELSE                 : 
+DOUBLENUM            : 114
+ELSE                 : 67
 ENUM                 : 
 EQEQUAL              : 
 EQUAL                : 35 40 59
-FALSE                : 
+FALSE                : 108
 FINALLY              : 
 FLOAT                : 16
-FLOATNUM             : 
-FOR                  : 
-FOREACH              : 
+FLOATNUM             : 113
+FOR                  : 82 83 84 85 86 87 88 89
+FOREACH              : 96
 GEQ                  : 
 GT                   : 
-HEXADECIMALNUM       : 
+HEXADECIMALNUM       : 111
 HOOKHOOK             : 
 HOOKHOOKEQUAL        : 
-ID                   : 1 2 22 23 24 25 35 39 40 59
-IF                   : 
-IN                   : 
+ID                   : 1 2 22 23 24 25 35 39 40 59 96 118 120
+IF                   : 66 67
+IN                   : 96
 INT                  : 13
 INTERFACE            : 
-INTNUM               : 
+INTNUM               : 110
 IS                   : 
-LBRACE               : 47 48 55 56
+LBRACE               : 47 48 55 56 68
 LEQ                  : 
 LONG                 : 14
-LPAREN               : 22 23 51 52 53 54
-LSB                  : 
+LPAREN               : 22 23 51 52 53 54 66 67 68 80 81 82 83 84 85 86 87 88 89 96 119 121 122
+LSB                  : 123
 LSHIFT               : 
 LSHIFTEQUAL          : 
 LT                   : 
@@ -221,7 +254,7 @@ MINUSMINUS           : 61 63
 NAMESPACE            : 
 NEW                  : 51 52 53 54
 NOTEQUAL             : 
-NULL                 : 
+NULL                 : 109
 OBJECT               : 7
 OUT                  : 
 OVERRIDE             : 
@@ -237,15 +270,15 @@ PLUSPLUS             : 60 62
 PRIVATE              : 
 PROTECTED            : 
 PUBLIC               : 
-RBRACE               : 47 48 55 56
+RBRACE               : 47 48 55 56 68
 READONLY             : 
 REF                  : 
-RETURN               : 
-RPAREN               : 22 23 51 52 53 54
-RSB                  : 
+RETURN               : 102 103
+RPAREN               : 22 23 51 52 53 54 66 67 68 80 81 82 83 84 85 86 87 88 89 96 119 121 122
+RSB                  : 123
 RSHIFT               : 
 RSHIFTEQUAL          : 
-SEMI                 : 30 31 49 50
+SEMI                 : 30 31 49 50 81 82 82 83 83 84 84 85 85 86 86 87 87 88 88 89 89 100 101 102 103
 SHORT                : 
 SIZEOF               : 
 SLASH                : 
@@ -254,36 +287,44 @@ STAR                 :
 STAREQUAL            : 
 STATIC               : 
 STRING               : 8
-STRINGLITERAL        : 
+STRINGLITERAL        : 117
 STRUCT               : 
-SWITCH               : 
-THIS                 : 
+SWITCH               : 68
+THIS                 : 124
 THROW                : 
 TILDE                : 
-TRUE                 : 
+TRUE                 : 107
 TRY                  : 
 TYPEOF               : 
 UINT                 : 
 ULONG                : 
 USHORT               : 
 VOID                 : 
-WHILE                : 
+WHILE                : 80 81
 error                : 
 
 Nonterminals, with rules where they appear
 
-arg_list             : 53 54
+arg_list             : 53 54 105 122
 block                : 21 41
+break_statement      : 97
 class_type           : 3
 const_declaration    : 30
 const_declarator     : 33 34
 const_declarators    : 32 34
+continue_statement   : 98
 declaration_statement : 28
-embedded_statement   : 29
+do_statement         : 77
+embedded_statement   : 29 66 67 67 80 81 82 83 84 85 86 87 88 89 96
 empty_statement      : 42
-exp                  : 35 40 59
+exp                  : 35 40 59 66 67 68 75 80 81 92 96 103 104 105 119 123
 exp_statement        : 43
 floating_point_type  : 11
+for_condition        : 82 83 86 87
+for_initializer      : 82 83 84 85 91
+for_iterator         : 82 84 86 88
+for_statement        : 78
+foreach_statement    : 79
 func_declaration     : 19 20
 if_statement         : 64
 integral_type        : 10
@@ -295,23 +336,31 @@ member_initializer_list : 56 58
 object_creation_exp  : 
 object_initializer   : 52 54
 param_list           : 22 25
-post_decrement_exp   : 
-post_increment_exp   : 
+pattern              : 73
+post_decrement_exp   : 126
+post_increment_exp   : 125
 pre_decrement_exp    : 
 pre_increment_exp    : 
-primary_exp          : 60 61
+primary_exp          : 60 61 120 121 122
+primary_no_array_creation_exp : 106 123
 program              : 20
+return_statement     : 99
 selection_statement  : 44
 signature            : 21
 statement            : 26 27
-statement_exp        : 50
-statement_list       : 27 47
+statement_exp        : 50 94 95
+statement_exp_list   : 93 95
+statement_list       : 27 47 71
+switch_body          : 68 70
+switch_label         : 71 72
+switch_section       : 69 70 72
 switch_statement     : 65
-type                 : 22 23 24 25 32 36 51 52 53 54
+type                 : 22 23 24 25 32 36 51 52 53 54 96
 type_name            : 2 6 9 0
 unary_exp            : 62 63
 value_type           : 5
-var_declaration      : 31
+var_declaration      : 31 90 91
 var_declarator       : 37 38
 var_declarators      : 36 38
+while_statement      : 76
 

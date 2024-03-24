@@ -5,6 +5,14 @@ from lexer import *
 
 # fmt: off
 
+def p_program(p):
+    '''program : func_declaration
+               | func_declaration program'''
+    if len(p) == 3:
+        p[0] = [p[1]] + p[2]
+    else:
+        p[0] = [p[1]]
+
 def p_type_name(p):
     '''type_name : ID
                  | type_name DOT ID'''
@@ -73,14 +81,6 @@ def p_integral_type_double(p):
 def p_integral_type_decimal(p):
     '''floating_point_type : DECIMAL'''
     p[0] = sa.DecimalType(p[1])
-
-def p_program(p):
-    '''program : func_declaration
-               | func_declaration program'''
-    if len(p) == 3:
-        p[0] = [p[1]] + p[2]
-    else:
-        p[0] = [p[1]]
 
 def p_func_declaration(p):
     '''func_declaration : signature block'''
@@ -157,7 +157,7 @@ def p_var_declarators(p):
 def p_var_declarator(p):
     '''var_declarator : ID
                       | ID EQUAL exp'''
-    if (len(p) == 1):
+    if (len(p) == 2):
         p[0] = sa.VarDeclaratorId(p[1])
     else:
         p[0] = sa.VarDeclaratorIdExp(p[1], p[3])
@@ -494,13 +494,17 @@ def p_member_access_exp(p):
     '''primary_no_array_creation_exp : primary_exp DOT ID'''
     p[0] = sa.MemberAccessExp(p[1], p[3])
 
+def p_primary_invocation_exp(p):
+    '''primary_no_array_creation_exp : invocation_exp'''
+    p[0] = sa.PrimaryInvocationExp(p[1])
+
 def p_invocation_exp(p):
-    '''primary_no_array_creation_exp : primary_exp LPAREN RPAREN
-                                     | primary_exp LPAREN arg_list RPAREN'''
+    '''invocation_exp : primary_exp LPAREN RPAREN
+                      | primary_exp LPAREN arg_list RPAREN'''
     if (len(p) == 4):
-        p[0] = sa.InvocationExp(p[1], None)
+        p[0] = sa.InvocationExpConcrete(p[1], None)
     else:
-        p[0] = sa.InvocationExp(p[1], p[3])
+        p[0] = sa.InvocationExpConcrete(p[1], p[3])
 
 def p_element_access_exp(p):
     '''primary_no_array_creation_exp : primary_no_array_creation_exp LSB exp RSB'''
@@ -577,7 +581,7 @@ def p_conditional_exp(p):
     '''conditional_exp : conditional_or_exp HOOK exp COLON exp
                        | conditional_or_exp'''
     if (len(p) == 2):
-        p[0] = sa.ConditionalExpNext(p[2])
+        p[0] = sa.ConditionalExpNext(p[1])
     else:
         p[0] = sa.TernaryExp(p[1], p[3], p[5])
 
@@ -585,7 +589,7 @@ def p_conditional_or_exp(p):
     '''conditional_or_exp : conditional_or_exp PIPEPIPE conditional_and_exp
                           | conditional_and_exp'''
     if (len(p) == 2):
-        p[0] = sa.ConditionalOrExpNext(p[2])
+        p[0] = sa.ConditionalOrExpNext(p[1])
     else:
         p[0] = sa.ConditionalOrExpConcrete(p[1], p[3])
 
@@ -593,7 +597,7 @@ def p_conditional_and_exp(p):
     '''conditional_and_exp : conditional_and_exp AMPERAMPER inclusive_or_exp
                            | inclusive_or_exp'''
     if (len(p) == 2):
-        p[0] = sa.ConditionalAndExpNext(p[2])
+        p[0] = sa.ConditionalAndExpNext(p[1])
     else:
         p[0] = sa.ConditionalAndExpConcrete(p[1], p[3])
 
@@ -601,7 +605,7 @@ def p_inclusive_or_exp(p):
     '''inclusive_or_exp : inclusive_or_exp PIPE exclusive_or_exp
                         | exclusive_or_exp'''
     if (len(p) == 2):
-        p[0] = sa.InclusiveOrExpNext(p[2])
+        p[0] = sa.InclusiveOrExpNext(p[1])
     else:
         p[0] = sa.InclusiveOrExpConcrete(p[1], p[3])
 
@@ -609,7 +613,7 @@ def p_exclusive_or_exp(p):
     '''exclusive_or_exp : exclusive_or_exp CIRCUMFLEX and_exp
                         | and_exp'''
     if (len(p) == 2):
-        p[0] = sa.ExclusiveOrExpNext(p[2])
+        p[0] = sa.ExclusiveOrExpNext(p[1])
     else:
         p[0] = sa.ExclusiveOrExpConcrete(p[1], p[3])
 
@@ -617,7 +621,7 @@ def p_and_exp(p):
     '''and_exp : and_exp AMPER equality_exp
                | equality_exp'''
     if (len(p) == 2):
-        p[0] = sa.AndExpNext(p[2])
+        p[0] = sa.AndExpNext(p[1])
     else:
         p[0] = sa.AndExpConcrete(p[1], p[3])
 
@@ -626,7 +630,7 @@ def p_equality_exp(p):
                     | equality_exp NOTEQUAL relational_exp
                     | relational_exp'''
     if (len(p) == 2):
-        p[0] = sa.EqualityExpNext(p[2])
+        p[0] = sa.EqualityExpNext(p[1])
     elif (p[2] == '=='):
         p[0] = sa.EqualExp(p[1], p[3])
     elif (p[2] == '!='):
@@ -691,7 +695,8 @@ def p_multiplicative_exp(p):
 def p_assignment_simple(p):
     '''assignment : unary_exp EQUAL exp'''
     p[0] = sa.AssignExp(p[1], p[3])
-    
+
+
 
     
 
@@ -726,5 +731,7 @@ def p_error(p):
     print("Syntax error in input!")
 
 f = open("teste_parser.txt", "r")
+lexer = lex.lex()
+lexer.input(f.read())
 parser = yacc.yacc()
-result = parser.parse(input=f.read(), debug=True)
+result = parser.parse(debug=True)

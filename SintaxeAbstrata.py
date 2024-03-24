@@ -1322,7 +1322,21 @@ class MemberAccessExp(NoArrayCreationExp):
         visitor.visitMemberAccessExp(self)
 
 
-class InvocationExp(NoArrayCreationExp, StmtExp):
+class PrimaryInvocationExp(NoArrayCreationExp):
+    def __init__(self, invocation_exp):
+        self.invocation_exp = invocation_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryInvocationExp(self)
+
+
+class InvocationExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class InvocationExpConcrete(InvocationExp):
     def __init__(self, primary_exp, arg_list):
         self.primary_exp = primary_exp
         self.arg_list = arg_list  # Pode ser None

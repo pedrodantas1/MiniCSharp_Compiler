@@ -119,7 +119,7 @@ def t_DOUBLENUM(t):
 
 
 def t_INTNUM(t):
-    r'[+-]?\d+'
+    r'\d+'
     t.value = int(t.value)
     return t
 
@@ -159,10 +159,10 @@ def t_error(t):
 t_ignore = ' \t'
 
 
-# f = open("teste1.txt", "r")
-# lexer = lex.lex()
-# lexer.input(f.read())
-# t = lexer.token()
-# while t:
-# 	print(t)
-# 	t = lexer.token()
+f = open("teste2.txt", "r")
+lexer = lex.lex()
+lexer.input(f.read())
+t = lexer.token()
+while t:
+	print(t)
+	t = lexer.token()

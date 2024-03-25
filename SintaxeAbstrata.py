@@ -51,14 +51,6 @@ class TypeClass(Type):
         return visitor.visitTypeClass(self)
 
 
-class TypeInterface(Type):
-    def __init__(self, interface_type):
-        self.interface_type = interface_type
-
-    def accept(self, visitor):
-        return visitor.visitTypeInterface(self)
-
-
 class TypeValue(Type):
     def __init__(self, value_type):
         self.value_type = value_type
@@ -95,14 +87,6 @@ class StringClassType(ClassType):
 
     def accept(self, visitor):
         return visitor.visitStringClassType(self)
-
-
-class InterfaceType(Type):
-    def __init__(self, type_name):
-        self.type_name = type_name
-
-    def accept(self, visitor):
-        return visitor.visitInterfaceType(self)
 
 
 class ValueType(ABC):
@@ -1313,21 +1297,49 @@ class IdExp(NoArrayCreationExp):
         visitor.visitIdExp(self)
 
 
-class ParenthesizedExp(NoArrayCreationExp):
+class PrimaryParenthesizedExp(NoArrayCreationExp):
+    def __init__(self, parenthesized_exp):
+        self.parenthesized_exp = parenthesized_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryParenthesizedExp(self)
+
+
+class ParenthesizedExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ParenthesizedExpConcrete(ParenthesizedExp):
     def __init__(self, exp):
         self.exp = exp
 
     def accept(self, visitor):
-        visitor.visitParenthesizedExp(self)
+        visitor.visitParenthesizedExpConcrete(self)
 
 
-class MemberAccessExp(NoArrayCreationExp):
+class PrimaryMemberAccessExp(NoArrayCreationExp):
+    def __init__(self, member_access):
+        self.member_access = member_access
+
+    def accept(self, visitor):
+        visitor.visitPrimaryMemberAccessExp(self)
+
+
+class MemberAccessExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MemberAccessExpConcrete(MemberAccessExp):
     def __init__(self, primary_exp, id):
         self.primary_exp = primary_exp
         self.id = id
 
     def accept(self, visitor):
-        visitor.visitMemberAccessExp(self)
+        visitor.visitMemberAccessExpConcrete(self)
 
 
 class PrimaryInvocationExp(NoArrayCreationExp):
@@ -1353,7 +1365,21 @@ class InvocationExpConcrete(InvocationExp):
         visitor.visitInvocationExp(self)
 
 
-class ElementAccessExp(NoArrayCreationExp):
+class PrimaryElementAccessExp(NoArrayCreationExp):
+    def __init__(self, element_access):
+        self.element_access = element_access
+
+    def accept(self, visitor):
+        visitor.visitPrimaryElementAccessExp(self)
+
+
+class ElementAccessExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ElementAccessExpConcrete(ElementAccessExp):
     def __init__(self, no_array_creation_exp, exp):
         self.no_array_creation_exp = no_array_creation_exp
         self.exp = exp
@@ -1394,28 +1420,70 @@ class PrimaryObjectCreationExp(NoArrayCreationExp):
         visitor.visitPrimaryObjectCreationExp(self)
 
 
-class TypeofExp(NoArrayCreationExp):
+class PrimaryTypeofExp(NoArrayCreationExp):
+    def __init__(self, typeof_exp):
+        self.typeof_exp = typeof_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryTypeofExp(self)
+
+
+class TypeofExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class TypeofExpConcrete(TypeofExp):
     def __init__(self, type):
         self.type = type
 
     def accept(self, visitor):
-        visitor.visitTypeofExp(self)
+        visitor.visitTypeofExpConcrete(self)
 
 
-class SizeofExp(NoArrayCreationExp):
+class PrimarySizeofExp(NoArrayCreationExp):
+    def __init__(self, sizeof_exp):
+        self.sizeof_exp = sizeof_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimarySizeofExp(self)
+
+
+class SizeofExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SizeofExpConcrete(SizeofExp):
     def __init__(self, value_type):
         self.value_type = value_type
 
     def accept(self, visitor):
-        visitor.visitSizeofExp(self)
+        visitor.visitSizeofExpConcrete(self)
 
 
-class DefaultExp(NoArrayCreationExp):
+class PrimaryDefaultExp(NoArrayCreationExp):
+    def __init__(self, default_exp):
+        self.default_exp = default_exp
+
+    def accept(self, visitor):
+        visitor.visitPrimaryDefaultExp(self)
+
+
+class DefaultExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class DefaultExpConcrete(DefaultExp):
     def __init__(self, type):
         self.type = type
 
     def accept(self, visitor):
-        visitor.visitDefaultExp(self)
+        visitor.visitDefaultExpConcrete(self)
 
 
 class ExpList(ABC):
@@ -1479,7 +1547,21 @@ class UnaryPreDecrementExp(UnaryExp):
         visitor.visitUnaryPreDecrementExp(self)
 
 
-class CastExp(UnaryExp):
+class UnaryCastExp(UnaryExp):
+    def __init__(self, cast_exp):
+        self.cast_exp = cast_exp
+
+    def accept(self, visitor):
+        visitor.visitUnaryCastExp(self)
+
+
+class CastExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class CastExpConcrete(CastExp):
     def __init__(self, type, unary_exp):
         self.type = type
         self.unary_exp = unary_exp

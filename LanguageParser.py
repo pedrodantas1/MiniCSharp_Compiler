@@ -23,29 +23,22 @@ def p_type_name(p):
 
 def p_type(p):
     '''type : class_type
-            | interface_type
             | value_type'''
     if (isinstance(p[1], sa.ClassType)):
         p[0] = sa.TypeClass(p[1])
-    elif (isinstance(p[1], sa.InterfaceType)):
-        p[0] = sa.TypeInterface(p[1])
     elif (isinstance(p[1], sa.ValueType)):
         p[0] = sa.TypeValue(p[1])
 
 def p_class_type(p):
-    '''class_type : type_name
-                  | OBJECT
-                  | STRING'''
+    '''class_type : OBJECT
+                  | STRING
+                  | type_name'''
     if (isinstance(p[1], sa.TypeName)):
         p[0] = sa.GenericClassType(p[1])
     elif(p[1] == 'object'):
         p[0] = sa.ObjectClassType(p[1])
     elif(p[1] == 'string'):
         p[0] = sa.StringClassType(p[1])
-
-def p_interface_type(p):
-    '''interface_type : type_name'''
-    p[0] = sa.InterfaceType(p[1])
 
 def p_value_type(p):
     '''value_type : integral_type
@@ -229,7 +222,7 @@ def p_object_creation(p):
                            | NEW type LPAREN RPAREN object_initializer
                            | NEW type LPAREN arg_list RPAREN
                            | NEW type LPAREN arg_list RPAREN object_initializer'''
-    if (isinstance(len(p) == 5)):
+    if (len(p) == 5):
         p[0] = sa.NoArgsObjectCreation(p[2])
     elif (len(p) == 6):
         if (isinstance(p[5], sa.ObjectInitializer)):
@@ -489,13 +482,22 @@ def p_id_exp(p):
     '''primary_no_array_creation_exp : ID'''
     p[0] = sa.IdExp(p[1])
 
-def p_parent_exp(p):
-    '''primary_no_array_creation_exp : LPAREN exp RPAREN'''
-    p[0] = sa.ParenthesizedExp(p[2])
+# Mudar as camadas
+def p_primary_parenthesized_exp(p):
+    '''primary_no_array_creation_exp : parenthesized_exp'''
+    p[0] = sa.PrimaryParenthesizedExp(p[1])
 
-def p_member_access_exp(p):
-    '''primary_no_array_creation_exp : primary_exp DOT ID'''
-    p[0] = sa.MemberAccessExp(p[1], p[3])
+def p_parenthesized_exp(p):
+    '''parenthesized_exp : LPAREN exp RPAREN'''
+    p[0] = sa.ParenthesizedExpConcrete(p[2])
+
+# def p_primary_member_access_exp(p):
+#     '''primary_no_array_creation_exp : member_access'''
+#     p[0] = sa.PrimaryMemberAccessExp(p[1])
+
+# def p_member_access_exp(p):
+#     '''member_access : primary_exp DOT ID'''
+#     p[0] = sa.MemberAccessExpConcrete(p[1], p[3])
 
 def p_primary_invocation_exp(p):
     '''primary_no_array_creation_exp : invocation_exp'''
@@ -509,9 +511,13 @@ def p_invocation_exp(p):
     else:
         p[0] = sa.InvocationExpConcrete(p[1], p[3])
 
+def p_primary_element_access_exp(p):
+    '''primary_no_array_creation_exp : element_access'''
+    p[0] = sa.PrimaryElementAccessExp(p[1])
+
 def p_element_access_exp(p):
-    '''primary_no_array_creation_exp : primary_no_array_creation_exp LSB exp RSB'''
-    p[0] = sa.ElementAccessExp(p[1], p[3])
+    '''element_access : primary_no_array_creation_exp LSB exp RSB'''
+    p[0] = sa.ElementAccessExpConcrete(p[1], p[3])
 
 def p_this_exp(p):
     '''primary_no_array_creation_exp : THIS'''
@@ -531,18 +537,30 @@ def p_primary_post_decrement_exp(p):
 def p_primary_object_creation_exp(p):
     '''primary_no_array_creation_exp : object_creation_exp'''
     p[0] = sa.PrimaryObjectCreationExp(p[1])
+    
+def p_primary_typeof_exp(p):
+    '''primary_no_array_creation_exp : typeof_exp'''
+    p[0] = sa.PrimaryTypeofExp(p[1])
 
 def p_typeof_exp(p):
-    '''primary_no_array_creation_exp : TYPEOF LPAREN type RPAREN'''
-    p[0] = sa.TypeofExp(p[3])
+    '''typeof_exp : TYPEOF LPAREN type RPAREN'''
+    p[0] = sa.TypeofExpConcrete(p[3])
+
+def p_primary_sizeof_exp(p):
+    '''primary_no_array_creation_exp : sizeof_exp'''
+    p[0] = sa.PrimarySizeofExp(p[1])
 
 def p_sizeof_exp(p):
-    '''primary_no_array_creation_exp : SIZEOF LPAREN value_type RPAREN'''
-    p[0] = sa.SizeofExp(p[3])
+    '''sizeof_exp : SIZEOF LPAREN value_type RPAREN'''
+    p[0] = sa.SizeofExpConcrete(p[3])
+
+def p_primary_default_exp(p):
+    '''primary_no_array_creation_exp : default_exp'''
+    p[0] = sa.PrimaryDefaultExp(p[1])
 
 def p_default_exp(p):
-    '''primary_no_array_creation_exp : DEFAULT LPAREN type RPAREN'''
-    p[0] = sa.DefaultExp(p[3])
+    '''default_exp : DEFAULT LPAREN type RPAREN'''
+    p[0] = sa.DefaultExpConcrete(p[3])
 
 def p_exp_list(p):
     '''exp_list : exp
@@ -563,10 +581,14 @@ def p_unary_pre_increment_exp(p):
 def p_unary_pre_decrement_exp(p):
     '''unary_exp : pre_decrement_exp'''
     p[0] = sa.UnaryPreDecrementExp(p[1])
+    
+def p_unary_p_cast_exp(p):
+    '''unary_exp : cast_exp'''
+    p[0] = sa.UnaryCastExp(p[1])
 
 def p_cast_exp(p):
-    '''unary_exp : LPAREN type RPAREN unary_exp'''
-    p[0] = sa.CastExp(p[2], p[4])
+    '''cast_exp : LPAREN type RPAREN unary_exp'''
+    p[0] = sa.CastExpConcrete(p[2], p[4])
 
 def p_exp_non_assignment_exp(p):
     '''exp : non_assignment_exp'''
@@ -733,7 +755,7 @@ def p_assignment_simple(p):
 def p_error(p):
     print("Syntax error in input!")
 
-f = open("teste_parser.txt", "r")
+f = open("teste_parser.cs", "r")
 lexer = lex.lex()
 lexer.input(f.read())
 parser = yacc.yacc()

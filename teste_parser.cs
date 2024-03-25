@@ -1,3 +1,4 @@
+/*
 int func(){
     int a = 1;
     if (a == 1)
@@ -16,4 +17,13 @@ void func2(){
 
 void func3(int z, float x){
     return;
+}
+*/
+
+void func(){
+    // Cliente c1 = new Cliente("Pedro", 21);
+    // double valor = 2 * (8 -4 + (3 - 1));
+    int a = -1;
+    // --a = a++;
+    // int a,b,c;
 }

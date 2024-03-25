@@ -3,8 +3,7 @@
 type_name -> ID |
              type_name '.' ID
 
-type -> class_type | 
-        interface_type |
+type -> class_type |
         array_type |
         value_type
 
@@ -12,15 +11,12 @@ class_type -> type_name |
               OBJECT | 
               STRING
 
-interface_type -> type_name
-
 @
 array_type -> non_array_type rank_specifiers
 
 @
 non_array_type -> value_type |
-                  class_type |
-                  interface_type
+                  class_type
 
 @
 rank_specifier -> '[' ']'

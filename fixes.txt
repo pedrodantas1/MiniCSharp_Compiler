@@ -1,0 +1,9 @@
++ junto do numero da erro no parser: mudei o intnum no lexer e o erro mudou de figura
+
+verificar reduce/reduce do type_name -> ID
+
+conflito no else
+
+conflito no default
+
+conflito em declaracao de variavel composta

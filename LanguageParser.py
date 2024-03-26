@@ -13,13 +13,13 @@ def p_program(p):
     else:
         p[0] = [p[1]]
 
-def p_type_name(p):
-    '''type_name : ID
-                 | type_name DOT ID'''
-    if (len(p) == 2):
-        p[0] = sa.SingleTypeName(p[1])
-    else:
-        p[0] = sa.CompoundTypeName(p[1], p[3])
+# def p_type_name(p):
+#     '''type_name : ID
+#                  | type_name DOT ID'''
+#     if (len(p) == 2):
+#         p[0] = sa.SingleTypeName(p[1])
+#     else:
+#         p[0] = sa.CompoundTypeName(p[1], p[3])
 
 def p_type(p):
     '''type : class_type
@@ -31,8 +31,7 @@ def p_type(p):
 
 def p_class_type(p):
     '''class_type : OBJECT
-                  | STRING
-                  | type_name'''
+                  | STRING'''
     if (isinstance(p[1], sa.TypeName)):
         p[0] = sa.GenericClassType(p[1])
     elif(p[1] == 'object'):
@@ -277,8 +276,8 @@ def p_selection_statement(p):
         p[0] = sa.SelectionStmtSwitch(p[1])
 
 def p_if_statement(p):
-    '''if_statement : IF LPAREN exp RPAREN embedded_statement
-                    | IF LPAREN exp RPAREN embedded_statement ELSE embedded_statement'''
+    '''if_statement : IF LPAREN exp RPAREN block
+                    | IF LPAREN exp RPAREN block ELSE block'''
     if (len(p) == 6):
         p[0] = sa.SimpleIfStmt(p[3], p[5])
     else:
@@ -371,8 +370,7 @@ def p_for_statement_empty(p):
     p[0] = sa.ForStmtConcrete(None, None, None, p[5])
 
 def p_for_initializer(p):
-    '''for_initializer : var_declaration
-                       | var_declaration COMMA for_initializer'''
+    '''for_initializer : var_declaration'''
     if (len(p) == 2):
         p[0] = sa.SimpleForInitializer(p[1])
     else:
@@ -491,13 +489,13 @@ def p_parenthesized_exp(p):
     '''parenthesized_exp : LPAREN exp RPAREN'''
     p[0] = sa.ParenthesizedExpConcrete(p[2])
 
-# def p_primary_member_access_exp(p):
-#     '''primary_no_array_creation_exp : member_access'''
-#     p[0] = sa.PrimaryMemberAccessExp(p[1])
+def p_primary_member_access_exp(p):
+    '''primary_no_array_creation_exp : member_access'''
+    p[0] = sa.PrimaryMemberAccessExp(p[1])
 
-# def p_member_access_exp(p):
-#     '''member_access : primary_exp DOT ID'''
-#     p[0] = sa.MemberAccessExpConcrete(p[1], p[3])
+def p_member_access_exp(p):
+    '''member_access : primary_exp DOT ID'''
+    p[0] = sa.MemberAccessExpConcrete(p[1], p[3])
 
 def p_primary_invocation_exp(p):
     '''primary_no_array_creation_exp : invocation_exp'''
@@ -554,13 +552,13 @@ def p_sizeof_exp(p):
     '''sizeof_exp : SIZEOF LPAREN value_type RPAREN'''
     p[0] = sa.SizeofExpConcrete(p[3])
 
-def p_primary_default_exp(p):
-    '''primary_no_array_creation_exp : default_exp'''
-    p[0] = sa.PrimaryDefaultExp(p[1])
+# def p_primary_default_exp(p):
+#     '''primary_no_array_creation_exp : default_exp'''
+#     p[0] = sa.PrimaryDefaultExp(p[1])
 
-def p_default_exp(p):
-    '''default_exp : DEFAULT LPAREN type RPAREN'''
-    p[0] = sa.DefaultExpConcrete(p[3])
+# def p_default_exp(p):
+#     '''default_exp : DEFAULT LPAREN type RPAREN'''
+#     p[0] = sa.DefaultExpConcrete(p[3])
 
 def p_exp_list(p):
     '''exp_list : exp

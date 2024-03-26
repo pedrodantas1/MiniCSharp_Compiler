@@ -154,8 +154,7 @@ for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' 
                  FOR '(' ';' ';' ')' embedded_statement
 
 @ Analisar o conflito state 100 - COMMA
-for_initializer -> var_declaration |
-                   var_declaration ',' for_initializer
+for_initializer -> var_declaration
 
 for_condition -> exp
 

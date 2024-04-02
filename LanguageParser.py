@@ -480,7 +480,6 @@ def p_id_exp(p):
     '''primary_no_array_creation_exp : ID'''
     p[0] = sa.IdExp(p[1])
 
-# Mudar as camadas
 def p_primary_parenthesized_exp(p):
     '''primary_no_array_creation_exp : parenthesized_exp'''
     p[0] = sa.PrimaryParenthesizedExp(p[1])
@@ -551,14 +550,6 @@ def p_primary_sizeof_exp(p):
 def p_sizeof_exp(p):
     '''sizeof_exp : SIZEOF LPAREN value_type RPAREN'''
     p[0] = sa.SizeofExpConcrete(p[3])
-
-# def p_primary_default_exp(p):
-#     '''primary_no_array_creation_exp : default_exp'''
-#     p[0] = sa.PrimaryDefaultExp(p[1])
-
-# def p_default_exp(p):
-#     '''default_exp : DEFAULT LPAREN type RPAREN'''
-#     p[0] = sa.DefaultExpConcrete(p[3])
 
 def p_exp_list(p):
     '''exp_list : exp

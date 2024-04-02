@@ -116,8 +116,8 @@ pre_decrement_exp -> '--' unary_exp
 selection_statement -> if_statement |
                        switch_statement
 
-if_statement -> IF '(' exp ')' embedded_statement |
-                IF '(' exp ')' embedded_statement ELSE embedded_statement
+if_statement -> IF '(' exp ')' block |
+                IF '(' exp ')' block ELSE block
 
 switch_statement -> SWITCH '(' exp ')' '{' switch_body '}'
 
@@ -153,7 +153,6 @@ for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' 
                  FOR '(' ';' ';' for_iterator ')' embedded_statement |
                  FOR '(' ';' ';' ')' embedded_statement
 
-@ Analisar o conflito state 100 - COMMA
 for_initializer -> var_declaration
 
 for_condition -> exp
@@ -211,8 +210,6 @@ element_access -> primary_no_array_creation_exp '[' exp ']'
 typeof_exp -> TYPEOF '(' type ')'
 
 sizeof_exp -> SIZEOF '(' value_type ')'
-
-default_exp -> DEFAULT '(' type ')'
 
 exp_list -> exp |
             exp_list ',' exp

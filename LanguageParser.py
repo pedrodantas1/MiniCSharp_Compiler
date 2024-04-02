@@ -571,13 +571,29 @@ def p_unary_pre_decrement_exp(p):
     '''unary_exp : pre_decrement_exp'''
     p[0] = sa.UnaryPreDecrementExp(p[1])
     
-def p_unary_p_cast_exp(p):
+def p_unary_cast_exp(p):
     '''unary_exp : cast_exp'''
     p[0] = sa.UnaryCastExp(p[1])
 
 def p_cast_exp(p):
     '''cast_exp : LPAREN type RPAREN unary_exp'''
     p[0] = sa.CastExpConcrete(p[2], p[4])
+
+def p_unary_minus_exp(p):
+    '''unary_exp : minus_exp'''
+    p[0] = sa.UnaryMinusExp(p[1])
+
+def p_minus_exp(p):
+    '''minus_exp : MINUS unary_exp'''
+    p[0] = sa.MinusExpConcrete(p[2])
+
+def p_unary_plus_exp(p):
+    '''unary_exp : plus_exp'''
+    p[0] = sa.UnaryPlusExp(p[1])
+
+def p_plus_exp(p):
+    '''plus_exp : PLUS unary_exp'''
+    p[0] = sa.PlusExpConcrete(p[2])
 
 def p_exp_non_assignment_exp(p):
     '''exp : non_assignment_exp'''

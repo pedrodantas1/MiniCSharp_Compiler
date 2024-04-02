@@ -195,8 +195,7 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  post_decrement_exp |
                                  object_creation_exp |
                                  typeof_exp |
-                                 sizeof_exp |
-                                 default_exp
+                                 sizeof_exp
 
 parenthesized_exp -> '(' exp ')'
 
@@ -234,9 +233,15 @@ variable_initializer -> exp |
 unary_exp -> primary_exp |
              pre_increment_exp |
              pre_decrement_exp |
-             cast_exp
+             cast_exp |
+             minus_exp |
+             plus_exp
 
 cast_exp -> '(' type ')' unary_exp
+
+minus_exp -> '-' unary_exp
+
+plus_exp -> '+' unary_exp
 
 exp -> non_assignment_exp |
        assignment

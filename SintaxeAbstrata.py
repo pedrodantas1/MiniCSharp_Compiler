@@ -1567,7 +1567,51 @@ class CastExpConcrete(CastExp):
         self.unary_exp = unary_exp
 
     def accept(self, visitor):
-        visitor.visitCastExp(self)
+        visitor.visitCastExpConcrete(self)
+
+
+class UnaryMinusExp(UnaryExp):
+    def __init__(self, minus_exp):
+        self.minus_exp = minus_exp
+
+    def accept(self, visitor):
+        visitor.visitUnaryMinusExp(self)
+
+
+class MinusExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MinusExpConcrete(MinusExp):
+    def __init__(self, unary_exp):
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitMinusExpConcrete(self)
+
+
+class UnaryPlusExp(UnaryExp):
+    def __init__(self, plus_exp):
+        self.plus_exp = plus_exp
+
+    def accept(self, visitor):
+        visitor.visitPlusExpConcrete(self)
+
+
+class PlusExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class PlusExpConcrete(PlusExp):
+    def __init__(self, unary_exp):
+        self.unary_exp = unary_exp
+
+    def accept(self, visitor):
+        visitor.visitPlusExpConcrete(self)
 
 
 class Exp(ABC):

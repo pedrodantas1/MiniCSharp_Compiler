@@ -14,27 +14,27 @@ class UnaryExp(ABC):
         pass
 
 
-class TypeName(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
+# class TypeName(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
 
 
-class SingleTypeName(TypeName):
-    def __init__(self, id):
-        self.id = id
+# class SingleTypeName(TypeName):
+#     def __init__(self, id):
+#         self.id = id
 
-    def accept(self, visitor):
-        return visitor.visitSingleTypeName(self)
+#     def accept(self, visitor):
+#         return visitor.visitSingleTypeName(self)
 
 
-class CompoundTypeName(TypeName):
-    def __init__(self, type_name, id):
-        self.type_name = type_name
-        self.id = id
+# class CompoundTypeName(TypeName):
+#     def __init__(self, type_name, id):
+#         self.type_name = type_name
+#         self.id = id
 
-    def accept(self, visitor):
-        return visitor.visitCompoundTypeName(self)
+#     def accept(self, visitor):
+#         return visitor.visitCompoundTypeName(self)
 
 
 class Type(ABC):
@@ -65,12 +65,12 @@ class ClassType(ABC):
         pass
 
 
-class GenericClassType(ClassType):
-    def __init__(self, type_name):
-        self.type_name = type_name
+# class GenericClassType(ClassType):
+#     def __init__(self, type_name):
+#         self.type_name = type_name
 
-    def accept(self, visitor):
-        return visitor.visitGenericClassType(self)
+#     def accept(self, visitor):
+#         return visitor.visitGenericClassType(self)
 
 
 class ObjectClassType(ClassType):

@@ -82,7 +82,6 @@ class Visitor(AbstractVisitor):
     
     def visitSingleStatementList(self, singlestatementlist):
         singlestatementlist.stmt.accept(self)
-        print(singlestatementlist.stmt)
     
     def visitCompoundStatementList(self, compoundstatementlist):
         compoundstatementlist.stmt.accept(self)

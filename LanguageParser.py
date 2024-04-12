@@ -172,7 +172,7 @@ def p_embedded_stmt(p):
         p[0] = sa.EmbeddedStmtExp(p[1])
     elif (isinstance(p[1], sa.SelectionStmt)):
         p[0] = sa.EmbeddedStmtSelection(p[1])
-    elif (isinstance(p[1], sa.SelectionStmt)):
+    elif (isinstance(p[1], sa.IterationStmt)):
         p[0] = sa.EmbeddedStmtIteration(p[1])
     elif (isinstance(p[1], sa.JumpStmt)):
         p[0] = sa.EmbeddedStmtJump(p[1])
@@ -602,7 +602,7 @@ def p_exp_assignment_exp(p):
 
 def p_non_assignment_conditional_exp(p):
     '''non_assignment_exp : conditional_exp'''
-    p[0] = sa.NonAssignmentConditionalExp([1])
+    p[0] = sa.NonAssignmentConditionalExp(p[1])
 
 def p_conditional_exp(p):
     '''conditional_exp : conditional_or_exp HOOK exp COLON exp

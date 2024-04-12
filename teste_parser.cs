@@ -1,4 +1,3 @@
-
 // int func(){
 //     int a = 1;
 //     if (a == 1){
@@ -9,7 +8,6 @@
 //         return 12;
 //     }
 // }
-
 // void func2(){
 //     // int a = 0;
 //     for(int i=0; 5; 5++){
@@ -19,12 +17,9 @@
 //         return;
 //     }
 // }
-
 // void func3(int z, float x){
 //     return;
 // }
-
-
 void func(){
     while(cliente == true)
     {

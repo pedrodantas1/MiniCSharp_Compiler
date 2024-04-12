@@ -141,8 +141,10 @@ def t_ID(t):
 
 
 def t_comment(t):
-  r'(\/\/.*)|(\/\*(.|\n)*?\*\/)'
-  pass
+#   r'(\/\/.*)|(\/\*(.|\n)*?\*\/)'
+#   r'(\/\/)(.*?)(?=[\n\r])|(\/\*(.|\n)*?\*\/)'
+    r'(\/\/)(.*?)([\n\r])|(\/\/.*)|(\/\*(.|[\n\r])*?\*\/[\n\r]?)'
+    pass
 
 
 def t_newline(t):
@@ -162,7 +164,10 @@ t_ignore = ' \t'
 f = open("teste2.txt", "r")
 lexer = lex.lex()
 lexer.input(f.read())
-t = lexer.token()
-while t:
-	print(t)
-	t = lexer.token()
+# t = lexer.token()
+# while t:
+# 	print(t)
+# 	t = lexer.token()
+print('{:10s}{:10s}{:10s}{:10s}'.format("Token", "Lexema", "Linha", "Coluna"))
+for tok in lexer:
+    print('{:10s}{:10s}{:10s}{:10s}'.format(tok.type, tok.value, str(tok.lineno), str(tok.lexpos)))

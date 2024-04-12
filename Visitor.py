@@ -164,7 +164,7 @@ class Visitor(AbstractVisitor):
         if blockstmt.stmt_list != None:
             blockstmt.stmt_list.accept(self)
         tab = tab - 4
-        myprint(blank(), "} ")
+        myprint(blank(), "}\n")
     
     def visitEmptyStmtConcrete(self, emptystmt):
         myprint(";")
@@ -347,6 +347,65 @@ class Visitor(AbstractVisitor):
             forstmt.for_iterator.accept(self)
         myprint(")")
         forstmt.block.accept(self)
+    
+    def visitSimpleForInitializer(self, simpleforinitializer):
+        simpleforinitializer.var_declaration.accept(self)
+    
+    def visitForConditionConcrete(self, forcondition):
+        forcondition.exp.accept(self)
+    
+    def visitForIteratorConcrete(self, foriterator):
+        foriterator.stmt_exp_list.accept(self)
+    
+    def visitSimpleStmtExpList(self, simplestmtexplist):
+        simplestmtexplist.exp_stmt.accept(self)
+    
+    def visitCompoundStmtExpList(self, compoundstmtexplist):
+        compoundstmtexplist.exp_stmt.accept(self)
+        myprint(", ")
+        compoundstmtexplist.stmt_exp_list.accept(self)
+    
+    def visitForeachStmtConcrete(self, foreachstmt):
+        myprint(blank(), "foreach (")
+        myprint(foreachstmt.type, " ", foreachstmt.id, " in ")
+        foreachstmt.exp.accept(self)
+        myprint(")")
+        foreachstmt.block.accept(self)
+    
+    def visitJumpStmtBreak(self, jumpstmtbreak):
+        jumpstmtbreak.break_stmt.accept(self)
+    
+    def visitJumpStmtContinue(self, jumpstmtcontinue):
+        jumpstmtcontinue.continue_stmt.accept(self)
+    
+    def visitJumpStmtReturn(self, jumpstmtreturn):
+        jumpstmtreturn.return_stmt.accept(self)
+    
+    def visitBreakStmtConcrete(self, breakstmt):
+        myprint(blank(), "break;")
+    
+    def visitContinueStmtConcrete(self, continuestmt):
+        myprint(blank(), "continue;")
+    
+    def visitReturnStmtConcrete(self, returnstmt):
+        myprint(blank(), "return")
+        if returnstmt.exp != None:
+            returnstmt.exp.accept(self)
+        myprint(";")
+    
+    def visitSimpleArgList(self, simplearglist):
+        simplearglist.exp.accept(self)
+    
+    def visitCompoundArgList(self, compoundarglist):
+        compoundarglist.exp.accept(self)
+        myprint(", ")
+        compoundarglist.arg_list.accept(self)
+    
+    def visitPrimaryExpNoArrayCreation(self, primaryexp):
+        primaryexp.no_array_creation_exp.accept(self)
+    
+    def visitBooleanExp(self, booleanexp):
+        myprint(booleanexp.bool_value)
     
     
         

@@ -175,7 +175,7 @@ arg_list -> exp |
             exp ',' arg_list
 
 primary_exp -> primary_no_array_creation_exp |
-               array_creation_exp
+               @ array_creation_exp
 
 primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  INTNUM | HEXADECIMALNUM| BINARYNUM | 

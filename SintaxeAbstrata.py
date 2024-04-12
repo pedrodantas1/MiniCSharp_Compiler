@@ -993,15 +993,6 @@ class SimpleForInitializer(ForInitializer):
         visitor.visitSimpleForInitializer(self)
 
 
-class CompoundForInitializer(ForInitializer):
-    def __init__(self, var_declaration, for_initializer):
-        self.var_declaration = var_declaration
-        self.for_initializer = for_initializer
-
-    def accept(self, visitor):
-        visitor.visitCompoundForInitializer(self)
-
-
 class ForCondition(ABC):
     @abstractmethod
     def accept(self, visitor):

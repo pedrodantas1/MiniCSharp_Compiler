@@ -371,10 +371,7 @@ def p_for_statement_empty(p):
 
 def p_for_initializer(p):
     '''for_initializer : var_declaration'''
-    if (len(p) == 2):
-        p[0] = sa.SimpleForInitializer(p[1])
-    else:
-        p[0] = sa.CompoundForInitializer(p[1], p[3])
+    p[0] = sa.SimpleForInitializer(p[1])
 
 def p_for_condition(p):
     '''for_condition : exp'''

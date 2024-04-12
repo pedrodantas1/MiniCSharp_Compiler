@@ -344,10 +344,6 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitCompoundForInitializer(self, compoundforinitializer):
-        pass
-
-    @abstractmethod
     def visitForConditionConcrete(self, forcondition):
         pass
 
@@ -400,12 +396,12 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPrimaryExpNoArrayCreation(self, primaryexpnoarraycreation):
+    def visitPrimaryExpNoArrayCreation(self, primaryexp):
         pass
 
-    @abstractmethod
-    def visitPrimaryExpArrayCreation(self, primaryexparraycreation):
-        pass
+    # @abstractmethod
+    # def visitPrimaryExpArrayCreation(self, primaryexp):
+    #     pass
 
     @abstractmethod
     def visitBooleanExp(self, booleanexp):

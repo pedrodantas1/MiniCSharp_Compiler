@@ -97,8 +97,7 @@ object_creation_exp -> NEW type '(' ')' |
                        NEW type '(' arg_list ')' |
                        NEW type '(' arg_list ')' object_initializer
 
-object_initializer -> '{' '}' |
-                      '{' member_initializer_list '}'
+object_initializer -> '{' member_initializer_list '}'
 
 member_initializer_list -> member_initializer |
                            member_initializer ',' member_initializer_list

@@ -147,9 +147,9 @@ class AbstractVisitor(ABC):
     def visitVarDeclaratorIdExp(self, vardeclaratoridexp):
         pass
 
-    @abstractmethod
-    def visitVarDeclaratorIdArray(self, vardeclaratoridarray):
-        pass
+    # @abstractmethod
+    # def visitVarDeclaratorIdArray(self, vardeclaratoridarray):
+    #     pass
 
     @abstractmethod
     def visitEmbeddedStmtBlock(self, embeddedstmtblock):
@@ -216,13 +216,11 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitNoArgsObjectCreation(self, noargsobjectcreation):
+    def visitNoArgsObjectCreation(self, objectcreation):
         pass
 
     @abstractmethod
-    def visitNoArgsWithInitializerObjectCreation(
-        self, noargswithinitializerobjectcreation
-    ):
+    def visitNoArgsWithInitializerObjectCreation(self, objectcreation):
         pass
 
     @abstractmethod
@@ -230,7 +228,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitWithInitializerObjectCreation(self, withinitializerobjectcreation):
+    def visitWithInitializerObjectCreation(self, objectcreation):
         pass
 
     @abstractmethod
@@ -238,11 +236,11 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitSingleMemberInitializerList(self, singlememberinitializerlist):
+    def visitSingleMemberInitializerList(self, memberinitializerlist):
         pass
 
     @abstractmethod
-    def visitCompoundMemberInitializerList(self, compoundmemberinitializerlist):
+    def visitCompoundMemberInitializerList(self, memberinitializerlist):
         pass
 
     @abstractmethod

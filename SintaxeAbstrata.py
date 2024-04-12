@@ -309,7 +309,7 @@ class DeclarationStmtVar(DeclarationStatement):
         self.var_declaration = var_declaration
 
     def accept(self, visitor):
-        visitor.visitDeclarationVar(self)
+        visitor.visitDeclarationStmtVar(self)
 
 
 class ConstDeclaration(ABC):

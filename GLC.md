@@ -200,6 +200,7 @@ member_access -> primary_exp '.' ID
 invocation_exp -> primary_exp '(' ')' |
                   primary_exp '(' arg_list ')'
 
+@
 element_access -> primary_no_array_creation_exp '[' exp ']'
 
 typeof_exp -> TYPEOF '(' type ')'

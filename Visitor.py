@@ -82,6 +82,7 @@ class Visitor(AbstractVisitor):
     
     def visitSingleStatementList(self, singlestatementlist):
         singlestatementlist.stmt.accept(self)
+        print(singlestatementlist.stmt)
     
     def visitCompoundStatementList(self, compoundstatementlist):
         compoundstatementlist.stmt.accept(self)
@@ -97,7 +98,7 @@ class Visitor(AbstractVisitor):
         declarationstmtconst.const_declaration.accept(self)
         myprint(";")
     
-    def visitvisitDeclarationStmtVar(self, declarationstmtvar):
+    def visitDeclarationStmtVar(self, declarationstmtvar):
         declarationstmtvar.var_declaration.accept(self)
         myprint(";")
     
@@ -407,42 +408,279 @@ class Visitor(AbstractVisitor):
     def visitBooleanExp(self, booleanexp):
         myprint(booleanexp.bool_value)
     
+    def visitNullExp(self, nullexp):
+        myprint(nullexp.null_value)
     
-        
+    def visitIntNumExp(self, intnumexp):
+        myprint(intnumexp.int_value)
     
-    
-    
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-        
-        
-    
-    
-        
+    def visitHexNumExp(self, hexnumexp):
+        myprint(hexnumexp.hex_value)
 
+    def visitBinNumExp(self, binnumexp):
+        myprint(binnumexp.bin_value)
+    
+    def visitFloatNumExp(self, floatnumexp):
+        myprint(floatnumexp.float_value)
+    
+    def visitDoubleNumExp(self, doublenumexp):
+        myprint(doublenumexp.double_value)
+    
+    def visitDecimalNumExp(self, decimalnumexp):
+        myprint(decimalnumexp.decimal_value)
+    
+    def visitCharExp(self, charexp):
+        myprint(charexp.char_literal)
+    
+    def visitStringExp(self, stringexp):
+        myprint(stringexp.string_literal)
+    
+    def visitIdExp(self, idexp):
+        myprint(idexp.id)
+    
+    def visitPrimaryParenthesizedExp(self, parenthesizedexp):
+        parenthesizedexp.parenthesized_exp.accept(self)
+    
+    def visitParenthesizedExpConcrete(self, parenthesizedexp):
+        myprint("(")
+        parenthesizedexp.exp.accept(self)
+        myprint(")")
+    
+    def visitPrimaryMemberAccessExp(self, memberaccessexp):
+        memberaccessexp.member_access.accept(self)
+    
+    def visitMemberAccessExpConcrete(self, memberaccessexp):
+        memberaccessexp.primary_exp.accept(self)
+        myprint(".")
+        myprint(memberaccessexp.id)
+    
+    def visitPrimaryInvocationExp(self, invocationexp):
+        invocationexp.invocation_exp.accept(self)
+    
+    def visitInvocationExpConcrete(self, invocationexp):
+        invocationexp.primary_exp.accept(self)
+        myprint("(")
+        if invocationexp.arg_list != None:
+            invocationexp.arg_list.accept(self)
+        myprint(")")
+    
+    # def visitPrimaryElementAccessExp(self, elementaccessexp):
+    #     elementaccessexp.element_access.accept(self)
+    
+    # def visitElementAccessExpConcrete(self, elementaccessexp):
+    #     elementaccessexp.no_array_creation_exp.accept(self)
+    #     myprint("[")
+    #     elementaccessexp.exp.accept(self)
+    #     myprint("]")
+    
+    def visitThisExp(self, thisexp):
+        myprint("this")
+    
+    def visitPrimaryPostIncrementExp(self, postincrementexp):
+        postincrementexp.post_increment_exp.accept(self)
+    
+    def visitPrimaryPostDecrementExp(self, postdecrementexp):
+        postdecrementexp.post_decrement_exp.accept(self)
+    
+    def visitPrimaryObjectCreationExp(self, objectcreationexp):
+        objectcreationexp.object_creation_exp.accept(self)
+    
+    def visitPrimaryTypeofExp(self, typeofexp):
+        typeofexp.typeof_exp.accept(self)
+    
+    def visitTypeofExpConcrete(self, typeofexp):
+        myprint("typeof(")
+        typeofexp.type.accept(self)
+        myprint(")")
+    
+    def visitPrimarySizeofExp(self, sizeofexp):
+        sizeofexp.sizeof_exp.accept(self)
+    
+    def visitSizeofExpConcrete(self, sizeofexp):
+        myprint("sizeof(")
+        sizeofexp.value_type.accept(self)
+        myprint(")")
+    
+    def visitUnaryPrimaryExp(self, unaryprimaryexp):
+        unaryprimaryexp.primary_exp.accept(self)
+    
+    def visitUnaryPreIncrementExp(self, unarypreincrementexp):
+        unarypreincrementexp.pre_increment_exp.accept(self)
 
+    def visitUnaryPreDecrementExp(self, unarypredecrementexp):
+        unarypredecrementexp.pre_decrement_exp.accept(self)
 
+    def visitUnaryCastExp(self, unarycastexp):
+        unarycastexp.cast_exp.accept(self)
 
+    def visitCastExpConcrete(self, castexp):
+        myprint("(")
+        castexp.type.accept(self)
+        myprint(")")
+        castexp.unary_exp.accept(self)
 
+    def visitUnaryMinusExp(self, unaryminusexp):
+        unaryminusexp.minus_exp.accept(self)
 
+    def visitMinusExpConcrete(self, minusexp):
+        myprint("-")
+        minusexp.unary_exp.accept(self)
 
+    def visitUnaryPlusExp(self, unaryplusexp):
+        unaryplusexp.plus_exp.accept(self)
 
+    def visitPlusExpConcrete(self, plusexp):
+        myprint("+")
+        plusexp.unary_exp.accept(self)
+    
+    def visitExpNonAssignment(self, expnonassignment):
+        expnonassignment.non_assignment_exp.accept(self)
 
+    def visitExpAssignment(self, expassignment):
+        expassignment.assignment.accept(self)
+    
+    def visitNonAssignmentConditionalExp(self, conditionalexp):
+        conditionalexp.conditional_exp.accept(self)
 
+    def visitTernaryExp(self, ternaryexp):
+        ternaryexp.conditional_or_exp.accept(self)
+        myprint(" ? ")
+        ternaryexp.exp1.accept(self)
+        myprint(" : ")
+        ternaryexp.exp2.accept(self)
 
+    def visitConditionalExpNext(self, conditionalexpnext):
+        conditionalexpnext.conditional_or_exp.accept(self)
 
-        
-        
+    def visitConditionalOrExpConcrete(self, conditionalorexp):
+        conditionalorexp.conditional_or_exp.accept(self)
+        myprint(" || ")
+        conditionalorexp.conditional_and_exp.accept(self)
 
+    def visitConditionalOrExpNext(self, conditionalorexpnext):
+        conditionalorexpnext.conditional_and_exp.accept(self)
+
+    def visitConditionalAndExpConcrete(self, conditionalandexp):
+        conditionalandexp.conditional_and_exp.accept(self)
+        myprint(" && ")
+        conditionalandexp.inclusive_or_exp.accept(self)
+
+    def visitConditionalAndExpNext(self, conditionalandexpnext):
+        conditionalandexpnext.inclusive_or_exp.accept(self)
+    
+    def visitInclusiveOrExpConcrete(self, inclusiveorexp):
+        inclusiveorexp.inclusive_or_exp.accept(self)
+        myprint(" | ")
+        inclusiveorexp.exclusive_or_exp.accept(self)
+
+    def visitInclusiveOrExpNext(self, inclusiveorexpnext):
+        inclusiveorexpnext.exclusive_or_exp.accept(self)
+
+    def visitExclusiveOrExpConcrete(self, exclusiveorexp):
+        exclusiveorexp.exclusive_or_exp.accept(self)
+        myprint(" ^ ")
+        exclusiveorexp.and_exp.accept(self)
+
+    def visitExclusiveOrExpNext(self, exclusiveorexpnext):
+        exclusiveorexpnext.and_exp.accept(self)
+    
+    def visitAndExpConcrete(self, andexp):
+        andexp.and_exp.accept(self)
+        myprint(" & ")
+        andexp.equality_exp.accept(self)
+
+    def visitAndExpNext(self, andexpnext):
+        andexpnext.equality_exp.accept(self)
+
+    def visitEqualExp(self, equalexp):
+        equalexp.equality_exp.accept(self)
+        myprint(" != ")
+        equalexp.relational_exp.accept(self)
+
+    def visitNotEqualExp(self, notequalexp):
+        notequalexp.equality_exp.accept(self)
+        myprint(" == ")
+        notequalexp.relational_exp.accept(self)
+
+    def visitEqualityExpNext(self, equalityexpnext):
+        equalityexpnext.relational_exp.accept(self)
+
+    def visitLessExp(self, lessexp):
+        lessexp.relational_exp.accept(self)
+        myprint(" < ")
+        lessexp.shift_exp.accept(self)
+
+    def visitGreaterExp(self, greaterexp):
+        greaterexp.relational_exp.accept(self)
+        myprint(" > ")
+        greaterexp.shift_exp.accept(self)
+
+    def visitLessEqualExp(self, lessequalexp):
+        lessequalexp.relational_exp.accept(self)
+        myprint(" <= ")
+        lessequalexp.shift_exp.accept(self)
+
+    def visitGreaterEqualExp(self, greaterequalexp):
+        greaterequalexp.relational_exp.accept(self)
+        myprint(" >= ")
+        greaterequalexp.shift_exp.accept(self)
+
+    def visitIsTypeExp(self, istypeexp):
+        istypeexp.relational_exp.accept(self)
+        myprint(" is ")
+        istypeexp.type.accept(self)
+    
+    def visitRelationalExpNext(self, relationalexpnext):
+        relationalexpnext.shift_exp.accept(self)
+    
+    def visitLeftShiftExp(self, leftshiftexp):
+        leftshiftexp.shift_exp.accept(self)
+        myprint(" << ")
+        leftshiftexp.additive_exp.accept(self)
+
+    def visitRightShiftExp(self, rightshiftexp):
+        rightshiftexp.shift_exp.accept(self)
+        myprint(" >> ")
+        rightshiftexp.additive_exp.accept(self)
+
+    def visitShiftExpNext(self, shiftexpnext):
+        shiftexpnext.additive_exp.accept(self)
+
+    def visitSumExp(self, sumexp):
+        sumexp.additive_exp.accept(self)
+        myprint(" + ")
+        sumexp.multiplicative_exp.accept(self)
+
+    def visitSubExp(self, subexp):
+        subexp.additive_exp.accept(self)
+        myprint(" - ")
+        subexp.multiplicative_exp.accept(self)
+
+    def visitAdditiveExpNext(self, additiveexpnext):
+        additiveexpnext.multiplicative_exp.accept(self)
+
+    def visitMultExp(self, multexp):
+        multexp.multiplicative_exp.accept(self)
+        myprint(" * ")
+        multexp.unary_exp.accept(self)
+
+    def visitDivExp(self, divexp):
+        divexp.multiplicative_exp.accept(self)
+        myprint(" / ")
+        divexp.unary_exp.accept(self)
+
+    def visitModExp(self, modexp):
+        modexp.multiplicative_exp.accept(self)
+        myprint(" % ")
+        modexp.unary_exp.accept(self)
+
+    def visitMultiplicativeExpNext(self, multiplicativeexpnext):
+        multiplicativeexpnext.unary_exp.accept(self)
+    
+    def visitAssignExp(self, assignexp):
+        assignexp.unary_exp.accept(self)
+        myprint(" = ") # Por enquanto atribuição simples apenas
+        assignexp.exp.accept(self)
 
 
 def main():

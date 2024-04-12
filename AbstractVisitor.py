@@ -108,7 +108,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitDeclarationVar(self, declarationvar):
+    def visitDeclarationStmtVar(self, declarationstmtvar):
         pass
 
     @abstractmethod
@@ -448,7 +448,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPrimaryParenthesizedExp(self, primaryparenthesizedexp):
+    def visitPrimaryParenthesizedExp(self, parenthesizedexp):
         pass
 
     @abstractmethod
@@ -456,7 +456,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPrimaryMemberAccessExp(self, primarymemberaccessexp):
+    def visitPrimaryMemberAccessExp(self, memberaccessexp):
         pass
 
     @abstractmethod
@@ -464,39 +464,39 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPrimaryInvocationExp(self, primaryinvocationexp):
+    def visitPrimaryInvocationExp(self, invocationexp):
         pass
 
     @abstractmethod
-    def visitInvocationExp(self, invocationexp):
+    def visitInvocationExpConcrete(self, invocationexp):
         pass
 
-    @abstractmethod
-    def visitPrimaryElementAccessExp(self, primaryelementaccessexp):
-        pass
+    # @abstractmethod
+    # def visitPrimaryElementAccessExp(self, elementaccessexp):
+    #     pass
 
-    @abstractmethod
-    def visitElementAccessExp(self, elementaccessexp):
-        pass
+    # @abstractmethod
+    # def visitElementAccessExpConcrete(self, elementaccessexp):
+    #     pass
 
     @abstractmethod
     def visitThisExp(self, thisexp):
         pass
 
     @abstractmethod
-    def visitPrimaryPostIncrementExp(self, primarypostincrementexp):
+    def visitPrimaryPostIncrementExp(self, postincrementexp):
         pass
 
     @abstractmethod
-    def visitPrimaryPostDecrementExp(self, primarypostdecrementexp):
+    def visitPrimaryPostDecrementExp(self, postdecrementexp):
         pass
 
     @abstractmethod
-    def visitPrimaryObjectCreationExp(self, primaryobjectcreationexp):
+    def visitPrimaryObjectCreationExp(self, objectcreationexp):
         pass
 
     @abstractmethod
-    def visitPrimaryTypeofExp(self, primarytypeofexp):
+    def visitPrimaryTypeofExp(self, typeofexp):
         pass
 
     @abstractmethod
@@ -504,32 +504,24 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPrimarySizeofExp(self, primarysizeofexp):
+    def visitPrimarySizeofExp(self, sizeofexp):
         pass
 
     @abstractmethod
     def visitSizeofExpConcrete(self, sizeofexp):
         pass
 
-    @abstractmethod
-    def visitPrimaryDefaultExp(self, primarydefaultexp):
-        pass
+    # @abstractmethod
+    # def visitSingleExpList(self, singleexplist):
+    #     pass
 
-    @abstractmethod
-    def visitDefaultExpConcrete(self, defaultexp):
-        pass
+    # @abstractmethod
+    # def visitCompoundExpList(self, compoundexplist):
+    #     pass
 
-    @abstractmethod
-    def visitSingleExpList(self, singleexplist):
-        pass
-
-    @abstractmethod
-    def visitCompoundExpList(self, compoundexplist):
-        pass
-
-    @abstractmethod
-    def visitSingleExpList(self, singleexplist):
-        pass
+    # @abstractmethod
+    # def visitArrayCreationExp(self, arraycreationexp):
+    #     pass
 
     @abstractmethod
     def visitUnaryPrimaryExp(self, unaryprimaryexp):
@@ -560,7 +552,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPlusExpConcrete(self, plusexp):
+    def visitUnaryPlusExp(self, unaryplusexp):
         pass
 
     @abstractmethod
@@ -576,7 +568,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitNonAssignmentConditionalExp(self, nonassignmentconditionalexp):
+    def visitNonAssignmentConditionalExp(self, conditionalexp):
         pass
 
     @abstractmethod

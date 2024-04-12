@@ -1339,7 +1339,7 @@ class InvocationExpConcrete(InvocationExp):
         self.arg_list = arg_list  # Pode ser None
 
     def accept(self, visitor):
-        visitor.visitInvocationExp(self)
+        visitor.visitInvocationExpConcrete(self)
 
 
 class PrimaryElementAccessExp(NoArrayCreationExp):
@@ -1362,7 +1362,7 @@ class ElementAccessExpConcrete(ElementAccessExp):
         self.exp = exp
 
     def accept(self, visitor):
-        visitor.visitElementAccessExp(self)
+        visitor.visitElementAccessExpConcrete(self)
 
 
 class ThisExp(NoArrayCreationExp):
@@ -1449,20 +1449,6 @@ class PrimaryDefaultExp(NoArrayCreationExp):
         visitor.visitPrimaryDefaultExp(self)
 
 
-class DefaultExp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class DefaultExpConcrete(DefaultExp):
-    def __init__(self, type):
-        self.type = type
-
-    def accept(self, visitor):
-        visitor.visitDefaultExpConcrete(self)
-
-
 class ExpList(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -1497,7 +1483,7 @@ class CompoundExpList(ExpList):
 #         self.exp = exp
 
 #     def accept(self, visitor):
-#         visitor.visitSingleExpList(self)
+#         visitor.visitArrayCreationExp(self)
 
 
 class UnaryPrimaryExp(UnaryExp):
@@ -1574,7 +1560,7 @@ class UnaryPlusExp(UnaryExp):
         self.plus_exp = plus_exp
 
     def accept(self, visitor):
-        visitor.visitPlusExpConcrete(self)
+        visitor.visitUnaryPlusExp(self)
 
 
 class PlusExp(ABC):

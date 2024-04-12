@@ -284,10 +284,6 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitSwitchBlockConcrete(self, switchblock):
-        pass
-
-    @abstractmethod
     def visitSimpleSwitchBody(self, simpleswitchbody):
         pass
 

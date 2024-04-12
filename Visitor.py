@@ -259,6 +259,102 @@ class Visitor(AbstractVisitor):
     def visitSelectionStmtSwitch(self, selectionstmtswitch):
         selectionstmtswitch.switch_statement.accept(self)
     
+    def visitSimpleIfStmt(self, simpleifstmt):
+        myprint(blank(), "if (")
+        simpleifstmt.exp.accept(self)
+        myprint(")")
+        simpleifstmt.block.accept(self)
+    
+    def visitIfElseStmt(self, ifelsestmt):
+        myprint(blank(), "if (")
+        ifelsestmt.exp.accept(self)
+        myprint(")")
+        ifelsestmt.block1.accept(self)
+        myprint("else")
+        ifelsestmt.block2.accept(self)
+    
+    def visitSwitchStmtConcrete(self, switchstmt):
+        global tab
+        myprint(blank(), "switch (")
+        switchstmt.exp.accept(self)
+        myprint(")\n")
+        myprint(blank(), "{")
+        tab = tab + 4
+        switchstmt.switch_body.accept(self)
+        tab = tab - 4
+        myprint(blank(), "}")
+    
+    def visitSimpleSwitchBody(self, simpleswitchbody):
+        simpleswitchbody.switch_section.accept(self)
+    
+    def visitCompoundSwitchBody(self, compoundswitchbody):
+        compoundswitchbody.switch_section.accept(self)
+        compoundswitchbody.switch_body.accept(self)
+    
+    def visitSimpleSwitchSection(self, simpleswitchsection):
+        simpleswitchsection.switch_label.accept(self)
+        simpleswitchsection.stmt_list.accept(self)
+    
+    def visitCompoundSwitchSection(self, compoundswitchsection):
+        compoundswitchsection.switch_label.accept(self)
+        compoundswitchsection.switch_section.accept(self)
+    
+    def visitSwitchLabelCase(self, switchlabelcase):
+        myprint(blank(), "case ")
+        switchlabelcase.pattern.accept(self)
+        myprint(" :\n")
+    
+    def visitSwitchLabelDefault(self, switchlabeldefault):
+        myprint(blank(), "default :\n")
+    
+    def visitPatternConcrete(self, pattern):
+        pattern.exp.accept(self)
+    
+    def visitIterationStmtWhile(self, iterationstmtwhile):
+        iterationstmtwhile.while_statement.accept(self)
+    
+    def visitIterationStmtDo(self, iterationstmtdo):
+        iterationstmtdo.do_statement.accept(self)
+    
+    def visitIterationStmtFor(self, iterationstmtfor):
+        iterationstmtfor.for_statement.accept(self)
+    
+    def visitIterationStmtForeach(self, iterationstmtforeach):
+        iterationstmtforeach.foreach_statement.accept(self)
+    
+    def visitWhileStmtConcrete(self, whilestmt):
+        myprint(blank(), "while (")
+        whilestmt.exp.accept(self)
+        myprint(")")
+        whilestmt.block.accept(self)
+    
+    def visitDoStmtConcrete(self, dostmt):
+        myprint(blank(), "do")
+        dostmt.block.accept(self)
+        myprint("while (")
+        dostmt.exp.accept(self)
+        myprint(");")
+    
+    def visitForStmtConcrete(self, forstmt):
+        myprint(blank(), "for (")
+        if forstmt.for_initializer != None:
+            forstmt.for_initializer.accept(self)
+        myprint("; ")
+        if forstmt.for_condition != None:
+            forstmt.for_condition.accept(self)
+        myprint("; ")
+        if forstmt.for_iterator != None:
+            forstmt.for_iterator.accept(self)
+        myprint(")")
+        forstmt.block.accept(self)
+    
+    
+        
+    
+    
+    
+        
+    
     
     
     

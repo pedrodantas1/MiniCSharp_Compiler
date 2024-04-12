@@ -778,19 +778,19 @@ class IfStmt(ABC):
 
 
 class SimpleIfStmt(IfStmt):
-    def __init__(self, exp, embedded_stmt):
+    def __init__(self, exp, block):
         self.exp = exp
-        self.embedded_stmt = embedded_stmt
+        self.block = block
 
     def accept(self, visitor):
         visitor.visitSimpleIfStmt(self)
 
 
 class IfElseStmt(IfStmt):
-    def __init__(self, exp, embedded_stmt1, embedded_stmt2):
+    def __init__(self, exp, block1, block2):
         self.exp = exp
-        self.embedded_stmt1 = embedded_stmt1
-        self.embedded_stmt2 = embedded_stmt2
+        self.block1 = block1
+        self.block2 = block2
 
     def accept(self, visitor):
         visitor.visitIfElseStmt(self)
@@ -809,20 +809,6 @@ class SwitchStmtConcrete(SwitchStmt):
 
     def accept(self, visitor):
         visitor.visitSwitchStmtConcrete(self)
-
-
-# class SwitchBlock(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
-
-
-# class SwitchBlockConcrete(SwitchBlock):
-#     def __init__(self, switch_body):
-#         self.switch_body = switch_body
-
-#     def accept(self, visitor):
-#         visitor.visitSwitchBlockConcrete(self)
 
 
 class SwitchBody(ABC):
@@ -953,9 +939,9 @@ class WhileStmt(ABC):
 
 
 class WhileStmtConcrete(WhileStmt):
-    def __init__(self, exp, embedded_stmt):
+    def __init__(self, exp, block):
         self.exp = exp
-        self.embedded_stmt = embedded_stmt
+        self.block = block
 
     def accept(self, visitor):
         visitor.visitWhileStmtConcrete(self)
@@ -968,8 +954,8 @@ class DoStmt(ABC):
 
 
 class DoStmtConcrete(DoStmt):
-    def __init__(self, embedded_stmt, exp):
-        self.embedded_stmt = embedded_stmt
+    def __init__(self, block, exp):
+        self.block = block
         self.exp = exp
 
     def accept(self, visitor):
@@ -983,11 +969,11 @@ class ForStmt(ABC):
 
 
 class ForStmtConcrete(ForStmt):
-    def __init__(self, for_initializer, for_condition, for_iterator, embedded_stmt):
+    def __init__(self, for_initializer, for_condition, for_iterator, block):
         self.for_initializer = for_initializer  # Pode ser None
         self.for_condition = for_condition  # Pode ser None
         self.for_iterator = for_iterator  # Pode ser None
-        self.embedded_stmt = embedded_stmt
+        self.block = block
 
     def accept(self, visitor):
         visitor.visitForStmtConcrete(self)
@@ -1074,11 +1060,11 @@ class ForeachStmt(ABC):
 
 
 class ForeachStmtConcrete(ForeachStmt):
-    def __init__(self, type, id, exp, embedded_stmt):
+    def __init__(self, type, id, exp, block):
         self.type = type
         self.id = id
         self.exp = exp
-        self.embedded_stmt = embedded_stmt
+        self.block = block
 
     def accept(self, visitor):
         visitor.visitForeachStmtConcrete(self)

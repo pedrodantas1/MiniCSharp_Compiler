@@ -120,8 +120,6 @@ if_statement -> IF '(' exp ')' block |
 
 switch_statement -> SWITCH '(' exp ')' '{' switch_body '}'
 
-<!-- switch_block -> '{' switch_body '}' -->
-
 switch_body -> switch_section |
                switch_section switch_body
 
@@ -131,7 +129,6 @@ switch_section -> switch_label statement_list |
 switch_label -> CASE pattern ':' |
                 DEFAULT ':'
 
-<!-- Talvez precise retirar o switch -->
 pattern -> exp
 
 iteration_statement -> while_statement |
@@ -139,18 +136,18 @@ iteration_statement -> while_statement |
                        for_statement |
                        foreach_statement
 
-while_statement -> WHILE '(' exp ')' embedded_statement
+while_statement -> WHILE '(' exp ')' block
 
-do_statement -> DO embedded_statement WHILE '(' exp ')' ';'
+do_statement -> DO block WHILE '(' exp ')' ';'
 
-for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' embedded_statement |
-                 FOR '(' for_initializer ';' for_condition ';' ')' embedded_statement |
-                 FOR '(' for_initializer ';' ';' for_iterator ')' embedded_statement |
-                 FOR '(' for_initializer ';' ';' ')' embedded_statement |
-                 FOR '(' ';' for_condition ';' for_iterator ')' embedded_statement |
-                 FOR '(' ';' for_condition ';' ')' embedded_statement |
-                 FOR '(' ';' ';' for_iterator ')' embedded_statement |
-                 FOR '(' ';' ';' ')' embedded_statement
+for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' block |
+                 FOR '(' for_initializer ';' for_condition ';' ')' block |
+                 FOR '(' for_initializer ';' ';' for_iterator ')' block |
+                 FOR '(' for_initializer ';' ';' ')' block |
+                 FOR '(' ';' for_condition ';' for_iterator ')' block |
+                 FOR '(' ';' for_condition ';' ')' block |
+                 FOR '(' ';' ';' for_iterator ')' block |
+                 FOR '(' ';' ';' ')' block
 
 for_initializer -> var_declaration
 
@@ -161,7 +158,7 @@ for_iterator -> statement_exp_list
 statement_exp_list -> statement_exp |
                       statement_exp ',' statement_exp_list
 
-foreach_statement -> FOREACH '(' type ID IN exp ')' embedded_statement
+foreach_statement -> FOREACH '(' type ID IN exp ')' block
 
 jump_statement -> break_statement |
                   continue_statement |
@@ -209,6 +206,7 @@ typeof_exp -> TYPEOF '(' type ')'
 
 sizeof_exp -> SIZEOF '(' value_type ')'
 
+@
 exp_list -> exp |
             exp_list ',' exp
 

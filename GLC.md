@@ -291,4 +291,45 @@ assignment -> unary_exp assignment_operator exp
 
 assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
                        '|=' | '^=' | '<<=' | '>>='
+
+class_declaration -> class_modifier CLASS ID class_body |
+                     CLASS ID class_body
+
+class_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
+
+class_body -> '{' class_member_declaration '}' |
+              '{' '}'
+
+class_member_declaration -> constant_declaration |
+                            field_declaration |
+                            method_declaration |
+                            constructor_declaration
+
+constant_declaration -> const_modifier CONST type const_declarators ';' |
+                        CONST type const_declarators ';'
+
+const_modifier -> PUBLIC | PROTECTED | PRIVATE
+
+field_declaration -> field_modifiers type var_declarators ';' |
+                     type var_declarators ';'
+
+field_modifiers -> field_modifier |
+                   field_modifier field_modifiers
+
+field_modifier -> NEW | PUBLIC | PROTECTED | PRIVATE | STATIC
+
+method_declaration -> method_modifiers type ID '(' param_list ')' block |
+                      method_modifiers type ID '(' ')' block
+
+method_modifiers -> method_modifier |
+                    method_modifier method_modifiers
+
+method_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
+
+constructor_declaration -> constructor_modifier ID '(' param_list ')' block |
+                           constructor_modifier ID '(' ')' block
+
+constructor_modifier -> PUBLIC | PROTECTED | PRIVATE
+
+
 ```

@@ -2312,3 +2312,73 @@ class MethodHeadConcrete(MethodHead):
 
     def accept(self, visitor):
         visitor.visitMethodHeadConcrete(self)
+
+
+class ConstructorDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstructorDeclWithMod(ConstructorDeclaration):
+    def __init__(self, constructor_modifier, constructor_head, block):
+        self.constructor_modifier = constructor_modifier
+        self.constructor_head = constructor_head
+        self.block = block
+
+    def accept(self, visitor):
+        visitor.visitConstructorDeclWithMod(self)
+
+
+class ConstructorDeclSimple(ConstructorDeclaration):
+    def __init__(self, constructor_head, block):
+        self.constructor_head = constructor_head
+        self.block = block
+
+    def accept(self, visitor):
+        visitor.visitConstructorDeclSimple(self)
+
+
+class ConstructorMod(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstructorModPublic(ConstructorMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstructorModPublic(self)
+
+
+class ConstructorModProtected(ConstructorMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstructorModProtected(self)
+
+
+class ConstructorModPrivate(ConstructorMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstructorModPrivate(self)
+
+
+class ConstructorHead(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstructorHeadConcrete(ConstructorHead):
+    def __init__(self, id, param_list):
+        self.id = id
+        self.param_list = param_list
+
+    def accept(self, visitor):
+        visitor.visitConstructorHeadConcrete(self)

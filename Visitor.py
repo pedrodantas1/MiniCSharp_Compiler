@@ -809,6 +809,30 @@ class Visitor(AbstractVisitor):
         if methodhead.param_list != None:
             methodhead.param_list.accept(self)
         myprint(")")
+    
+    def visitConstructorDeclWithMod(self, constructordecl):
+        constructordecl.constructor_modifier.accept(self)
+        constructordecl.constructor_head.accept(self)
+        constructordecl.block.accept(self)
+
+    def visitConstructorDeclSimple(self, constructordecl):
+        constructordecl.constructor_head.accept(self)
+        constructordecl.block.accept(self)
+    
+    def visitConstructorModPublic(self, constructormod):
+        myprint(blank(), "public ")
+
+    def visitConstructorModProtected(self, constructormod):
+        myprint(blank(), "protected ")
+
+    def visitConstructorModPrivate(self, constructormod):
+        myprint(blank(), "private ")
+    
+    def visitConstructorHeadConcrete(self, constructorhead):
+        myprint(constructorhead.id, "(")
+        if constructorhead.param_list != None:
+            constructorhead.param_list.accept(self)
+        myprint(")")
 
 
 def main():

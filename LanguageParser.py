@@ -112,7 +112,7 @@ def p_declaration_stmt(p):
         p[0] = sa.DeclarationStmtVar(p[1])
 
 def p_local_const_declaration(p):
-    '''const_declaration : CONST type const_declarators'''
+    '''local_const_declaration : CONST type const_declarators'''
     p[0] = sa.ConstDeclarationConcrete(p[2], p[3])
 
 def p_const_declarators(p):
@@ -128,7 +128,7 @@ def p_const_declarator(p):
     p[0] = sa.ConstDeclaratorConcrete(p[1], p[3])
 
 def p_local_var_declaration(p):
-    '''var_declaration : type var_declarators'''
+    '''local_var_declaration : type var_declarators'''
     p[0] = sa.VarDeclarationConcrete(p[1], p[2])
 
 def p_var_declarators(p):
@@ -729,7 +729,7 @@ def p_assignment_simple(p):
     p[0] = sa.AssignExp(p[1], p[3])
 
 def p_class_declaration(p):
-    '''class_declaration : class_modifier CLASS ID class_body |
+    '''class_declaration : class_modifier CLASS ID class_body
                          | CLASS ID class_body'''
     if (len(p) == 5):
         p[0] = sa.ClassDeclWithMod(p[1], p[3], p[4])
@@ -861,7 +861,34 @@ def p_method_head(p):
         p[0] = sa.MethodHeadConcrete(p[1], p[3])
     else:
         p[0] = sa.MethodHeadConcrete(p[1], None)
-        
+
+def p_constructor_declaration(p):
+    '''constructor_declaration : constructor_modifier constructor_head block
+                               | constructor_head block'''
+    if (len(p) == 4):
+        p[0] = sa.ConstructorDeclWithMod(p[1], p[2], p[3])
+    else:
+        p[0] = sa.ConstructorDeclSimple(p[1], p[2])
+
+def p_constructor_modifier(p):
+    '''constructor_modifier : PUBLIC
+                            | PROTECTED
+                            | PRIVATE'''
+    if (p[1] == 'public'):
+        p[0] = sa.ConstructorModPublic();
+    elif (p[1] == 'protected'):
+        p[0] = sa.ConstructorModProtected();
+    elif (p[1] == 'private'):
+        p[0] = sa.ConstructorModPrivate();
+
+def p_constructor_head(p):
+    '''constructor_head : ID LPAREN param_list RPAREN
+                        | ID LPAREN RPAREN'''
+    if (len(p) == 5):
+        p[0] = sa.ConstructorHeadConcrete(p[1], p[3])
+    else:
+        p[0] = sa.ConstructorHeadConcrete(p[1], None)
+
 
 def p_error(p):
     print("Syntax error in input!")

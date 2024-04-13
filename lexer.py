@@ -148,8 +148,8 @@ def t_comment(t):
 
 
 def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 
 def t_error(t):

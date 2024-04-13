@@ -1,9 +1,6 @@
 1-> Implementar classe (se der)
 2-> Implementar operadores de escopo private, etc (se der)
     > Mudar demais artefatos com as mudanças implementadas na GLC
-        > func_decl para class_declaration
-        > apagar func_declaration -> signature block
-        > apagar signature -> type id
         > adaptar e criar novas regras e classes no parser e visitor
 
 
@@ -12,3 +9,4 @@
 4-> Implementar negação logica (!)
 5-> Implementar operador de complemento bit a bit (~)
 6-> Ajeitar GLC
+7-> Rever Sintaxe abstrata

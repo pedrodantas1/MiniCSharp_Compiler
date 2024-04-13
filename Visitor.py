@@ -60,16 +60,16 @@ class Visitor(AbstractVisitor):
     def visitDecimalType(self, decimaltype):
         myprint(decimaltype.decimal_type)
 
-    def visitFuncDeclConcrete(self, funcdecl):
-        funcdecl.signature.accept(self)
-        funcdecl.block.accept(self)
+    # def visitFuncDeclConcrete(self, funcdecl):
+    #     funcdecl.signature.accept(self)
+    #     funcdecl.block.accept(self)
 
-    def visitSignatureConcrete(self, signature):
-        signature.type.accept(self)
-        myprint(" ", signature.id, "(")
-        if signature.param_list != None:
-            signature.param_list.accept(self)
-        myprint(")")
+    # def visitSignatureConcrete(self, signature):
+    #     signature.type.accept(self)
+    #     myprint(" ", signature.id, "(")
+    #     if signature.param_list != None:
+    #         signature.param_list.accept(self)
+    #     myprint(")")
         
     def visitSingleParamList(self, singleparamlist):
         singleparamlist.type.accept(self)

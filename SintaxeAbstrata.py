@@ -156,35 +156,35 @@ class DecimalType(FloatingPointType):
         return visitor.visitDecimalType(self)
 
 
-class FuncDecl(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
+# class FuncDecl(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
 
 
-class FuncDeclConcrete(FuncDecl):
-    def __init__(self, signature, block):
-        self.signature = signature
-        self.block = block
+# class FuncDeclConcrete(FuncDecl):
+#     def __init__(self, signature, block):
+#         self.signature = signature
+#         self.block = block
 
-    def accept(self, visitor):
-        return visitor.visitFuncDeclConcrete(self)
-
-
-class Signature(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
+#     def accept(self, visitor):
+#         return visitor.visitFuncDeclConcrete(self)
 
 
-class SignatureConcrete(Signature):
-    def __init__(self, type, id, param_list):
-        self.type = type
-        self.id = id
-        self.param_list = param_list  # Pode ser None
+# class Signature(ABC):
+#     @abstractmethod
+#     def accept(self, visitor):
+#         pass
 
-    def accept(self, visitor):
-        return visitor.visitSignatureConcrete(self)
+
+# class SignatureConcrete(Signature):
+#     def __init__(self, type, id, param_list):
+#         self.type = type
+#         self.id = id
+#         self.param_list = param_list  # Pode ser None
+
+#     def accept(self, visitor):
+#         return visitor.visitSignatureConcrete(self)
 
 
 class ParamList(ABC):

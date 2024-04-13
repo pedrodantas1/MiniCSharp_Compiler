@@ -58,13 +58,13 @@ class AbstractVisitor(ABC):
     def visitDecimalType(self, decimaltype):
         pass
 
-    @abstractmethod
-    def visitFuncDeclConcrete(self, funcdecl):
-        pass
+    # @abstractmethod
+    # def visitFuncDeclConcrete(self, funcdecl):
+    #     pass
 
-    @abstractmethod
-    def visitSignatureConcrete(self, signature):
-        pass
+    # @abstractmethod
+    # def visitSignatureConcrete(self, signature):
+    #     pass
 
     @abstractmethod
     def visitSingleParamList(self, singleparamlist):

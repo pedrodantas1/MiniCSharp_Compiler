@@ -6,8 +6,8 @@ from lexer import *
 # fmt: off
 
 def p_program(p):
-    '''program : func_declaration
-               | func_declaration program'''
+    '''program : class_declaration
+               | class_declaration program'''
     if len(p) == 3:
         p[0] = [p[1]] + p[2]
     else:
@@ -67,17 +67,17 @@ def p_integral_type_decimal(p):
     '''floating_point_type : DECIMAL'''
     p[0] = sa.DecimalType(p[1])
 
-def p_func_declaration(p):
-    '''func_declaration : signature block'''
-    p[0] = sa.FuncDeclConcrete(p[1], p[2])
+# def p_func_declaration(p):
+#     '''func_declaration : signature block'''
+#     p[0] = sa.FuncDeclConcrete(p[1], p[2])
     
-def p_signature(p):
-    '''signature : type ID LPAREN param_list RPAREN
-                 | type ID LPAREN RPAREN'''
-    if (isinstance(p[4], sa.ParamList)):
-        p[0] = sa.SignatureConcrete(p[1], p[2], p[4])
-    else:
-        p[0] = sa.SignatureConcrete(p[1], p[2], None)
+# def p_signature(p):
+#     '''signature : type ID LPAREN param_list RPAREN
+#                  | type ID LPAREN RPAREN'''
+#     if (isinstance(p[4], sa.ParamList)):
+#         p[0] = sa.SignatureConcrete(p[1], p[2], p[4])
+#     else:
+#         p[0] = sa.SignatureConcrete(p[1], p[2], None)
 
 def p_param_list(p):
     '''param_list : type ID

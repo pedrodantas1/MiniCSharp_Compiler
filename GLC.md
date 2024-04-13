@@ -68,7 +68,7 @@ var_declarators -> var_declarator |
 
 var_declarator -> ID |
                   ID '=' exp |
-                  ID '=' array_initializer
+                  @ ID '=' array_initializer
 
 embedded_statement -> block |
                       empty_statement |

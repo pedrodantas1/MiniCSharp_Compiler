@@ -98,6 +98,7 @@ class Visitor(AbstractVisitor):
         myprint(";\n")
     
     def visitDeclarationStmtVar(self, declarationstmtvar):
+        myprint(blank())
         declarationstmtvar.var_declaration.accept(self)
         myprint(";\n")
     
@@ -111,17 +112,17 @@ class Visitor(AbstractVisitor):
     
     def visitCompoundConstDeclarators(self, compoundconstdeclarators):
         compoundconstdeclarators.const_declarator.accept(self)
-        myprint(", ")
+        myprint(",")
         compoundconstdeclarators.const_declarators.accept(self)
     
     def visitConstDeclaratorConcrete(self, constdeclarator):
         myprint(" ", constdeclarator.id)
         myprint(" = ")
         constdeclarator.exp.accept(self)
-        myprint("\n")
     
     def visitVarDeclarationConcrete(self, vardeclaration):
         vardeclaration.type.accept(self)
+        myprint(" ")
         vardeclaration.var_declarators.accept(self)
     
     def visitSingleVarDeclarators(self, singlevardeclarators):
@@ -139,7 +140,6 @@ class Visitor(AbstractVisitor):
         myprint(vardeclaratoridexp.id)
         myprint(" = ")
         vardeclaratoridexp.exp.accept(self)
-        myprint("\n")
     
     def visitEmbeddedStmtBlock(self, embeddedstmtblock):
         embeddedstmtblock.block.accept(self)
@@ -170,7 +170,7 @@ class Visitor(AbstractVisitor):
         myprint(blank(), "}\n")
     
     def visitEmptyStmtConcrete(self, emptystmt):
-        myprint(";\n")
+        myprint(blank(), ";\n")
     
     def visitExpStmtConcrete(self, expstmt):
         myprint(blank())
@@ -199,27 +199,27 @@ class Visitor(AbstractVisitor):
         stmtexppredecrement.pre_decrement_exp.accept(self)
     
     def visitNoArgsObjectCreation(self, objectcreation):
-        myprint(blank(), "new ")
+        myprint("new ")
         objectcreation.type.accept(self)
-        myprint(" ()")
+        myprint("()")
     
     def visitNoArgsWithInitializerObjectCreation(self, objectcreation):
-        myprint(blank(), "new ")
+        myprint("new ")
         objectcreation.type.accept(self)
-        myprint(" ()")
+        myprint("()")
         objectcreation.object_initializer.accept(self)
     
     def visitObjectCreation(self, objectcreation):
-        myprint(blank(), "new ")
+        myprint("new ")
         objectcreation.type.accept(self)
-        myprint(" (")
+        myprint("(")
         objectcreation.arg_list.accept(self)
         myprint(")")
     
     def visitWithInitializerObjectCreation(self, objectcreation):
-        myprint(blank(), "new ")
+        myprint("new ")
         objectcreation.type.accept(self)
-        myprint(" (")
+        myprint("(")
         objectcreation.arg_list.accept(self)
         myprint(")")
         objectcreation.object_initializer.accept(self)
@@ -274,7 +274,7 @@ class Visitor(AbstractVisitor):
         ifelsestmt.exp.accept(self)
         myprint(")")
         ifelsestmt.block1.accept(self)
-        myprint("else")
+        myprint(blank(), "else")
         ifelsestmt.block2.accept(self)
     
     def visitSwitchStmtConcrete(self, switchstmt):
@@ -396,6 +396,7 @@ class Visitor(AbstractVisitor):
     def visitReturnStmtConcrete(self, returnstmt):
         myprint(blank(), "return")
         if returnstmt.exp != None:
+            myprint(" ")
             returnstmt.exp.accept(self)
         myprint(";\n")
     
@@ -599,12 +600,12 @@ class Visitor(AbstractVisitor):
 
     def visitEqualExp(self, equalexp):
         equalexp.equality_exp.accept(self)
-        myprint(" != ")
+        myprint(" == ")
         equalexp.relational_exp.accept(self)
 
     def visitNotEqualExp(self, notequalexp):
         notequalexp.equality_exp.accept(self)
-        myprint(" == ")
+        myprint(" != ")
         notequalexp.relational_exp.accept(self)
 
     def visitEqualityExpNext(self, equalityexpnext):

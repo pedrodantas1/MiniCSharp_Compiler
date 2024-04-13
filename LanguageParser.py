@@ -32,9 +32,7 @@ def p_type(p):
 def p_class_type(p):
     '''class_type : OBJECT
                   | STRING'''
-    if (isinstance(p[1], sa.TypeName)):
-        p[0] = sa.GenericClassType(p[1])
-    elif(p[1] == 'object'):
+    if(p[1] == 'object'):
         p[0] = sa.ObjectClassType(p[1])
     elif(p[1] == 'string'):
         p[0] = sa.StringClassType(p[1])
@@ -339,35 +337,35 @@ def p_do_statement(p):
 
 def p_for_statement_full(p):
     '''for_statement : FOR LPAREN for_initializer SEMI for_condition SEMI for_iterator RPAREN block'''
-    p[0] = sa.ForStmtConcrete(p[2], p[4], p[6], p[8])
+    p[0] = sa.ForStmtConcrete(p[3], p[5], p[7], p[9])
 
 def p_for_statement_12(p):
     '''for_statement : FOR LPAREN for_initializer SEMI for_condition SEMI RPAREN block'''
-    p[0] = sa.ForStmtConcrete(p[2], p[4], None, p[7])
+    p[0] = sa.ForStmtConcrete(p[3], p[5], None, p[8])
 
 def p_for_statement_13(p):
     '''for_statement : FOR LPAREN for_initializer SEMI SEMI for_iterator RPAREN block'''
-    p[0] = sa.ForStmtConcrete(p[2], None, p[5], p[7])
+    p[0] = sa.ForStmtConcrete(p[3], None, p[6], p[8])
 
 def p_for_statement_1(p):
     '''for_statement : FOR LPAREN for_initializer SEMI SEMI RPAREN block'''
-    p[0] = sa.ForStmtConcrete(p[2], None, None, p[6])
+    p[0] = sa.ForStmtConcrete(p[3], None, None, p[7])
 
 def p_for_statement_23(p):
     '''for_statement : FOR LPAREN SEMI for_condition SEMI for_iterator RPAREN block'''
-    p[0] = sa.ForStmtConcrete(None, p[3], p[5], p[7])
+    p[0] = sa.ForStmtConcrete(None, p[4], p[6], p[8])
 
 def p_for_statement_2(p):
     '''for_statement : FOR LPAREN SEMI for_condition SEMI RPAREN block'''
-    p[0] = sa.ForStmtConcrete(None, p[3], None, p[6])
+    p[0] = sa.ForStmtConcrete(None, p[4], None, p[7])
 
 def p_for_statement_3(p):
     '''for_statement : FOR LPAREN SEMI SEMI for_iterator RPAREN block'''
-    p[0] = sa.ForStmtConcrete(None, None, p[4], p[6])
+    p[0] = sa.ForStmtConcrete(None, None, p[5], p[7])
 
 def p_for_statement_empty(p):
     '''for_statement : FOR LPAREN SEMI SEMI RPAREN block'''
-    p[0] = sa.ForStmtConcrete(None, None, None, p[5])
+    p[0] = sa.ForStmtConcrete(None, None, None, p[6])
 
 def p_for_initializer(p):
     '''for_initializer : var_declaration'''

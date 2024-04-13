@@ -1,5 +1,5 @@
-// int func(){
-//     int a = 1;
+// int func(int x, float y, string z){
+//     bool existe = false;
 //     if (a == 1){
 //         if (3 == 3){
 //             return a;
@@ -9,25 +9,40 @@
 //     }
 // }
 // void func2(){
-//     // int a = 0;
-//     for(int i=0; 5; 5++){
+//     int a = 1;
+//     for(int i=0; i<10; i++){
 //         a = a * 2;
-//     }
-//     if (a){
-//         return;
 //     }
 // }
 // void func3(int z, float x){
 //     return;
 // }
+// void func(){
+//     while(cliente == true)
+//     {
+//         i++;
+//     }
+//     double valor = 2 * (8 - 4 + (3 - 1));
+//     int a = -77+1;
+//     --a = a++;
+//     int a,b,c;
+// }
 void func(){
-    // while(cliente == true)
-    // {
-    //     i++;
-    // }
-    // Cliente c1 = new Cliente("Pedro", 21);
-    double valor = 2 * (8 - 4 + (3 - 1));
-    int a = -2+1;
-    --a = a++;
-    int a,b,c;
+    const int a = 43, b=32,c=11;
+    int a=12,b=22,c=2;
+    func2(a,b,c);
+    func();
+    string a = new string("ola mundo!");
+    string b = new string();
+    switch (a){
+        case < 30:
+            b = 50;
+            break;
+        case > 50:
+            b = 20;
+            break;
+        default:
+            b = 0;
+            break;
+    }
 }

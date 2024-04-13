@@ -30,13 +30,16 @@ integral_type -> INT | LONG | CHAR
 
 floating_point_type -> FLOAT | DOUBLE | DECIMAL
 
-program -> func_declaration |
-           func_declaration program
+<!-- program -> func_declaration |
+           func_declaration program -->
 
-func_declaration -> signature block
+program -> class_declaration |
+           class_declaration program
 
-signature -> type ID '(' param_list ')' |
-             type ID '(' ')'
+<!-- func_declaration -> signature block -->
+
+<!-- signature -> type ID '(' param_list ')' |
+             type ID '(' ')' -->
 
 param_list -> type ID |
               type ID ',' param_list
@@ -318,18 +321,24 @@ field_modifiers -> field_modifier |
 
 field_modifier -> NEW | PUBLIC | PROTECTED | PRIVATE | STATIC
 
-method_declaration -> method_modifiers type ID '(' param_list ')' block |
-                      method_modifiers type ID '(' ')' block
+method_declaration -> method_modifiers type method_head block |
+                      type method_head block
 
 method_modifiers -> method_modifier |
                     method_modifier method_modifiers
 
 method_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
 
-constructor_declaration -> constructor_modifier ID '(' param_list ')' block |
-                           constructor_modifier ID '(' ')' block
+method_head -> ID '(' param_list ')' |
+               ID '(' ')'
+
+constructor_declaration -> constructor_modifier constructor_head block |
+                           constructor_head block
 
 constructor_modifier -> PUBLIC | PROTECTED | PRIVATE
+
+constructor_head -> ID '(' param_list ')' |
+                    ID '(' ')'
 
 
 ```

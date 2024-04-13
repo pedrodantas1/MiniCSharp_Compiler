@@ -1,5 +1,9 @@
 1-> Implementar classe (se der)
 2-> Implementar operadores de escopo private, etc (se der)
+    > Deixar declaração de variavel e constante locais
+
+
+
 3-> Implementar atribuição composta
 4-> Implementar negação logica (!)
 5-> Implementar operador de complemento bit a bit (~)

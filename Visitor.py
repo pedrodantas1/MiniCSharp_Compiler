@@ -95,11 +95,11 @@ class Visitor(AbstractVisitor):
     
     def visitDeclarationStmtConst(self, declarationstmtconst):
         declarationstmtconst.const_declaration.accept(self)
-        myprint(";")
+        myprint(";\n")
     
     def visitDeclarationStmtVar(self, declarationstmtvar):
         declarationstmtvar.var_declaration.accept(self)
-        myprint(";")
+        myprint(";\n")
     
     def visitConstDeclarationConcrete(self, constdeclaration):
         myprint(blank(), "const ")
@@ -118,10 +118,11 @@ class Visitor(AbstractVisitor):
         myprint(" ", constdeclarator.id)
         myprint(" = ")
         constdeclarator.exp.accept(self)
+        myprint("\n")
     
     def visitVarDeclarationConcrete(self, vardeclaration):
         vardeclaration.type.accept(self)
-        vardeclaration.var_declarators(self)
+        vardeclaration.var_declarators.accept(self)
     
     def visitSingleVarDeclarators(self, singlevardeclarators):
         singlevardeclarators.var_declarator.accept(self)
@@ -138,6 +139,7 @@ class Visitor(AbstractVisitor):
         myprint(vardeclaratoridexp.id)
         myprint(" = ")
         vardeclaratoridexp.exp.accept(self)
+        myprint("\n")
     
     def visitEmbeddedStmtBlock(self, embeddedstmtblock):
         embeddedstmtblock.block.accept(self)
@@ -159,7 +161,8 @@ class Visitor(AbstractVisitor):
     
     def visitBlockStmtConcrete(self, blockstmt):
         global tab
-        myprint("{ ")
+        myprint("\n")
+        myprint(blank(), "{\n")
         tab = tab + 4
         if blockstmt.stmt_list != None:
             blockstmt.stmt_list.accept(self)
@@ -167,11 +170,12 @@ class Visitor(AbstractVisitor):
         myprint(blank(), "}\n")
     
     def visitEmptyStmtConcrete(self, emptystmt):
-        myprint(";")
+        myprint(";\n")
     
     def visitExpStmtConcrete(self, expstmt):
+        myprint(blank())
         expstmt.statement_exp.accept(self)
-        myprint(";")
+        myprint(";\n")
     
     def visitStmtExpInvocation(self, stmtexpinvocation):
         stmtexpinvocation.invocation_exp.accept(self)
@@ -303,9 +307,11 @@ class Visitor(AbstractVisitor):
         myprint(blank(), "case ")
         switchlabelcase.pattern.accept(self)
         myprint(" :\n")
+        myprint(blank()*2)
     
     def visitSwitchLabelDefault(self, switchlabeldefault):
         myprint(blank(), "default :\n")
+        myprint(blank()*2)
     
     def visitPatternConcrete(self, pattern):
         pattern.exp.accept(self)
@@ -333,7 +339,7 @@ class Visitor(AbstractVisitor):
         dostmt.block.accept(self)
         myprint("while (")
         dostmt.exp.accept(self)
-        myprint(");")
+        myprint(");\n")
     
     def visitForStmtConcrete(self, forstmt):
         myprint(blank(), "for (")
@@ -382,16 +388,16 @@ class Visitor(AbstractVisitor):
         jumpstmtreturn.return_stmt.accept(self)
     
     def visitBreakStmtConcrete(self, breakstmt):
-        myprint(blank(), "break;")
+        myprint(blank(), "break;\n")
     
     def visitContinueStmtConcrete(self, continuestmt):
-        myprint(blank(), "continue;")
+        myprint(blank(), "continue;\n")
     
     def visitReturnStmtConcrete(self, returnstmt):
         myprint(blank(), "return")
         if returnstmt.exp != None:
             returnstmt.exp.accept(self)
-        myprint(";")
+        myprint(";\n")
     
     def visitSimpleArgList(self, simplearglist):
         simplearglist.exp.accept(self)

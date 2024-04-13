@@ -21,13 +21,13 @@
 //     return;
 // }
 void func(){
-    while(cliente == true)
-    {
-        i++;
-    }
+    // while(cliente == true)
+    // {
+    //     i++;
+    // }
     // Cliente c1 = new Cliente("Pedro", 21);
-    // double valor = 2 * (8 - 4 + (3 - 1));
-    // int a = -2+1;
-    // --a = a++;
-    // int a,b,c;
+    double valor = 2 * (8 - 4 + (3 - 1));
+    int a = -2+1;
+    --a = a++;
+    int a,b,c;
 }

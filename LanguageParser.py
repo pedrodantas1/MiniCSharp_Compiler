@@ -728,6 +728,15 @@ def p_assignment_simple(p):
     '''assignment : unary_exp EQUAL exp'''
     p[0] = sa.AssignExp(p[1], p[3])
 
+def p_class_declaration(p):
+    '''class_declaration : class_modifier CLASS ID class_body |
+                         | CLASS ID class_body'''
+    if (len(p) == 5):
+        p[0] = sa.ClassDeclWithMod(p[1], p[3], p[4])
+    else:
+        p[0] = sa.ClassDeclSimple(p[2], p[3])
+        
+
 
 def p_error(p):
     print("Syntax error in input!")

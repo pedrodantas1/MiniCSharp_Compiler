@@ -1945,3 +1945,28 @@ class AssignExp(Exp):
 
     def accept(self, visitor):
         visitor.visitAssignExp(self)
+
+
+class ClassDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ClassDeclWithMod(ClassDeclaration):
+    def __init__(self, class_modifier, id, class_body):
+        self.class_modifier = class_modifier
+        self.id = id
+        self.class_body = class_body
+
+    def accept(self, visitor):
+        visitor.visitClassDeclWithMod(self)
+
+
+class ClassDeclSimple(ClassDeclaration):
+    def __init__(self, id, class_body):
+        self.id = id
+        self.class_body = class_body
+
+    def accept(self, visitor):
+        visitor.visitClassDeclSimple(self)

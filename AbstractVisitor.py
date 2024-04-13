@@ -689,3 +689,11 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitAssignExp(self, assignexp):
         pass
+
+    @abstractmethod
+    def visitClassDeclWithMod(self, classdecl):
+        pass
+
+    @abstractmethod
+    def visitClassDeclSimple(self, classdecl):
+        pass

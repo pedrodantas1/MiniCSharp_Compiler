@@ -688,6 +688,17 @@ class Visitor(AbstractVisitor):
         assignexp.unary_exp.accept(self)
         myprint(" = ") # Por enquanto atribuição simples apenas
         assignexp.exp.accept(self)
+    
+    def visitClassDeclWithMod(self, classdecl):
+        classdecl.class_modifier.accept(self)
+        myprint("class ", classdecl.id)
+        classdecl.class_body.accept(self)
+
+    def visitClassDeclSimple(self, classdecl):
+        myprint("class ", classdecl.id)
+        classdecl.class_body.accept(self)
+    
+    
 
 
 def main():

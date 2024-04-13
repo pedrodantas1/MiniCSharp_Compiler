@@ -823,6 +823,44 @@ def p_field_modifier(p):
         p[0] = sa.FieldModPrivate();
     elif (p[1] == 'static'):
         p[0] = sa.FieldModStatic();
+
+def p_method_declaration(p):
+    '''method_declaration : method_modifiers type method_head block
+                          | type method_head block'''
+    if (len(p) == 5):
+        p[0] = sa.MethodDeclWithMod(p[1], p[2], p[3], p[4])
+    else:
+        p[0] = sa.MethodDeclSimple(p[1], p[2], p[3])
+
+def p_method_modifiers(p):
+    '''method_modifiers : method_modifier
+                        | method_modifier method_modifiers'''
+    if (len(p) == 2):
+        p[0] = sa.SingleMethodModifier(p[1])
+    else:
+        p[0] = sa.CompoundMethodModifier(p[1], p[2])
+
+def p_method_modifier(p):
+    '''method_modifier : PUBLIC
+                       | PROTECTED
+                       | PRIVATE
+                       | STATIC'''
+    if (p[1] == 'public'):
+        p[0] = sa.MethodModPublic();
+    elif (p[1] == 'protected'):
+        p[0] = sa.MethodModProtected();
+    elif (p[1] == 'private'):
+        p[0] = sa.MethodModPrivate();
+    elif (p[1] == 'static'):
+        p[0] = sa.MethodModStatic();
+
+def p_method_head(p):
+    '''method_head : ID LPAREN param_list RPAREN
+                   | ID LPAREN RPAREN'''
+    if (len(p) == 5):
+        p[0] = sa.MethodHeadConcrete(p[1], p[3])
+    else:
+        p[0] = sa.MethodHeadConcrete(p[1], None)
         
 
 def p_error(p):

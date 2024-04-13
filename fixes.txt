@@ -2,9 +2,8 @@
 2-> Implementar operadores de escopo private, etc (se der)
     > Mudar demais artefatos com as mudanças implementadas na GLC
         > adaptar e criar novas regras e classes no parser e visitor
-        > 
 
-
+3-> Analisar espaçamento do static
 3-> Permitir public static class, por exemplo
 3-> Implementar atribuição composta
 4-> Implementar negação logica (!)

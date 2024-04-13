@@ -2209,3 +2209,106 @@ class FieldModStatic(FieldMod):
 
     def accept(self, visitor):
         visitor.visitFieldModStatic(self)
+
+
+class MethodDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MethodDeclWithMod(MethodDeclaration):
+    def __init__(self, method_modifiers, type, method_head, block):
+        self.method_modifiers = method_modifiers
+        self.type = type
+        self.method_head = method_head
+        self.block = block
+
+    def accept(self, visitor):
+        visitor.visitMethodDeclWithMod(self)
+
+
+class MethodDeclSimple(MethodDeclaration):
+    def __init__(self, type, method_head, block):
+        self.type = type
+        self.method_head = method_head
+        self.block = block
+
+    def accept(self, visitor):
+        visitor.visitMethodDeclSimple(self)
+
+
+class MethodModifiers(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SingleMethodModifier(MethodModifiers):
+    def __init__(self, method_modifier):
+        self.method_modifier = method_modifier
+
+    def accept(self, visitor):
+        visitor.visitSingleMethodModifier(self)
+
+
+class CompoundMethodModifier(MethodModifiers):
+    def __init__(self, method_modifier, method_modifiers):
+        self.method_modifier = method_modifier
+        self.method_modifiers = method_modifiers
+
+    def accept(self, visitor):
+        visitor.visitCompoundMethodModifier(self)
+
+
+class MethodMod(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MethodModPublic(MethodMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitMethodModPublic(self)
+
+
+class MethodModProtected(MethodMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitMethodModProtected(self)
+
+
+class MethodModPrivate(MethodMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitMethodModPrivate(self)
+
+
+class MethodModStatic(MethodMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitMethodModStatic(self)
+
+
+class MethodHead(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class MethodHeadConcrete(MethodHead):
+    def __init__(self, id, param_list):
+        self.id = id
+        self.param_list = param_list
+
+    def accept(self, visitor):
+        visitor.visitMethodHeadConcrete(self)

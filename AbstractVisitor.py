@@ -789,3 +789,39 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitFieldModStatic(self, fieldmod):
         pass
+
+    @abstractmethod
+    def visitMethodDeclWithMod(self, methoddecl):
+        pass
+
+    @abstractmethod
+    def visitMethodDeclSimple(self, methoddecl):
+        pass
+
+    @abstractmethod
+    def visitSingleMethodModifier(self, methodmod):
+        pass
+
+    @abstractmethod
+    def visitCompoundMethodModifier(self, methodmod):
+        pass
+    
+    @abstractmethod
+    def visitMethodModPublic(self, methodmod):
+        pass
+    
+    @abstractmethod
+    def visitMethodModProtected(self, methodmod):
+        pass
+    
+    @abstractmethod
+    def visitMethodModPrivate(self, methodmod):
+        pass
+    
+    @abstractmethod
+    def visitMethodModStatic(self, methodmod):
+        pass
+    
+    @abstractmethod
+    def visitMethodHeadConcrete(self, methodhead):
+        pass

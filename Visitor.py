@@ -773,6 +773,42 @@ class Visitor(AbstractVisitor):
 
     def visitFieldModStatic(self, fieldmod):
         myprint(blank(), "static ")
+    
+    def visitMethodDeclWithMod(self, methoddecl):
+        methoddecl.method_modifiers.accept(self)
+        methoddecl.type.accept(self)
+        methoddecl.method_head.accept(self)
+        methoddecl.block.accept(self)
+    
+    def visitMethodDeclSimple(self, methoddecl):
+        methoddecl.type.accept(self)
+        methoddecl.method_head.accept(self)
+        methoddecl.block.accept(self)
+    
+    def visitSingleMethodModifier(self, methodmod):
+        methodmod.method_modifier.accept(self)
+
+    def visitCompoundMethodModifier(self, methodmod):
+        methodmod.method_modifier.accept(self)
+        methodmod.method_modifiers.accept(self)
+    
+    def visitMethodModPublic(self, methodmod):
+        myprint(blank(), "public ")
+    
+    def visitMethodModProtected(self, methodmod):
+        myprint(blank(), "protected ")
+    
+    def visitMethodModPrivate(self, methodmod):
+        myprint(blank(), "private ")
+    
+    def visitMethodModStatic(self, methodmod):
+        myprint(blank(), "static ")
+    
+    def visitMethodHeadConcrete(self, methodhead):
+        myprint(methodhead.id, "(")
+        if methodhead.param_list != None:
+            methodhead.param_list.accept(self)
+        myprint(")")
 
 
 def main():

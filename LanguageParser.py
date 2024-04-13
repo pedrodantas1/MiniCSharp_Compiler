@@ -310,8 +310,39 @@ def p_switch_label(p):
         p[0] = sa.SwitchLabelDefault()
 
 def p_pattern(p):
-    '''pattern : exp'''
-    p[0] = sa.PatternConcrete(p[1])
+    '''pattern : relational_pattern
+               | constant_pattern'''
+    if (isinstance(p[1], sa.RelationalPattern)):
+        p[0] = sa.PatternRelational(p[1])
+    elif (isinstance(p[1], sa.ConstantPattern)):
+        p[0] = sa.PatternConstant(p[1])
+
+def p_relational_pattern(p):
+    '''relational_pattern : relational_operator constant_exp'''
+    p[0] = sa.RelationalPatternConcrete(p[1], p[2])
+
+def p_relational_operator(p):
+    '''relational_operator : LT
+                           | GT
+                           | LEQ
+                           | GEQ'''
+    p[0] = sa.RelationalOperatorConcrete(p[1])
+
+def p_constant_exp(p):
+    '''constant_exp : INTNUM
+                    | FLOATNUM
+                    | CHARLITERAL'''
+    p[0] = sa.ConstantExpConcrete(p[1])
+
+def p_constant_pattern(p):
+    '''constant_pattern : INTNUM
+                        | FLOATNUM
+                        | CHARLITERAL
+                        | STRINGLITERAL
+                        | TRUE
+                        | FALSE
+                        | NULL'''
+    p[0] = sa.ConstantPatternConcrete(p[1])
 
 def p_iteration_statement(p):
     '''iteration_statement : while_statement
@@ -729,4 +760,4 @@ f = open("teste_parser.cs", "r")
 lexer = lex.lex()
 lexer.input(f.read())
 parser = yacc.yacc()
-result = parser.parse(debug=True)
+result = parser.parse(debug=False)

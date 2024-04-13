@@ -38,11 +38,20 @@ void func(){
         case < 30:
             b = 50;
             break;
-        case > 50:
+        case 50:
             b = 20;
+            break;
+        case null:
+            b = 100;
             break;
         default:
             b = 0;
             break;
     }
+    while(cliente == true){
+        i++;
+    }
+    do{
+        a = a*2;
+    }while(a<250);
 }

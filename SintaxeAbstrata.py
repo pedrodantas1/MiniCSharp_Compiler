@@ -886,12 +886,77 @@ class Pattern(ABC):
         pass
 
 
-class PatternConcrete(Pattern):
-    def __init__(self, exp):
-        self.exp = exp
+class PatternRelational(Pattern):
+    def __init__(self, relational_pattern):
+        self.relational_pattern = relational_pattern
 
     def accept(self, visitor):
-        visitor.visitPatternConcrete(self)
+        visitor.visitPatternRelational(self)
+
+
+class PatternConstant(Pattern):
+    def __init__(self, constant_pattern):
+        self.constant_pattern = constant_pattern
+
+    def accept(self, visitor):
+        visitor.visitPatternConstant(self)
+
+
+class RelationalPattern(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class RelationalPatternConcrete(RelationalPattern):
+    def __init__(self, relational_operator, constant_exp):
+        self.relational_operator = relational_operator
+        self.constant_exp = constant_exp
+
+    def accept(self, visitor):
+        visitor.visitRelationalPatternConcrete(self)
+
+
+class RelationalOperator(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class RelationalOperatorConcrete(RelationalOperator):
+    def __init__(self, operator):
+        self.operator = operator
+
+    def accept(self, visitor):
+        visitor.visitRelationalOperatorConcrete(self)
+
+
+class ConstantExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstantExpConcrete(ConstantExp):
+    def __init__(self, constant_exp):
+        self.constant_exp = constant_exp
+
+    def accept(self, visitor):
+        visitor.visitConstantExpConcrete(self)
+
+
+class ConstantPattern(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstantPatternConcrete(ConstantPattern):
+    def __init__(self, constant_exp):
+        self.constant_exp = constant_exp
+
+    def accept(self, visitor):
+        visitor.visitConstantPatternConcrete(self)
 
 
 class IterationStmt(ABC):

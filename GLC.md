@@ -129,7 +129,16 @@ switch_section -> switch_label statement_list |
 switch_label -> CASE pattern ':' |
                 DEFAULT ':'
 
-pattern -> exp
+pattern -> relational_pattern |
+           constant_pattern
+
+relational_pattern -> relational_operator constant_exp
+
+relational_operator -> '<' | '>' | '<=' | '>='
+
+constant_exp -> INTNUM | FLOATNUM | CHARLITERAL
+
+constant_pattern -> INTNUM | FLOATNUM | CHARLITERAL | STRINGLITERAL | TRUE | FALSE | NULL
 
 iteration_statement -> while_statement |
                        do_statement |

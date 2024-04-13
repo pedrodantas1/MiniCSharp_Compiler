@@ -308,7 +308,27 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitPatternConcrete(self, pattern):
+    def visitPatternRelational(self, pattern):
+        pass
+
+    @abstractmethod
+    def visitPatternConstant(self, pattern):
+        pass
+
+    @abstractmethod
+    def visitRelationalPatternConcrete(self, pattern):
+        pass
+
+    @abstractmethod
+    def visitRelationalOperatorConcrete(self, relationaloperator):
+        pass
+
+    @abstractmethod
+    def visitConstantExpConcrete(self, constantexp):
+        pass
+
+    @abstractmethod
+    def visitConstantPatternConcrete(self, pattern):
         pass
 
     @abstractmethod

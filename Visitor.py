@@ -282,11 +282,11 @@ class Visitor(AbstractVisitor):
         myprint(blank(), "switch (")
         switchstmt.exp.accept(self)
         myprint(")\n")
-        myprint(blank(), "{")
+        myprint(blank(), "{\n")
         tab = tab + 4
         switchstmt.switch_body.accept(self)
         tab = tab - 4
-        myprint(blank(), "}")
+        myprint(blank(), "}\n")
     
     def visitSimpleSwitchBody(self, simpleswitchbody):
         simpleswitchbody.switch_section.accept(self)
@@ -306,15 +306,31 @@ class Visitor(AbstractVisitor):
     def visitSwitchLabelCase(self, switchlabelcase):
         myprint(blank(), "case ")
         switchlabelcase.pattern.accept(self)
-        myprint(" :\n")
-        myprint(blank()*2)
+        myprint(":\n")
+        myprint("    ")
     
     def visitSwitchLabelDefault(self, switchlabeldefault):
-        myprint(blank(), "default :\n")
-        myprint(blank()*2)
+        myprint(blank(), "default:\n")
+        myprint("    ")
     
-    def visitPatternConcrete(self, pattern):
-        pattern.exp.accept(self)
+    def visitPatternRelational(self, pattern):
+        pattern.relational_pattern.accept(self)
+    
+    def visitPatternConstant(self, pattern):
+        pattern.constant_pattern.accept(self)
+    
+    def visitRelationalPatternConcrete(self, pattern):
+        pattern.relational_operator.accept(self)
+        pattern.constant_exp.accept(self)
+    
+    def visitRelationalOperatorConcrete(self, relationaloperator):
+        myprint(relationaloperator.operator, " ")
+    
+    def visitConstantExpConcrete(self, constantexp):
+        myprint(constantexp.constant_exp)
+    
+    def visitConstantPatternConcrete(self, pattern):
+        myprint(pattern.constant_exp)
     
     def visitIterationStmtWhile(self, iterationstmtwhile):
         iterationstmtwhile.while_statement.accept(self)
@@ -337,7 +353,7 @@ class Visitor(AbstractVisitor):
     def visitDoStmtConcrete(self, dostmt):
         myprint(blank(), "do")
         dostmt.block.accept(self)
-        myprint("while (")
+        myprint(blank(), "while (")
         dostmt.exp.accept(self)
         myprint(");\n")
     

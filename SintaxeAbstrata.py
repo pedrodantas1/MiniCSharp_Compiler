@@ -14,29 +14,6 @@ class UnaryExp(ABC):
         pass
 
 
-# class TypeName(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
-
-
-# class SingleTypeName(TypeName):
-#     def __init__(self, id):
-#         self.id = id
-
-#     def accept(self, visitor):
-#         return visitor.visitSingleTypeName(self)
-
-
-# class CompoundTypeName(TypeName):
-#     def __init__(self, type_name, id):
-#         self.type_name = type_name
-#         self.id = id
-
-#     def accept(self, visitor):
-#         return visitor.visitCompoundTypeName(self)
-
-
 class Type(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -63,14 +40,6 @@ class ClassType(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
-
-
-# class GenericClassType(ClassType):
-#     def __init__(self, type_name):
-#         self.type_name = type_name
-
-#     def accept(self, visitor):
-#         return visitor.visitGenericClassType(self)
 
 
 class ObjectClassType(ClassType):
@@ -1460,50 +1429,6 @@ class PrimaryObjectCreationExp(NoArrayCreationExp):
 
     def accept(self, visitor):
         visitor.visitPrimaryObjectCreationExp(self)
-
-
-class PrimaryTypeofExp(NoArrayCreationExp):
-    def __init__(self, typeof_exp):
-        self.typeof_exp = typeof_exp
-
-    def accept(self, visitor):
-        visitor.visitPrimaryTypeofExp(self)
-
-
-class TypeofExp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class TypeofExpConcrete(TypeofExp):
-    def __init__(self, type):
-        self.type = type
-
-    def accept(self, visitor):
-        visitor.visitTypeofExpConcrete(self)
-
-
-class PrimarySizeofExp(NoArrayCreationExp):
-    def __init__(self, sizeof_exp):
-        self.sizeof_exp = sizeof_exp
-
-    def accept(self, visitor):
-        visitor.visitPrimarySizeofExp(self)
-
-
-class SizeofExp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class SizeofExpConcrete(SizeofExp):
-    def __init__(self, value_type):
-        self.value_type = value_type
-
-    def accept(self, visitor):
-        visitor.visitSizeofExpConcrete(self)
 
 
 class PrimaryDefaultExp(NoArrayCreationExp):

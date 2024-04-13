@@ -13,14 +13,6 @@ def p_program(p):
     else:
         p[0] = [p[1]]
 
-# def p_type_name(p):
-#     '''type_name : ID
-#                  | type_name DOT ID'''
-#     if (len(p) == 2):
-#         p[0] = sa.SingleTypeName(p[1])
-#     else:
-#         p[0] = sa.CompoundTypeName(p[1], p[3])
-
 def p_type(p):
     '''type : class_type
             | value_type'''
@@ -560,22 +552,6 @@ def p_primary_post_decrement_exp(p):
 def p_primary_object_creation_exp(p):
     '''primary_no_array_creation_exp : object_creation_exp'''
     p[0] = sa.PrimaryObjectCreationExp(p[1])
-    
-def p_primary_typeof_exp(p):
-    '''primary_no_array_creation_exp : typeof_exp'''
-    p[0] = sa.PrimaryTypeofExp(p[1])
-
-def p_typeof_exp(p):
-    '''typeof_exp : TYPEOF LPAREN type RPAREN'''
-    p[0] = sa.TypeofExpConcrete(p[3])
-
-def p_primary_sizeof_exp(p):
-    '''primary_no_array_creation_exp : sizeof_exp'''
-    p[0] = sa.PrimarySizeofExp(p[1])
-
-def p_sizeof_exp(p):
-    '''sizeof_exp : SIZEOF LPAREN value_type RPAREN'''
-    p[0] = sa.SizeofExpConcrete(p[3])
 
 # def p_exp_list(p):
 #     '''exp_list : exp
@@ -760,4 +736,4 @@ f = open("teste_parser.cs", "r")
 lexer = lex.lex()
 lexer.input(f.read())
 parser = yacc.yacc()
-result = parser.parse(debug=False)
+result = parser.parse(debug=True)

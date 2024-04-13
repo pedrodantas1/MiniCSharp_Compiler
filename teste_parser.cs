@@ -27,7 +27,7 @@
 //     --a = a++;
 //     int a,b,c;
 // }
-void func(){
+int func(){
     const int a = 43, b=32,c=11;
     int a=12,b=22,c=2;
     func2(a,b,c);
@@ -53,5 +53,14 @@ void func(){
     }
     do{
         a = a*2;
-    }while(a<250);
+    }while(a<250 && b > 45);
+    int cont = 0;
+    foreach(char c in "palavra"){
+        cont++;
+        continue;
+    }
+    double d = 3.2;
+    int n = (int) d;
+    int y = x << 4;
+    return (a != 3) ? 1 : 22;
 }

@@ -37,7 +37,6 @@ readonly
 ref
 return
 short
-sizeof
 static
 string
 struct
@@ -46,7 +45,6 @@ this
 throw
 true
 try
-typeof
 uint
 ulong
 ushort

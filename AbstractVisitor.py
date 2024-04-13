@@ -2,15 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class AbstractVisitor(ABC):
-
-    # @abstractmethod
-    # def visitSingleTypeName(self, singletypename):
-    #     pass
-
-    # @abstractmethod
-    # def visitCompoundTypeName(self, compoundtypename):
-    #     pass
-
     @abstractmethod
     def visitTypeClass(self, typeclass):
         pass
@@ -18,10 +9,6 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitTypeValue(self, typevalue):
         pass
-
-    # @abstractmethod
-    # def visitGenericClassType(self, genericclasstype):
-    #     pass
 
     @abstractmethod
     def visitObjectClassType(self, objectclasstype):
@@ -513,22 +500,6 @@ class AbstractVisitor(ABC):
 
     @abstractmethod
     def visitPrimaryObjectCreationExp(self, objectcreationexp):
-        pass
-
-    @abstractmethod
-    def visitPrimaryTypeofExp(self, typeofexp):
-        pass
-
-    @abstractmethod
-    def visitTypeofExpConcrete(self, typeofexp):
-        pass
-
-    @abstractmethod
-    def visitPrimarySizeofExp(self, sizeofexp):
-        pass
-
-    @abstractmethod
-    def visitSizeofExpConcrete(self, sizeofexp):
         pass
 
     # @abstractmethod

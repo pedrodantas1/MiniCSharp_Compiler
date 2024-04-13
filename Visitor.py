@@ -389,7 +389,8 @@ class Visitor(AbstractVisitor):
     
     def visitForeachStmtConcrete(self, foreachstmt):
         myprint(blank(), "foreach (")
-        myprint(foreachstmt.type, " ", foreachstmt.id, " in ")
+        foreachstmt.type.accept(self)
+        myprint(" ", foreachstmt.id, " in ")
         foreachstmt.exp.accept(self)
         myprint(")")
         foreachstmt.block.accept(self)
@@ -507,22 +508,6 @@ class Visitor(AbstractVisitor):
     def visitPrimaryObjectCreationExp(self, objectcreationexp):
         objectcreationexp.object_creation_exp.accept(self)
     
-    def visitPrimaryTypeofExp(self, typeofexp):
-        typeofexp.typeof_exp.accept(self)
-    
-    def visitTypeofExpConcrete(self, typeofexp):
-        myprint("typeof(")
-        typeofexp.type.accept(self)
-        myprint(")")
-    
-    def visitPrimarySizeofExp(self, sizeofexp):
-        sizeofexp.sizeof_exp.accept(self)
-    
-    def visitSizeofExpConcrete(self, sizeofexp):
-        myprint("sizeof(")
-        sizeofexp.value_type.accept(self)
-        myprint(")")
-    
     def visitUnaryPrimaryExp(self, unaryprimaryexp):
         unaryprimaryexp.primary_exp.accept(self)
     
@@ -538,7 +523,7 @@ class Visitor(AbstractVisitor):
     def visitCastExpConcrete(self, castexp):
         myprint("(")
         castexp.type.accept(self)
-        myprint(")")
+        myprint(") ")
         castexp.unary_exp.accept(self)
 
     def visitUnaryMinusExp(self, unaryminusexp):

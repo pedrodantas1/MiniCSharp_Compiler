@@ -1,14 +1,10 @@
 # GLC da linguagem de programação Mini C#
 ```
-type_name -> ID |
-             type_name '.' ID
-
 type -> class_type |
         array_type |
         value_type
 
-class_type -> type_name |
-              OBJECT | 
+class_type -> OBJECT | 
               STRING
 
 @
@@ -199,8 +195,6 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  post_increment_exp |
                                  post_decrement_exp |
                                  object_creation_exp |
-                                 typeof_exp |
-                                 sizeof_exp
 
 parenthesized_exp -> '(' exp ')'
 
@@ -211,10 +205,6 @@ invocation_exp -> primary_exp '(' ')' |
 
 @
 element_access -> primary_no_array_creation_exp '[' exp ']'
-
-typeof_exp -> TYPEOF '(' type ')'
-
-sizeof_exp -> SIZEOF '(' value_type ')'
 
 @
 exp_list -> exp |

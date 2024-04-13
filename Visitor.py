@@ -698,7 +698,33 @@ class Visitor(AbstractVisitor):
         myprint("class ", classdecl.id)
         classdecl.class_body.accept(self)
     
+    def visitClassModPublic(self, classmod):
+        myprint(blank(), "public ")
+
+    def visitClassModProtected(self, classmod):
+        myprint(blank(), "protected ")
+        
+    def visitClassModPrivate(self, classmod):
+        myprint(blank(), "private ")
+
+    def visitClassModStatic(self, classmod):
+        myprint(blank(), "static ")
     
+    def visitClassBodyConcrete(self, classbody):
+        classbody.class_member_decl.accept(self)
+    
+    def visitClassMemberConstant(self, classmember):
+        classmember.constant_declaration.accept(self)
+
+    def visitClassMemberField(self, classmember):
+        classmember.field_declaration.accept(self)
+
+    def visitClassMemberMethod(self, classmember):
+        classmember.method_declaration.accept(self)
+
+    def visitClassMemberConstructor(self, classmember):
+        classmember.constructor_declaration.accept(self)
+        
 
 
 def main():

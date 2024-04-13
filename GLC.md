@@ -300,13 +300,13 @@ class_declaration -> class_modifier CLASS ID class_body |
 
 class_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
 
-class_body -> '{' class_member_declaration '}' |
+class_body -> '{' class_member_decl '}' |
               '{' '}'
 
-class_member_declaration -> constant_declaration |
-                            field_declaration |
-                            method_declaration |
-                            constructor_declaration
+class_member_decl -> constant_declaration |
+                     field_declaration |
+                     method_declaration |
+                     constructor_declaration
 
 constant_declaration -> const_modifier CONST type const_declarators ';' |
                         CONST type const_declarators ';'

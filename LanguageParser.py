@@ -735,8 +735,43 @@ def p_class_declaration(p):
         p[0] = sa.ClassDeclWithMod(p[1], p[3], p[4])
     else:
         p[0] = sa.ClassDeclSimple(p[2], p[3])
-        
 
+def p_class_modifier(p):
+    '''class_modifier : PUBLIC
+                      | PROTECTED
+                      | PRIVATE
+                      | STATIC'''
+    if (p[1] == 'public'):
+        p[0] = sa.ClassModPublic();
+    elif (p[1] == 'protected'):
+        p[0] = sa.ClassModProtected();
+    elif (p[1] == 'private'):
+        p[0] = sa.ClassModPrivate();
+    elif (p[1] == 'static'):
+        p[0] = sa.ClassModStatic();
+
+def p_class_body(p):
+    '''class_body : LBRACE class_member_decl RBRACE
+                  | LBRACE RBRACE'''
+    if (len(p) == 4):
+        p[0] = sa.ClassBodyConcrete(p[2])
+    else:
+        p[0] = sa.ClassBodyConcrete(None)
+
+def p_class_member_declaration(p):
+    '''class_member_decl : constant_declaration
+                         | field_declaration
+                         | method_declaration
+                         | constructor_declaration'''
+    if (isinstance(p[1], sa.ConstantDeclaration)):
+        p[0] = sa.ClassMemberConstant(p[1])
+    elif (isinstance(p[1], sa.FieldDeclaration)):
+        p[0] = sa.ClassMemberField(p[1])
+    elif (isinstance(p[1], sa.MethodDeclaration)):
+        p[0] = sa.ClassMemberMethod(p[1])
+    elif (isinstance(p[1], sa.ConstructorDeclaration)):
+        p[0] = sa.ClassMemberConstructor(p[1])
+        
 
 def p_error(p):
     print("Syntax error in input!")

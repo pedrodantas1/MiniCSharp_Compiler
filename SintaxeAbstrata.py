@@ -1970,3 +1970,93 @@ class ClassDeclSimple(ClassDeclaration):
 
     def accept(self, visitor):
         visitor.visitClassDeclSimple(self)
+
+
+class ClassMod(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ClassModPublic(ClassMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitClassModPublic(self)
+
+
+class ClassModProtected(ClassMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitClassModProtected(self)
+
+
+class ClassModPrivate(ClassMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitClassModPrivate(self)
+
+
+class ClassModStatic(ClassMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitClassModStatic(self)
+
+
+class ClassBody(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ClassBodyConcrete(ClassBody):
+    def __init__(self, class_member_decl):
+        self.class_member_decl = class_member_decl
+
+    def accept(self, visitor):
+        visitor.visitClassBodyConcrete(self)
+
+
+class ClassMemberDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ClassMemberConstant(ClassMemberDeclaration):
+    def __init__(self, constant_declaration):
+        self.constant_declaration = constant_declaration
+
+    def accept(self, visitor):
+        visitor.visitClassMemberConstant(self)
+
+
+class ClassMemberField(ClassMemberDeclaration):
+    def __init__(self, field_declaration):
+        self.field_declaration = field_declaration
+
+    def accept(self, visitor):
+        visitor.visitClassMemberField(self)
+
+
+class ClassMemberMethod(ClassMemberDeclaration):
+    def __init__(self, method_declaration):
+        self.method_declaration = method_declaration
+
+    def accept(self, visitor):
+        visitor.visitClassMemberMethod(self)
+
+
+class ClassMemberConstructor(ClassMemberDeclaration):
+    def __init__(self, constructor_declaration):
+        self.constructor_declaration = constructor_declaration
+
+    def accept(self, visitor):
+        visitor.visitClassMemberConstructor(self)

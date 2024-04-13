@@ -1,3 +1,6 @@
-1-> Implementar atribuição composta
-2-> Ajeitar GLC
-3-> Ajeitar SintaxeAbstrata
+1-> Implementar negação logica (!)
+2-> Implementar operador de complemento bit a bit (~)
+3-> Implementar atribuição composta
+4-> Implementar classe (se der)
+4-> Implementar operadores de escopo private, etc (se der)
+4-> Ajeitar GLC

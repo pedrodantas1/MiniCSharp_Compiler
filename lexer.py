@@ -4,13 +4,11 @@ import ply.lex as lex
 tokens = []
 
 keyword_list = [
-    'bool', 'break', 'case', 'catch', 'char', 'class', 'const', 'continue', 'decimal',
-    'default', 'do', 'double', 'else', 'enum', 'false', 'finally', 'float', 'for',
-    'foreach', 'if', 'in', 'int', 'interface', 'is', 'long', 'namespace', 'new', 
-    'object', 'null', 'out', 'override', 'params', 'private', 'protected', 'public', 
-    'readonly', 'ref', 'return', 'short', 'static', 'string', 'struct', 
-    'switch', 'this', 'throw', 'true', 'try', 'uint', 'ulong', 'ushort', 
-    'void', 'while'
+    'bool', 'break', 'case', 'char', 'class', 'const', 'continue', 'decimal',
+    'default', 'do', 'double', 'else', 'false', 'float', 'for', 'foreach',
+    'if', 'in', 'int', 'is', 'long', 'new', 'object', 'null', 'private',
+    'protected', 'public', 'return', 'static', 'string', 'switch', 'this',
+    'true', 'void', 'while'
 ]
 
 reserved = {}

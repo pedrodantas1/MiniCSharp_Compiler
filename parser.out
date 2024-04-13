@@ -4,40 +4,24 @@ Unused terminals:
 
     AMPEREQUAL
     BANG
-    CATCH
     CIRCUMEQUAL
     CLASS
-    ENUM
-    FINALLY
     HOOKHOOK
     HOOKHOOKEQUAL
-    INTERFACE
     LSHIFTEQUAL
     MINUSEQUAL
-    NAMESPACE
-    OUT
-    OVERRIDE
-    PARAMS
+    OLA
     PERCENTEQUAL
     PIPEEQUAL
     PLUSEQUAL
     PRIVATE
     PROTECTED
     PUBLIC
-    READONLY
-    REF
     RSHIFTEQUAL
-    SHORT
     SLASHEQUAL
     STAREQUAL
     STATIC
-    STRUCT
-    THROW
     TILDE
-    TRY
-    UINT
-    ULONG
-    USHORT
 
 Grammar
 
@@ -246,7 +230,6 @@ BINARYNUM            : 130
 BOOL                 : 9
 BREAK                : 118
 CASE                 : 76
-CATCH                : 
 CHAR                 : 13
 CHARLITERAL          : 87 90 134
 CIRCUMEQUAL          : 
@@ -264,11 +247,9 @@ DOT                  : 140
 DOUBLE               : 15
 DOUBLENUM            : 132
 ELSE                 : 70
-ENUM                 : 
 EQEQUAL              : 174
 EQUAL                : 31 36 62 193
 FALSE                : 93 126
-FINALLY              : 
 FLOAT                : 14
 FLOATNUM             : 86 89 131
 FOR                  : 101 102 103 104 105 106 107 108
@@ -283,7 +264,6 @@ ID                   : 18 19 20 21 31 35 36 62 114 136 140
 IF                   : 69 70
 IN                   : 114
 INT                  : 11
-INTERFACE            : 
 INTNUM               : 85 88 128
 IS                   : 181
 LBRACE               : 43 44 58 59 71
@@ -297,14 +277,11 @@ LT                   : 81 177
 MINUS                : 156 187
 MINUSEQUAL           : 
 MINUSMINUS           : 64 66
-NAMESPACE            : 
 NEW                  : 54 55 56 57
 NOTEQUAL             : 175
 NULL                 : 94 127
 OBJECT               : 5
-OUT                  : 
-OVERRIDE             : 
-PARAMS               : 
+OLA                  : 
 PERCENT              : 191
 PERCENTEQUAL         : 
 PIPE                 : 168
@@ -317,15 +294,12 @@ PRIVATE              :
 PROTECTED            : 
 PUBLIC               : 
 RBRACE               : 43 44 58 59 71
-READONLY             : 
-REF                  : 
 RETURN               : 120 121
 RPAREN               : 18 19 54 55 56 57 69 70 71 99 100 101 102 103 104 105 106 107 108 114 138 142 143 154
 RSB                  : 145
 RSHIFT               : 184
 RSHIFTEQUAL          : 
 SEMI                 : 26 27 45 46 100 101 101 102 102 103 103 104 104 105 105 106 106 107 107 108 108 118 119 120 121
-SHORT                : 
 SLASH                : 190
 SLASHEQUAL           : 
 STAR                 : 189
@@ -333,16 +307,10 @@ STAREQUAL            :
 STATIC               : 
 STRING               : 6
 STRINGLITERAL        : 91 135
-STRUCT               : 
 SWITCH               : 71
 THIS                 : 146
-THROW                : 
 TILDE                : 
 TRUE                 : 92 125
-TRY                  : 
-UINT                 : 
-ULONG                : 
-USHORT               : 
 VOID                 : 10
 WHILE                : 99 100
 error                : 

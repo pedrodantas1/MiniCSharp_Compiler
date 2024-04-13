@@ -104,14 +104,14 @@ def p_statement(p):
         p[0] = sa.StatementEmbedded(p[1])
 
 def p_declaration_stmt(p):
-    '''declaration_statement : const_declaration SEMI
-                             | var_declaration SEMI'''
-    if (isinstance(p[1], sa.ConstDeclaration)):
+    '''declaration_statement : local_const_declaration SEMI
+                             | local_var_declaration SEMI'''
+    if (isinstance(p[1], sa.LocalConstDeclaration)):
         p[0] = sa.DeclarationStmtConst(p[1])
-    elif (isinstance(p[1], sa.VarDeclaration)):
+    elif (isinstance(p[1], sa.LocalVarDeclaration)):
         p[0] = sa.DeclarationStmtVar(p[1])
 
-def p_const_declaration(p):
+def p_local_const_declaration(p):
     '''const_declaration : CONST type const_declarators'''
     p[0] = sa.ConstDeclarationConcrete(p[2], p[3])
 
@@ -127,7 +127,7 @@ def p_const_declarator(p):
     '''const_declarator : ID EQUAL exp'''
     p[0] = sa.ConstDeclaratorConcrete(p[1], p[3])
 
-def p_var_declaration(p):
+def p_local_var_declaration(p):
     '''var_declaration : type var_declarators'''
     p[0] = sa.VarDeclarationConcrete(p[1], p[2])
 
@@ -391,7 +391,7 @@ def p_for_statement_empty(p):
     p[0] = sa.ForStmtConcrete(None, None, None, p[6])
 
 def p_for_initializer(p):
-    '''for_initializer : var_declaration'''
+    '''for_initializer : local_var_declaration'''
     p[0] = sa.SimpleForInitializer(p[1])
 
 def p_for_condition(p):

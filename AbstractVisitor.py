@@ -99,7 +99,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitConstDeclarationConcrete(self, constdeclaration):
+    def visitLocalConstDeclarationConcrete(self, constdeclaration):
         pass
 
     @abstractmethod
@@ -115,7 +115,7 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitVarDeclarationConcrete(self, vardeclaration):
+    def visitLocalVarDeclarationConcrete(self, vardeclaration):
         pass
 
     @abstractmethod

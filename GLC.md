@@ -50,17 +50,17 @@ statement_list -> statement |
 statement -> declaration_statement |
              embedded_statement
 
-declaration_statement -> const_declaration ';' |
-                         var_declaration ';'
+declaration_statement -> local_const_declaration ';' |
+                         local_var_declaration ';'
 
-const_declaration -> CONST type const_declarators
+local_const_declaration -> CONST type const_declarators
 
 const_declarators -> const_declarator |
                      const_declarator ',' const_declarators
 
 const_declarator -> ID '=' exp
 
-var_declaration -> type var_declarators
+local_var_declaration -> type var_declarators
 
 var_declarators -> var_declarator |
                    var_declarator ',' var_declarators
@@ -157,7 +157,7 @@ for_statement -> FOR '(' for_initializer ';' for_condition ';' for_iterator ')' 
                  FOR '(' ';' ';' for_iterator ')' block |
                  FOR '(' ';' ';' ')' block
 
-for_initializer -> var_declaration
+for_initializer -> local_var_declaration
 
 for_condition -> exp
 

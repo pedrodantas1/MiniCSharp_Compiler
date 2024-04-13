@@ -281,19 +281,19 @@ class DeclarationStmtVar(DeclarationStatement):
         visitor.visitDeclarationStmtVar(self)
 
 
-class ConstDeclaration(ABC):
+class LocalConstDeclaration(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
 
 
-class ConstDeclarationConcrete(ConstDeclaration):
+class LocalConstDeclarationConcrete(LocalConstDeclaration):
     def __init__(self, type, const_declarators):
         self.type = type
         self.const_declarators = const_declarators
 
     def accept(self, visitor):
-        visitor.visitConstDeclarationConcrete(self)
+        visitor.visitLocalConstDeclarationConcrete(self)
 
 
 class ConstDeclarators(ABC):
@@ -334,19 +334,19 @@ class ConstDeclaratorConcrete(ConstDeclarator):
         visitor.visitConstDeclaratorConcrete(self)
 
 
-class VarDeclaration(ABC):
+class LocalVarDeclaration(ABC):
     @abstractmethod
     def accept(self, visitor):
         pass
 
 
-class VarDeclarationConcrete(VarDeclaration):
+class LocalVarDeclarationConcrete(LocalVarDeclaration):
     def __init__(self, type, var_declarators):
         self.type = type
         self.var_declarators = var_declarators
 
     def accept(self, visitor):
-        visitor.visitVarDeclarationConcrete(self)
+        visitor.visitLocalVarDeclarationConcrete(self)
 
 
 class VarDeclarators(ABC):
@@ -1020,8 +1020,8 @@ class ForInitializer(ABC):
 
 
 class SimpleForInitializer(ForInitializer):
-    def __init__(self, var_declaration):
-        self.var_declaration = var_declaration
+    def __init__(self, local_var_declaration):
+        self.local_var_declaration = local_var_declaration
 
     def accept(self, visitor):
         visitor.visitSimpleForInitializer(self)

@@ -102,7 +102,7 @@ class Visitor(AbstractVisitor):
         declarationstmtvar.var_declaration.accept(self)
         myprint(";\n")
     
-    def visitConstDeclarationConcrete(self, constdeclaration):
+    def visitLocalConstDeclarationConcrete(self, constdeclaration):
         myprint(blank(), "const ")
         constdeclaration.type.accept(self)
         constdeclaration.const_declarators.accept(self)
@@ -120,7 +120,7 @@ class Visitor(AbstractVisitor):
         myprint(" = ")
         constdeclarator.exp.accept(self)
     
-    def visitVarDeclarationConcrete(self, vardeclaration):
+    def visitLocalVarDeclarationConcrete(self, vardeclaration):
         vardeclaration.type.accept(self)
         myprint(" ")
         vardeclaration.var_declarators.accept(self)
@@ -371,7 +371,7 @@ class Visitor(AbstractVisitor):
         forstmt.block.accept(self)
     
     def visitSimpleForInitializer(self, simpleforinitializer):
-        simpleforinitializer.var_declaration.accept(self)
+        simpleforinitializer.local_var_declaration.accept(self)
     
     def visitForConditionConcrete(self, forcondition):
         forcondition.exp.accept(self)

@@ -771,6 +771,25 @@ def p_class_member_declaration(p):
         p[0] = sa.ClassMemberMethod(p[1])
     elif (isinstance(p[1], sa.ConstructorDeclaration)):
         p[0] = sa.ClassMemberConstructor(p[1])
+
+def p_constant_declaration(p):
+    '''constant_declaration : const_modifier CONST type const_declarators SEMI
+                            | CONST type const_declarators SEMI'''
+    if (len(p) == 6):
+        p[0] = sa.ConstDeclWithMod(p[1], p[3], p[4])
+    else:
+        p[0] = sa.ConstDeclSimple(p[2], p[3])
+
+def p_const_modifier(p):
+    '''const_modifier : PUBLIC
+                      | PROTECTED
+                      | PRIVATE'''
+    if (p[1] == 'public'):
+        p[0] = sa.ConstModPublic();
+    elif (p[1] == 'protected'):
+        p[0] = sa.ConstModProtected();
+    elif (p[1] == 'private'):
+        p[0] = sa.ConstModPrivate();
         
 
 def p_error(p):

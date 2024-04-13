@@ -724,7 +724,24 @@ class Visitor(AbstractVisitor):
 
     def visitClassMemberConstructor(self, classmember):
         classmember.constructor_declaration.accept(self)
-        
+    
+    def visitConstDeclWithMod(self, constdecl):
+        constdecl.const_modifier.accept(self)
+        constdecl.type.accept(self)
+        constdecl.const_declarators.accept(self)
+
+    def visitConstDeclSimple(self, constdecl):
+        constdecl.type.accept(self)
+        constdecl.const_declarators.accept(self)
+    
+    def visitConstModPublic(self, constmod):
+        myprint(blank(), "public ")
+
+    def visitConstModProtected(self, constmod):
+        myprint(blank(), "protected ")
+
+    def visitConstModPrivate(self, constmod):
+        myprint(blank(), "private ")
 
 
 def main():

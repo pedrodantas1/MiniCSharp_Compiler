@@ -2060,3 +2060,58 @@ class ClassMemberConstructor(ClassMemberDeclaration):
 
     def accept(self, visitor):
         visitor.visitClassMemberConstructor(self)
+
+
+class ConstantDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstDeclWithMod(ConstantDeclaration):
+    def __init__(self, const_modifier, type, const_declarators):
+        self.const_modifier = const_modifier
+        self.type = type
+        self.const_declarators = const_declarators
+
+    def accept(self, visitor):
+        visitor.visitConstDeclWithMod(self)
+
+
+class ConstDeclSimple(ConstantDeclaration):
+    def __init__(self, type, const_declarators):
+        self.type = type
+        self.const_declarators = const_declarators
+
+    def accept(self, visitor):
+        visitor.visitConstDeclSimple(self)
+
+
+class ConstMod(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConstModPublic(ConstMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstModPublic(self)
+
+
+class ConstModProtected(ConstMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstModProtected(self)
+
+
+class ConstModPrivate(ConstMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitConstModPrivate(self)

@@ -733,3 +733,23 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitClassMemberConstructor(self, classmember):
         pass
+
+    @abstractmethod
+    def visitConstDeclWithMod(self, constdecl):
+        pass
+
+    @abstractmethod
+    def visitConstDeclSimple(self, constdecl):
+        pass
+
+    @abstractmethod
+    def visitConstModPublic(self, constmod):
+        pass
+
+    @abstractmethod
+    def visitConstModProtected(self, constmod):
+        pass
+
+    @abstractmethod
+    def visitConstModPrivate(self, constmod):
+        pass

@@ -753,3 +753,39 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitConstModPrivate(self, constmod):
         pass
+
+    @abstractmethod
+    def visitFieldDeclWithMod(self, fielddecl):
+        pass
+
+    @abstractmethod
+    def visitFieldDeclSimple(self, fielddecl):
+        pass
+
+    @abstractmethod
+    def visitSingleFieldModifier(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitCompoundFieldModifier(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitFieldModNew(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitFieldModPublic(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitFieldModProtected(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitFieldModPrivate(self, fieldmod):
+        pass
+
+    @abstractmethod
+    def visitFieldModStatic(self, fieldmod):
+        pass

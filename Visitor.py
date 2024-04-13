@@ -742,6 +742,37 @@ class Visitor(AbstractVisitor):
 
     def visitConstModPrivate(self, constmod):
         myprint(blank(), "private ")
+    
+    def visitFieldDeclWithMod(self, fielddecl):
+        fielddecl.field_modifiers.accept(self)
+        fielddecl.type.accept(self)
+        fielddecl.var_declarators.accept(self)
+
+    def visitFieldDeclSimple(self, fielddecl):
+        fielddecl.type.accept(self)
+        fielddecl.var_declarators.accept(self)
+    
+    def visitSingleFieldModifier(self, fieldmod):
+        fieldmod.field_modifier.accept(self)
+
+    def visitCompoundFieldModifier(self, fieldmod):
+        fieldmod.field_modifier.accept(self)
+        fieldmod.field_modifiers.accept(self)
+    
+    def visitFieldModNew(self, fieldmod):
+        myprint(blank(), "new ")
+
+    def visitFieldModPublic(self, fieldmod):
+        myprint(blank(), "public ")
+
+    def visitFieldModProtected(self, fieldmod):
+        myprint(blank(), "protected ")
+
+    def visitFieldModPrivate(self, fieldmod):
+        myprint(blank(), "private ")
+
+    def visitFieldModStatic(self, fieldmod):
+        myprint(blank(), "static ")
 
 
 def main():

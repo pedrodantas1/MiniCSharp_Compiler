@@ -2115,3 +2115,97 @@ class ConstModPrivate(ConstMod):
 
     def accept(self, visitor):
         visitor.visitConstModPrivate(self)
+
+
+class FieldDeclaration(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class FieldDeclWithMod(FieldDeclaration):
+    def __init__(self, field_modifiers, type, var_declarators):
+        self.field_modifiers = field_modifiers
+        self.type = type
+        self.var_declarators = var_declarators
+
+    def accept(self, visitor):
+        visitor.visitFieldDeclWithMod(self)
+
+
+class FieldDeclSimple(FieldDeclaration):
+    def __init__(self, type, var_declarators):
+        self.type = type
+        self.var_declarators = var_declarators
+
+    def accept(self, visitor):
+        visitor.visitFieldDeclSimple(self)
+
+
+class FieldModifiers(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SingleFieldModifier(FieldModifiers):
+    def __init__(self, field_modifier):
+        self.field_modifier = field_modifier
+
+    def accept(self, visitor):
+        visitor.visitSingleFieldModifier(self)
+
+
+class CompoundFieldModifier(FieldModifiers):
+    def __init__(self, field_modifier, field_modifiers):
+        self.field_modifier = field_modifier
+        self.field_modifiers = field_modifiers
+
+    def accept(self, visitor):
+        visitor.visitCompoundFieldModifier(self)
+
+
+class FieldMod(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class FieldModNew(FieldMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitFieldModNew(self)
+
+
+class FieldModPublic(FieldMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitFieldModPublic(self)
+
+
+class FieldModProtected(FieldMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitFieldModProtected(self)
+
+
+class FieldModPrivate(FieldMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitFieldModPrivate(self)
+
+
+class FieldModStatic(FieldMod):
+    def __init__(self):
+        pass
+
+    def accept(self, visitor):
+        visitor.visitFieldModStatic(self)

@@ -790,6 +790,39 @@ def p_const_modifier(p):
         p[0] = sa.ConstModProtected();
     elif (p[1] == 'private'):
         p[0] = sa.ConstModPrivate();
+
+def p_field_declaration(p):
+    '''field_declaration : field_modifiers type var_declarators SEMI
+                         | type var_declarators SEMI'''
+    if (len(p) == 5):
+        p[0] = sa.FieldDeclWithMod(p[1], p[2], p[3])
+    else:
+        p[0] = sa.FieldDeclSimple(p[1], p[2])
+
+def p_field_modifiers(p):
+    '''field_modifiers : field_modifier
+                       | field_modifier field_modifiers'''
+    if (len(p) == 2):
+        p[0] = sa.SingleFieldModifier(p[1])
+    else:
+        p[0] = sa.CompoundFieldModifier(p[1], p[2])
+
+def p_field_modifier(p):
+    '''field_modifier : NEW
+                      | PUBLIC
+                      | PROTECTED
+                      | PRIVATE
+                      | STATIC'''
+    if (p[1] == 'new'):
+        p[0] = sa.FieldModNew();
+    elif (p[1] == 'public'):
+        p[0] = sa.FieldModPublic();
+    elif (p[1] == 'protected'):
+        p[0] = sa.FieldModProtected();
+    elif (p[1] == 'private'):
+        p[0] = sa.FieldModPrivate();
+    elif (p[1] == 'static'):
+        p[0] = sa.FieldModStatic();
         
 
 def p_error(p):

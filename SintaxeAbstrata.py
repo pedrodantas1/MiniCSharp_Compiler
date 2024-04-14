@@ -191,7 +191,6 @@ class CompoundStatementList(StatementList):
         visitor.visitCompoundStatementList(self)
 
 
-# Comandos
 class Statement(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -214,7 +213,6 @@ class StatementEmbedded(Statement):
         visitor.visitStatementEmbedded(self)
 
 
-# Comandos de declaracao (constante e variavel)
 class DeclarationStatement(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -351,9 +349,6 @@ class VarDeclaratorIdExp(VarDeclarator):
         visitor.visitVarDeclaratorIdExp(self)
 
 
-# Comandos integrados
-# (comandos exp, if, switch, while, do while, for, foreach,
-# break, continue, return)
 class EmbeddedStatement(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -408,7 +403,6 @@ class EmbeddedStmtJump(EmbeddedStatement):
         visitor.visitEmbeddedStmtJump(self)
 
 
-# Bloco de comando
 class BlockStmt(ABC):
     @abstractmethod
     def accept(self, visitor):

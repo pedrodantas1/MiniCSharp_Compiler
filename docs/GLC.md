@@ -168,7 +168,6 @@ primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  parenthesized_exp |
                                  member_access |
                                  invocation_exp |
-                                 element_access |
                                  THIS |
                                  post_increment_exp |
                                  post_decrement_exp |
@@ -241,10 +240,7 @@ multiplicative_exp -> multiplicative_exp '*' unary_exp |
                       multiplicative_exp '%' unary_exp |
                       unary_exp
 
-assignment -> unary_exp assignment_operator exp
-
-assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
-                       '|=' | '^=' | '<<=' | '>>='
+assignment -> unary_exp '=' exp
 
 class_declaration -> modifiers CLASS ID class_body |
                      CLASS ID class_body

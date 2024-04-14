@@ -706,31 +706,38 @@ class Visitor(AbstractVisitor):
         classmemberlist.class_member_list.accept(self)
     
     def visitClassMemberConstant(self, classmember):
+        # myprint("\n")
         classmember.constant_declaration.accept(self)
 
     def visitClassMemberField(self, classmember):
+        # myprint("\n")
         classmember.field_declaration.accept(self)
 
     def visitClassMemberMethod(self, classmember):
+        myprint("\n")
         classmember.method_declaration.accept(self)
 
     def visitClassMemberConstructor(self, classmember):
+        myprint("\n")
         classmember.constructor_declaration.accept(self)
     
     def visitConstDeclWithMod(self, constdecl):
+        myprint(blank())
         constdecl.modifiers.accept(self)
+        myprint("const ")
         constdecl.type.accept(self)
-        myprint(" ")
         constdecl.const_declarators.accept(self)
         myprint(";\n")
 
     def visitConstDeclSimple(self, constdecl):
+        myprint(blank())
+        myprint("const ")
         constdecl.type.accept(self)
-        myprint(" ")
         constdecl.const_declarators.accept(self)
         myprint(";\n")
     
     def visitFieldDeclWithMod(self, fielddecl):
+        myprint(blank())
         fielddecl.modifiers_list.accept(self)
         fielddecl.type.accept(self)
         myprint(" ")
@@ -738,6 +745,7 @@ class Visitor(AbstractVisitor):
         myprint(";\n")
 
     def visitFieldDeclSimple(self, fielddecl):
+        myprint(blank())
         fielddecl.type.accept(self)
         myprint(" ")
         fielddecl.var_declarators.accept(self)
@@ -781,7 +789,7 @@ class Visitor(AbstractVisitor):
         myprint(")")
     
     def visitModifiersConcrete(self, modifiers):
-        myprint(blank(), modifiers.modifier, " ")
+        myprint(modifiers.modifier, " ")
     
     def visitSimpleModifiersList(self, modifierslist):
         modifierslist.modifiers.accept(self)

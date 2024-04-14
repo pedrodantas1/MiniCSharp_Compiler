@@ -1,4 +1,3 @@
-1-> Analisar espaçamento do static
 2-> Permitir public static class, por exemplo
 3-> Implementar atribuição composta
 4-> Implementar negação logica (!)

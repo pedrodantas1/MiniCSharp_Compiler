@@ -838,4 +838,4 @@ if __name__ == "__main__":
     lexer = lex.lex()
     lexer.input(f.read())
     parser = yacc.yacc()
-    result = parser.parse(debug=True)
+    result = parser.parse(debug=False)

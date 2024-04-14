@@ -20,13 +20,10 @@ for keyword in keyword_list:
 tokens += [
     'PLUSPLUS', 'MINUSMINUS', 'PLUS', 'MINUS', 'STAR', 'SLASH', 'PERCENT',
     'BANG', 'AMPER', 'CIRCUMFLEX', 'PIPE', 'AMPERAMPER', 'PIPEPIPE',
-    'TILDE', 'LSHIFT', 'RSHIFT',
+    'LSHIFT', 'RSHIFT',
     'EQEQUAL', 'NOTEQUAL', 'LT', 'GT', 'LEQ', 'GEQ',
     
-    'EQUAL', 'PLUSEQUAL', 'MINUSEQUAL', 'STAREQUAL', 'SLASHEQUAL', 'PERCENTEQUAL',
-    'AMPEREQUAL', 'PIPEEQUAL', 'CIRCUMEQUAL',
-    'LSHIFTEQUAL', 'RSHIFTEQUAL',
-    'HOOKHOOK', 'HOOKHOOKEQUAL',
+    'EQUAL',
     
     'HOOK', 'COLON', 'COMMA', 'SEMI', 'DOT',
     'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LSB', 'RSB',
@@ -53,7 +50,6 @@ t_PIPE = r'\|'
 t_AMPERAMPER = r'&&'
 t_PIPEPIPE = r'\|\|'
 
-t_TILDE = r'~'
 t_LSHIFT = r'<<'
 t_RSHIFT = r'>>'
 
@@ -65,18 +61,6 @@ t_LEQ = r'<='
 t_GEQ = r'>='
 
 t_EQUAL = r'='
-t_PLUSEQUAL = r'\+='
-t_MINUSEQUAL = r'-='
-t_STAREQUAL = r'\*='
-t_SLASHEQUAL = r'/='
-t_PERCENTEQUAL = r'%='
-t_AMPEREQUAL = r'&='
-t_PIPEEQUAL = r'\|='
-t_CIRCUMEQUAL = r'\^='
-t_LSHIFTEQUAL = r'<<='
-t_RSHIFTEQUAL = r'>>='
-t_HOOKHOOK = r'\?\?'
-t_HOOKHOOKEQUAL = r'\?\?='
 
 t_HOOK = r'\?'
 t_COLON = r':'

@@ -2,20 +2,7 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    AMPEREQUAL
     BANG
-    CIRCUMEQUAL
-    HOOKHOOK
-    HOOKHOOKEQUAL
-    LSHIFTEQUAL
-    MINUSEQUAL
-    PERCENTEQUAL
-    PIPEEQUAL
-    PLUSEQUAL
-    RSHIFTEQUAL
-    SLASHEQUAL
-    STAREQUAL
-    TILDE
 
 Grammar
 
@@ -244,7 +231,6 @@ Terminals, with rules where they appear
 
 AMPER                : 169
 AMPERAMPER           : 163
-AMPEREQUAL           : 
 BANG                 : 
 BINARYNUM            : 127
 BOOL                 : 9
@@ -252,7 +238,6 @@ BREAK                : 115
 CASE                 : 73
 CHAR                 : 13
 CHARLITERAL          : 84 87 131
-CIRCUMEQUAL          : 
 CIRCUMFLEX           : 167
 CLASS                : 191 192
 COLON                : 73 74 159
@@ -278,8 +263,6 @@ GEQ                  : 81 177
 GT                   : 79 175
 HEXADECIMALNUM       : 126
 HOOK                 : 159
-HOOKHOOK             : 
-HOOKHOOKEQUAL        : 
 ID                   : 17 18 28 32 33 59 111 133 137 191 192 207 208 211 212
 IF                   : 66 67
 IN                   : 111
@@ -292,22 +275,17 @@ LONG                 : 12
 LPAREN               : 51 52 53 54 66 67 68 96 97 98 99 100 101 102 103 104 105 111 135 139 140 151 207 208 211 212
 LSB                  : 142
 LSHIFT               : 180
-LSHIFTEQUAL          : 
 LT                   : 78 174
 MINUS                : 153 184
-MINUSEQUAL           : 
 MINUSMINUS           : 61 63
 NEW                  : 51 52 53 54 213
 NOTEQUAL             : 172
 NULL                 : 91 124
 OBJECT               : 5
 PERCENT              : 188
-PERCENTEQUAL         : 
 PIPE                 : 165
-PIPEEQUAL            : 
 PIPEPIPE             : 161
 PLUS                 : 155 183
-PLUSEQUAL            : 
 PLUSPLUS             : 60 62
 PRIVATE              : 216
 PROTECTED            : 215
@@ -317,18 +295,14 @@ RETURN               : 117 118
 RPAREN               : 51 52 53 54 66 67 68 96 97 98 99 100 101 102 103 104 105 111 135 139 140 151 207 208 211 212
 RSB                  : 142
 RSHIFT               : 181
-RSHIFTEQUAL          : 
 SEMI                 : 23 24 42 43 97 98 98 99 99 100 100 101 101 102 102 103 103 104 104 105 105 115 116 117 118 201 202 203 204
 SLASH                : 187
-SLASHEQUAL           : 
 STAR                 : 186
-STAREQUAL            : 
 STATIC               : 217
 STRING               : 6
 STRINGLITERAL        : 88 132
 SWITCH               : 68
 THIS                 : 143
-TILDE                : 
 TRUE                 : 89 122
 VOID                 : 10
 WHILE                : 96 97

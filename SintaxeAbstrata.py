@@ -1,19 +1,6 @@
 from abc import ABC, abstractmethod
 
 
-# Herdado por mais de uma classe (talvez mudar)
-class NoArrayCreationExp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class UnaryExp(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
 class Type(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -154,37 +141,6 @@ class DecimalType(FloatingPointType):
 
     def accept(self, visitor):
         return visitor.visitDecimalType(self)
-
-
-# class FuncDecl(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
-
-
-# class FuncDeclConcrete(FuncDecl):
-#     def __init__(self, signature, block):
-#         self.signature = signature
-#         self.block = block
-
-#     def accept(self, visitor):
-#         return visitor.visitFuncDeclConcrete(self)
-
-
-# class Signature(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
-
-
-# class SignatureConcrete(Signature):
-#     def __init__(self, type, id, param_list):
-#         self.type = type
-#         self.id = id
-#         self.param_list = param_list  # Pode ser None
-
-#     def accept(self, visitor):
-#         return visitor.visitSignatureConcrete(self)
 
 
 class ParamList(ABC):
@@ -395,15 +351,6 @@ class VarDeclaratorIdExp(VarDeclarator):
         visitor.visitVarDeclaratorIdExp(self)
 
 
-# class VarDeclaratorIdArray(VarDeclarator):
-#     def __init__(self, id, array_initializer):
-#         self.id = id
-#         self.array_initializer = array_initializer
-
-#     def accept(self, visitor):
-#         visitor.visitVarDeclaratorIdArray(self)
-
-
 # Comandos integrados
 # (comandos exp, if, switch, while, do while, for, foreach,
 # break, continue, return)
@@ -476,7 +423,6 @@ class BlockStmtConcrete(BlockStmt):
         visitor.visitBlockStmtConcrete(self)
 
 
-# Comando vazio
 class EmptyStmt(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -567,7 +513,6 @@ class StmtExpPreDecrement(StmtExp):
         visitor.visitStmtExpPreDecrement(self)
 
 
-# Comando para criacao de objetos
 class ObjectCreationExp(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -1167,7 +1112,6 @@ class ReturnStmtConcrete(ReturnStmt):
         visitor.visitReturnStmtConcrete(self)
 
 
-# Lista de argumentos
 class ArgList(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -1191,7 +1135,6 @@ class CompoundArgList(ArgList):
         visitor.visitCompoundArgList(self)
 
 
-# Expressoes primarias
 class PrimaryExp(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -1206,18 +1149,10 @@ class PrimaryExpNoArrayCreation(PrimaryExp):
         visitor.visitPrimaryExpNoArrayCreation(self)
 
 
-# class PrimaryExpArrayCreation(PrimaryExp):
-#     def __init__(self, array_creation_exp):
-#         self.array_creation_exp = array_creation_exp
-
-#     def accept(self, visitor):
-#         visitor.visitPrimaryExpArrayCreation(self)
-
-
-# class NoArrayCreationExp(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
+class NoArrayCreationExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
 
 
 class BooleanExp(NoArrayCreationExp):
@@ -1462,18 +1397,10 @@ class CompoundExpList(ExpList):
         visitor.visitCompoundExpList(self)
 
 
-# class ArrayCreationExp(ABC):
-#     @abstractmethod
-#     def accept(self, visitor):
-#         pass
-
-
-# class ArrayCreationExp(ArrayCreationExp):
-#     def __init__(self, exp):
-#         self.exp = exp
-
-#     def accept(self, visitor):
-#         visitor.visitArrayCreationExp(self)
+class UnaryExp(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
 
 
 class UnaryPrimaryExp(UnaryExp):

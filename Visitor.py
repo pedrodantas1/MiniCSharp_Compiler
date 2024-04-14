@@ -476,15 +476,6 @@ class Visitor(AbstractVisitor):
             invocationexp.arg_list.accept(self)
         myprint(")")
     
-    # def visitPrimaryElementAccessExp(self, elementaccessexp):
-    #     elementaccessexp.element_access.accept(self)
-    
-    # def visitElementAccessExpConcrete(self, elementaccessexp):
-    #     elementaccessexp.no_array_creation_exp.accept(self)
-    #     myprint("[")
-    #     elementaccessexp.exp.accept(self)
-    #     myprint("]")
-    
     def visitThisExp(self, thisexp):
         myprint("this")
     
@@ -675,7 +666,7 @@ class Visitor(AbstractVisitor):
     
     def visitAssignExp(self, assignexp):
         assignexp.unary_exp.accept(self)
-        myprint(" = ") # Por enquanto atribuição simples apenas
+        myprint(" = ")
         assignexp.exp.accept(self)
     
     def visitClassDeclWithMod(self, classdecl):

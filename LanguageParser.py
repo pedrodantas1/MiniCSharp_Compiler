@@ -67,18 +67,6 @@ def p_integral_type_decimal(p):
     '''floating_point_type : DECIMAL'''
     p[0] = sa.DecimalType(p[1])
 
-# def p_func_declaration(p):
-#     '''func_declaration : signature block'''
-#     p[0] = sa.FuncDeclConcrete(p[1], p[2])
-    
-# def p_signature(p):
-#     '''signature : type ID LPAREN param_list RPAREN
-#                  | type ID LPAREN RPAREN'''
-#     if (isinstance(p[4], sa.ParamList)):
-#         p[0] = sa.SignatureConcrete(p[1], p[2], p[4])
-#     else:
-#         p[0] = sa.SignatureConcrete(p[1], p[2], None)
-
 def p_param_list(p):
     '''param_list : type ID
                   | type ID COMMA param_list'''
@@ -538,28 +526,17 @@ def p_this_exp(p):
     '''primary_no_array_creation_exp : THIS'''
     p[0] = sa.ThisExp(p[1])
 
-# @
 def p_primary_post_increment_exp(p):
     '''primary_no_array_creation_exp : post_increment_exp'''
     p[0] = sa.PrimaryPostIncrementExp(p[1])
 
-# @
 def p_primary_post_decrement_exp(p):
     '''primary_no_array_creation_exp : post_decrement_exp'''
     p[0] = sa.PrimaryPostDecrementExp(p[1])
 
-# @
 def p_primary_object_creation_exp(p):
     '''primary_no_array_creation_exp : object_creation_exp'''
     p[0] = sa.PrimaryObjectCreationExp(p[1])
-
-# def p_exp_list(p):
-#     '''exp_list : exp
-#                 | exp_list COMMA exp'''
-#     if (len(p) == 2):
-#         p[0] = sa.SingleExpList(p[1])
-#     else:
-#         p[0] = sa.CompoundExpList(p[1], p[3])
 
 def p_unary_primary_exp(p):
     '''unary_exp : primary_exp'''

@@ -1,6 +1,1 @@
-2-> Permitir public static class, por exemplo
-3-> Implementar atribuição composta
-4-> Implementar negação logica (!)
-5-> Implementar operador de complemento bit a bit (~)
-6-> Ajeitar GLC
-7-> Rever Sintaxe abstrata
+1-> Implementar negação logica (!)

@@ -1,25 +1,10 @@
 # GLC da linguagem de programação Mini C#
 ```
 type -> class_type |
-        array_type |
         value_type
 
 class_type -> OBJECT | 
               STRING
-
-@
-array_type -> non_array_type rank_specifiers
-
-@
-non_array_type -> value_type |
-                  class_type
-
-@
-rank_specifier -> '[' ']'
-
-@
-rank_specifiers -> rank_specifier |
-                   rank_specifier rank_specifiers
 
 value_type -> integral_type |
               floating_point_type |
@@ -30,16 +15,8 @@ integral_type -> INT | LONG | CHAR
 
 floating_point_type -> FLOAT | DOUBLE | DECIMAL
 
-<!-- program -> func_declaration |
-           func_declaration program -->
-
 program -> class_declaration |
            class_declaration program
-
-<!-- func_declaration -> signature block -->
-
-<!-- signature -> type ID '(' param_list ')' |
-             type ID '(' ')' -->
 
 param_list -> type ID |
               type ID ',' param_list
@@ -66,8 +43,7 @@ var_declarators -> var_declarator |
                    var_declarator ',' var_declarators
 
 var_declarator -> ID |
-                  ID '=' exp |
-                  @ ID '=' array_initializer
+                  ID '=' exp
 
 embedded_statement -> block |
                       empty_statement |
@@ -182,8 +158,7 @@ return_statement -> RETURN ';' |
 arg_list -> exp |
             exp ',' arg_list
 
-primary_exp -> primary_no_array_creation_exp |
-               @ array_creation_exp
+primary_exp -> primary_no_array_creation_exp
 
 primary_no_array_creation_exp -> TRUE | FALSE | NULL
                                  INTNUM | HEXADECIMALNUM| BINARYNUM | 
@@ -205,30 +180,6 @@ member_access -> primary_exp '.' ID
 
 invocation_exp -> primary_exp '(' ')' |
                   primary_exp '(' arg_list ')'
-
-@
-element_access -> primary_no_array_creation_exp '[' exp ']'
-
-@
-exp_list -> exp |
-            exp_list ',' exp
-
-@
-array_creation_exp -> NEW non_array_type '[' exp_list ']' |
-                      NEW non_array_type '[' exp_list ']' rank_specifiers |
-                      NEW non_array_type '[' exp_list ']' array_initializer |
-                      NEW non_array_type '[' exp_list ']' rank_specifiers array_initializer
-
-@
-array_initializer -> '{' variable_initializer_list '}'
-
-@
-variable_initializer_list -> variable_initializer |
-                             variable_initializer ',' variable_initializer_list
-
-@
-variable_initializer -> exp |
-                        array_initializer
 
 unary_exp -> primary_exp |
              pre_increment_exp |

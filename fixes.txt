@@ -1,10 +1,5 @@
-1-> Implementar classe (se der)
-2-> Implementar operadores de escopo private, etc (se der)
-    > Mudar demais artefatos com as mudanças implementadas na GLC
-        > adaptar e criar novas regras e classes no parser e visitor
-
-3-> Analisar espaçamento do static
-3-> Permitir public static class, por exemplo
+1-> Analisar espaçamento do static
+2-> Permitir public static class, por exemplo
 3-> Implementar atribuição composta
 4-> Implementar negação logica (!)
 5-> Implementar operador de complemento bit a bit (~)

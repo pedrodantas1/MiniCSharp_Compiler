@@ -58,14 +58,6 @@ class AbstractVisitor(ABC):
     def visitDecimalType(self, decimaltype):
         pass
 
-    # @abstractmethod
-    # def visitFuncDeclConcrete(self, funcdecl):
-    #     pass
-
-    # @abstractmethod
-    # def visitSignatureConcrete(self, signature):
-    #     pass
-
     @abstractmethod
     def visitSingleParamList(self, singleparamlist):
         pass
@@ -133,10 +125,6 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitVarDeclaratorIdExp(self, vardeclaratoridexp):
         pass
-
-    # @abstractmethod
-    # def visitVarDeclaratorIdArray(self, vardeclaratoridarray):
-    #     pass
 
     @abstractmethod
     def visitEmbeddedStmtBlock(self, embeddedstmtblock):
@@ -406,10 +394,6 @@ class AbstractVisitor(ABC):
     def visitPrimaryExpNoArrayCreation(self, primaryexp):
         pass
 
-    # @abstractmethod
-    # def visitPrimaryExpArrayCreation(self, primaryexp):
-    #     pass
-
     @abstractmethod
     def visitBooleanExp(self, booleanexp):
         pass
@@ -478,14 +462,6 @@ class AbstractVisitor(ABC):
     def visitInvocationExpConcrete(self, invocationexp):
         pass
 
-    # @abstractmethod
-    # def visitPrimaryElementAccessExp(self, elementaccessexp):
-    #     pass
-
-    # @abstractmethod
-    # def visitElementAccessExpConcrete(self, elementaccessexp):
-    #     pass
-
     @abstractmethod
     def visitThisExp(self, thisexp):
         pass
@@ -501,18 +477,6 @@ class AbstractVisitor(ABC):
     @abstractmethod
     def visitPrimaryObjectCreationExp(self, objectcreationexp):
         pass
-
-    # @abstractmethod
-    # def visitSingleExpList(self, singleexplist):
-    #     pass
-
-    # @abstractmethod
-    # def visitCompoundExpList(self, compoundexplist):
-    #     pass
-
-    # @abstractmethod
-    # def visitArrayCreationExp(self, arraycreationexp):
-    #     pass
 
     @abstractmethod
     def visitUnaryPrimaryExp(self, unaryprimaryexp):
@@ -699,22 +663,6 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitClassModPublic(self, classmod):
-        pass
-
-    @abstractmethod
-    def visitClassModProtected(self, classmod):
-        pass
-
-    @abstractmethod
-    def visitClassModPrivate(self, classmod):
-        pass
-
-    @abstractmethod
-    def visitClassModStatic(self, classmod):
-        pass
-
-    @abstractmethod
     def visitClassBodyConcrete(self, classbody):
         pass
 
@@ -743,18 +691,6 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitConstModPublic(self, constmod):
-        pass
-
-    @abstractmethod
-    def visitConstModProtected(self, constmod):
-        pass
-
-    @abstractmethod
-    def visitConstModPrivate(self, constmod):
-        pass
-
-    @abstractmethod
     def visitFieldDeclWithMod(self, fielddecl):
         pass
 
@@ -763,63 +699,11 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitSingleFieldModifier(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitCompoundFieldModifier(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitFieldModNew(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitFieldModPublic(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitFieldModProtected(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitFieldModPrivate(self, fieldmod):
-        pass
-
-    @abstractmethod
-    def visitFieldModStatic(self, fieldmod):
-        pass
-
-    @abstractmethod
     def visitMethodDeclWithMod(self, methoddecl):
         pass
 
     @abstractmethod
     def visitMethodDeclSimple(self, methoddecl):
-        pass
-
-    @abstractmethod
-    def visitSingleMethodModifier(self, methodmod):
-        pass
-
-    @abstractmethod
-    def visitCompoundMethodModifier(self, methodmod):
-        pass
-
-    @abstractmethod
-    def visitMethodModPublic(self, methodmod):
-        pass
-
-    @abstractmethod
-    def visitMethodModProtected(self, methodmod):
-        pass
-
-    @abstractmethod
-    def visitMethodModPrivate(self, methodmod):
-        pass
-
-    @abstractmethod
-    def visitMethodModStatic(self, methodmod):
         pass
 
     @abstractmethod
@@ -835,17 +719,17 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
-    def visitConstructorModPublic(self, constructormod):
-        pass
-
-    @abstractmethod
-    def visitConstructorModProtected(self, constructormod):
-        pass
-
-    @abstractmethod
-    def visitConstructorModPrivate(self, constructormod):
-        pass
-
-    @abstractmethod
     def visitConstructorHeadConcrete(self, constructorhead):
+        pass
+
+    @abstractmethod
+    def visitModifiersConcrete(self, modifiers):
+        pass
+
+    @abstractmethod
+    def visitSimpleModifiersList(self, modifierslist):
+        pass
+
+    @abstractmethod
+    def visitCompoundModifiersList(self, modifierslist):
         pass

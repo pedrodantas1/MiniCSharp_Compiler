@@ -1954,8 +1954,8 @@ class ClassDeclaration(ABC):
 
 
 class ClassDeclWithMod(ClassDeclaration):
-    def __init__(self, class_modifier, id, class_body):
-        self.class_modifier = class_modifier
+    def __init__(self, modifiers, id, class_body):
+        self.modifiers = modifiers
         self.id = id
         self.class_body = class_body
 
@@ -1970,44 +1970,6 @@ class ClassDeclSimple(ClassDeclaration):
 
     def accept(self, visitor):
         visitor.visitClassDeclSimple(self)
-
-
-class ClassMod(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class ClassModPublic(ClassMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitClassModPublic(self)
-
-
-class ClassModProtected(ClassMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitClassModProtected(self)
-
-
-class ClassModPrivate(ClassMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitClassModPrivate(self)
-
-
-class ClassModStatic(ClassMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitClassModStatic(self)
 
 
 class ClassBody(ABC):
@@ -2069,8 +2031,8 @@ class ConstantDeclaration(ABC):
 
 
 class ConstDeclWithMod(ConstantDeclaration):
-    def __init__(self, const_modifier, type, const_declarators):
-        self.const_modifier = const_modifier
+    def __init__(self, modifiers, type, const_declarators):
+        self.modifiers = modifiers
         self.type = type
         self.const_declarators = const_declarators
 
@@ -2087,36 +2049,6 @@ class ConstDeclSimple(ConstantDeclaration):
         visitor.visitConstDeclSimple(self)
 
 
-class ConstMod(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class ConstModPublic(ConstMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstModPublic(self)
-
-
-class ConstModProtected(ConstMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstModProtected(self)
-
-
-class ConstModPrivate(ConstMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstModPrivate(self)
-
-
 class FieldDeclaration(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -2124,8 +2056,8 @@ class FieldDeclaration(ABC):
 
 
 class FieldDeclWithMod(FieldDeclaration):
-    def __init__(self, field_modifiers, type, var_declarators):
-        self.field_modifiers = field_modifiers
+    def __init__(self, modifiers_list, type, var_declarators):
+        self.modifiers_list = modifiers_list
         self.type = type
         self.var_declarators = var_declarators
 
@@ -2142,75 +2074,6 @@ class FieldDeclSimple(FieldDeclaration):
         visitor.visitFieldDeclSimple(self)
 
 
-class FieldModifiers(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class SingleFieldModifier(FieldModifiers):
-    def __init__(self, field_modifier):
-        self.field_modifier = field_modifier
-
-    def accept(self, visitor):
-        visitor.visitSingleFieldModifier(self)
-
-
-class CompoundFieldModifier(FieldModifiers):
-    def __init__(self, field_modifier, field_modifiers):
-        self.field_modifier = field_modifier
-        self.field_modifiers = field_modifiers
-
-    def accept(self, visitor):
-        visitor.visitCompoundFieldModifier(self)
-
-
-class FieldMod(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class FieldModNew(FieldMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitFieldModNew(self)
-
-
-class FieldModPublic(FieldMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitFieldModPublic(self)
-
-
-class FieldModProtected(FieldMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitFieldModProtected(self)
-
-
-class FieldModPrivate(FieldMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitFieldModPrivate(self)
-
-
-class FieldModStatic(FieldMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitFieldModStatic(self)
-
-
 class MethodDeclaration(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -2218,8 +2081,8 @@ class MethodDeclaration(ABC):
 
 
 class MethodDeclWithMod(MethodDeclaration):
-    def __init__(self, method_modifiers, type, method_head, block):
-        self.method_modifiers = method_modifiers
+    def __init__(self, modifiers_list, type, method_head, block):
+        self.modifiers_list = modifiers_list
         self.type = type
         self.method_head = method_head
         self.block = block
@@ -2236,67 +2099,6 @@ class MethodDeclSimple(MethodDeclaration):
 
     def accept(self, visitor):
         visitor.visitMethodDeclSimple(self)
-
-
-class MethodModifiers(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class SingleMethodModifier(MethodModifiers):
-    def __init__(self, method_modifier):
-        self.method_modifier = method_modifier
-
-    def accept(self, visitor):
-        visitor.visitSingleMethodModifier(self)
-
-
-class CompoundMethodModifier(MethodModifiers):
-    def __init__(self, method_modifier, method_modifiers):
-        self.method_modifier = method_modifier
-        self.method_modifiers = method_modifiers
-
-    def accept(self, visitor):
-        visitor.visitCompoundMethodModifier(self)
-
-
-class MethodMod(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class MethodModPublic(MethodMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitMethodModPublic(self)
-
-
-class MethodModProtected(MethodMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitMethodModProtected(self)
-
-
-class MethodModPrivate(MethodMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitMethodModPrivate(self)
-
-
-class MethodModStatic(MethodMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitMethodModStatic(self)
 
 
 class MethodHead(ABC):
@@ -2321,8 +2123,8 @@ class ConstructorDeclaration(ABC):
 
 
 class ConstructorDeclWithMod(ConstructorDeclaration):
-    def __init__(self, constructor_modifier, constructor_head, block):
-        self.constructor_modifier = constructor_modifier
+    def __init__(self, modifiers, constructor_head, block):
+        self.modifiers = modifiers
         self.constructor_head = constructor_head
         self.block = block
 
@@ -2339,36 +2141,6 @@ class ConstructorDeclSimple(ConstructorDeclaration):
         visitor.visitConstructorDeclSimple(self)
 
 
-class ConstructorMod(ABC):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class ConstructorModPublic(ConstructorMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstructorModPublic(self)
-
-
-class ConstructorModProtected(ConstructorMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstructorModProtected(self)
-
-
-class ConstructorModPrivate(ConstructorMod):
-    def __init__(self):
-        pass
-
-    def accept(self, visitor):
-        visitor.visitConstructorModPrivate(self)
-
-
 class ConstructorHead(ABC):
     @abstractmethod
     def accept(self, visitor):
@@ -2382,3 +2154,40 @@ class ConstructorHeadConcrete(ConstructorHead):
 
     def accept(self, visitor):
         visitor.visitConstructorHeadConcrete(self)
+
+
+class Modifiers(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ModifiersConcrete(Modifiers):
+    def __init__(self, modifier):
+        self.modifier = modifier
+
+    def accept(self, visitor):
+        visitor.visitModifiersConcrete(self)
+
+
+class ModifiersList(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleModifiersList(ModifiersList):
+    def __init__(self, modifiers):
+        self.modifiers = modifiers
+
+    def accept(self, visitor):
+        visitor.visitSimpleModifiersList(self)
+
+
+class CompoundModifiersList(ModifiersList):
+    def __init__(self, modifiers, modifiers_list):
+        self.modifiers = modifiers
+        self.modifiers_list = modifiers_list
+
+    def accept(self, visitor):
+        visitor.visitCompoundModifiersList(self)

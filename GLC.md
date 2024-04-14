@@ -295,10 +295,8 @@ assignment -> unary_exp assignment_operator exp
 assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
                        '|=' | '^=' | '<<=' | '>>='
 
-class_declaration -> class_modifier CLASS ID class_body |
+class_declaration -> modifiers CLASS ID class_body |
                      CLASS ID class_body
-
-class_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
 
 class_body -> '{' class_member_decl '}' |
               '{' '}'
@@ -308,37 +306,27 @@ class_member_decl -> constant_declaration |
                      method_declaration |
                      constructor_declaration
 
-constant_declaration -> const_modifier CONST type const_declarators ';' |
+constant_declaration -> modifiers CONST type const_declarators ';' |
                         CONST type const_declarators ';'
 
-const_modifier -> PUBLIC | PROTECTED | PRIVATE
-
-field_declaration -> field_modifiers type var_declarators ';' |
+field_declaration -> modifiers_list type var_declarators ';' |
                      type var_declarators ';'
 
-field_modifiers -> field_modifier |
-                   field_modifier field_modifiers
-
-field_modifier -> NEW | PUBLIC | PROTECTED | PRIVATE | STATIC
-
-method_declaration -> method_modifiers type method_head block |
+method_declaration -> modifiers_list type method_head block |
                       type method_head block
-
-method_modifiers -> method_modifier |
-                    method_modifier method_modifiers
-
-method_modifier -> PUBLIC | PROTECTED | PRIVATE | STATIC
 
 method_head -> ID '(' param_list ')' |
                ID '(' ')'
 
-constructor_declaration -> constructor_modifier constructor_head block |
+constructor_declaration -> modifiers constructor_head block |
                            constructor_head block
-
-constructor_modifier -> PUBLIC | PROTECTED | PRIVATE
 
 constructor_head -> ID '(' param_list ')' |
                     ID '(' ')'
 
+modifiers -> NEW | PUBLIC | PROTECTED | PRIVATE | STATIC
+
+modifiers_list -> modifiers |
+                  modifiers modifiers_list
 
 ```

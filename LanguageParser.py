@@ -113,7 +113,7 @@ def p_declaration_stmt(p):
 
 def p_local_const_declaration(p):
     '''local_const_declaration : CONST type const_declarators'''
-    p[0] = sa.ConstDeclarationConcrete(p[2], p[3])
+    p[0] = sa.LocalConstDeclarationConcrete(p[2], p[3])
 
 def p_const_declarators(p):
     '''const_declarators : const_declarator
@@ -129,7 +129,7 @@ def p_const_declarator(p):
 
 def p_local_var_declaration(p):
     '''local_var_declaration : type var_declarators'''
-    p[0] = sa.VarDeclarationConcrete(p[1], p[2])
+    p[0] = sa.LocalVarDeclarationConcrete(p[1], p[2])
 
 def p_var_declarators(p):
     '''var_declarators : var_declarator
@@ -729,26 +729,12 @@ def p_assignment_simple(p):
     p[0] = sa.AssignExp(p[1], p[3])
 
 def p_class_declaration(p):
-    '''class_declaration : class_modifier CLASS ID class_body
+    '''class_declaration : modifiers CLASS ID class_body
                          | CLASS ID class_body'''
     if (len(p) == 5):
         p[0] = sa.ClassDeclWithMod(p[1], p[3], p[4])
     else:
         p[0] = sa.ClassDeclSimple(p[2], p[3])
-
-def p_class_modifier(p):
-    '''class_modifier : PUBLIC
-                      | PROTECTED
-                      | PRIVATE
-                      | STATIC'''
-    if (p[1] == 'public'):
-        p[0] = sa.ClassModPublic();
-    elif (p[1] == 'protected'):
-        p[0] = sa.ClassModProtected();
-    elif (p[1] == 'private'):
-        p[0] = sa.ClassModPrivate();
-    elif (p[1] == 'static'):
-        p[0] = sa.ClassModStatic();
 
 def p_class_body(p):
     '''class_body : LBRACE class_member_decl RBRACE
@@ -773,86 +759,28 @@ def p_class_member_declaration(p):
         p[0] = sa.ClassMemberConstructor(p[1])
 
 def p_constant_declaration(p):
-    '''constant_declaration : const_modifier CONST type const_declarators SEMI
+    '''constant_declaration : modifiers CONST type const_declarators SEMI
                             | CONST type const_declarators SEMI'''
     if (len(p) == 6):
         p[0] = sa.ConstDeclWithMod(p[1], p[3], p[4])
     else:
         p[0] = sa.ConstDeclSimple(p[2], p[3])
 
-def p_const_modifier(p):
-    '''const_modifier : PUBLIC
-                      | PROTECTED
-                      | PRIVATE'''
-    if (p[1] == 'public'):
-        p[0] = sa.ConstModPublic();
-    elif (p[1] == 'protected'):
-        p[0] = sa.ConstModProtected();
-    elif (p[1] == 'private'):
-        p[0] = sa.ConstModPrivate();
-
 def p_field_declaration(p):
-    '''field_declaration : field_modifiers type var_declarators SEMI
+    '''field_declaration : modifiers_list type var_declarators SEMI
                          | type var_declarators SEMI'''
     if (len(p) == 5):
         p[0] = sa.FieldDeclWithMod(p[1], p[2], p[3])
     else:
         p[0] = sa.FieldDeclSimple(p[1], p[2])
 
-def p_field_modifiers(p):
-    '''field_modifiers : field_modifier
-                       | field_modifier field_modifiers'''
-    if (len(p) == 2):
-        p[0] = sa.SingleFieldModifier(p[1])
-    else:
-        p[0] = sa.CompoundFieldModifier(p[1], p[2])
-
-def p_field_modifier(p):
-    '''field_modifier : NEW
-                      | PUBLIC
-                      | PROTECTED
-                      | PRIVATE
-                      | STATIC'''
-    if (p[1] == 'new'):
-        p[0] = sa.FieldModNew();
-    elif (p[1] == 'public'):
-        p[0] = sa.FieldModPublic();
-    elif (p[1] == 'protected'):
-        p[0] = sa.FieldModProtected();
-    elif (p[1] == 'private'):
-        p[0] = sa.FieldModPrivate();
-    elif (p[1] == 'static'):
-        p[0] = sa.FieldModStatic();
-
 def p_method_declaration(p):
-    '''method_declaration : method_modifiers type method_head block
+    '''method_declaration : modifiers_list type method_head block
                           | type method_head block'''
     if (len(p) == 5):
         p[0] = sa.MethodDeclWithMod(p[1], p[2], p[3], p[4])
     else:
         p[0] = sa.MethodDeclSimple(p[1], p[2], p[3])
-
-def p_method_modifiers(p):
-    '''method_modifiers : method_modifier
-                        | method_modifier method_modifiers'''
-    if (len(p) == 2):
-        p[0] = sa.SingleMethodModifier(p[1])
-    else:
-        p[0] = sa.CompoundMethodModifier(p[1], p[2])
-
-def p_method_modifier(p):
-    '''method_modifier : PUBLIC
-                       | PROTECTED
-                       | PRIVATE
-                       | STATIC'''
-    if (p[1] == 'public'):
-        p[0] = sa.MethodModPublic();
-    elif (p[1] == 'protected'):
-        p[0] = sa.MethodModProtected();
-    elif (p[1] == 'private'):
-        p[0] = sa.MethodModPrivate();
-    elif (p[1] == 'static'):
-        p[0] = sa.MethodModStatic();
 
 def p_method_head(p):
     '''method_head : ID LPAREN param_list RPAREN
@@ -863,23 +791,12 @@ def p_method_head(p):
         p[0] = sa.MethodHeadConcrete(p[1], None)
 
 def p_constructor_declaration(p):
-    '''constructor_declaration : constructor_modifier constructor_head block
+    '''constructor_declaration : modifiers constructor_head block
                                | constructor_head block'''
     if (len(p) == 4):
         p[0] = sa.ConstructorDeclWithMod(p[1], p[2], p[3])
     else:
         p[0] = sa.ConstructorDeclSimple(p[1], p[2])
-
-def p_constructor_modifier(p):
-    '''constructor_modifier : PUBLIC
-                            | PROTECTED
-                            | PRIVATE'''
-    if (p[1] == 'public'):
-        p[0] = sa.ConstructorModPublic();
-    elif (p[1] == 'protected'):
-        p[0] = sa.ConstructorModProtected();
-    elif (p[1] == 'private'):
-        p[0] = sa.ConstructorModPrivate();
 
 def p_constructor_head(p):
     '''constructor_head : ID LPAREN param_list RPAREN
@@ -888,6 +805,23 @@ def p_constructor_head(p):
         p[0] = sa.ConstructorHeadConcrete(p[1], p[3])
     else:
         p[0] = sa.ConstructorHeadConcrete(p[1], None)
+
+def p_modifiers(p):
+    '''modifiers : NEW
+                 | PUBLIC
+                 | PROTECTED
+                 | PRIVATE
+                 | STATIC'''
+    p[0] = sa.ModifiersConcrete(p[1])
+
+def p_modifiers_list(p):
+    '''modifiers_list : modifiers
+                      | modifiers modifiers_list'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleModifiersList(p[1])
+    else:
+        p[0] = sa.CompoundModifiersList(p[1], p[2])
+        
 
 
 def p_error(p):

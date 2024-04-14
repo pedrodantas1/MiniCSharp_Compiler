@@ -59,17 +59,6 @@ class Visitor(AbstractVisitor):
 
     def visitDecimalType(self, decimaltype):
         myprint(decimaltype.decimal_type)
-
-    # def visitFuncDeclConcrete(self, funcdecl):
-    #     funcdecl.signature.accept(self)
-    #     funcdecl.block.accept(self)
-
-    # def visitSignatureConcrete(self, signature):
-    #     signature.type.accept(self)
-    #     myprint(" ", signature.id, "(")
-    #     if signature.param_list != None:
-    #         signature.param_list.accept(self)
-    #     myprint(")")
         
     def visitSingleParamList(self, singleparamlist):
         singleparamlist.type.accept(self)
@@ -690,25 +679,13 @@ class Visitor(AbstractVisitor):
         assignexp.exp.accept(self)
     
     def visitClassDeclWithMod(self, classdecl):
-        classdecl.class_modifier.accept(self)
+        classdecl.modifiers.accept(self)
         myprint("class ", classdecl.id)
         classdecl.class_body.accept(self)
 
     def visitClassDeclSimple(self, classdecl):
         myprint("class ", classdecl.id)
         classdecl.class_body.accept(self)
-    
-    def visitClassModPublic(self, classmod):
-        myprint(blank(), "public ")
-
-    def visitClassModProtected(self, classmod):
-        myprint(blank(), "protected ")
-        
-    def visitClassModPrivate(self, classmod):
-        myprint(blank(), "private ")
-
-    def visitClassModStatic(self, classmod):
-        myprint(blank(), "static ")
     
     def visitClassBodyConcrete(self, classbody):
         classbody.class_member_decl.accept(self)
@@ -726,7 +703,7 @@ class Visitor(AbstractVisitor):
         classmember.constructor_declaration.accept(self)
     
     def visitConstDeclWithMod(self, constdecl):
-        constdecl.const_modifier.accept(self)
+        constdecl.modifiers.accept(self)
         constdecl.type.accept(self)
         constdecl.const_declarators.accept(self)
 
@@ -734,17 +711,8 @@ class Visitor(AbstractVisitor):
         constdecl.type.accept(self)
         constdecl.const_declarators.accept(self)
     
-    def visitConstModPublic(self, constmod):
-        myprint(blank(), "public ")
-
-    def visitConstModProtected(self, constmod):
-        myprint(blank(), "protected ")
-
-    def visitConstModPrivate(self, constmod):
-        myprint(blank(), "private ")
-    
     def visitFieldDeclWithMod(self, fielddecl):
-        fielddecl.field_modifiers.accept(self)
+        fielddecl.modifiers_list.accept(self)
         fielddecl.type.accept(self)
         fielddecl.var_declarators.accept(self)
 
@@ -752,30 +720,8 @@ class Visitor(AbstractVisitor):
         fielddecl.type.accept(self)
         fielddecl.var_declarators.accept(self)
     
-    def visitSingleFieldModifier(self, fieldmod):
-        fieldmod.field_modifier.accept(self)
-
-    def visitCompoundFieldModifier(self, fieldmod):
-        fieldmod.field_modifier.accept(self)
-        fieldmod.field_modifiers.accept(self)
-    
-    def visitFieldModNew(self, fieldmod):
-        myprint(blank(), "new ")
-
-    def visitFieldModPublic(self, fieldmod):
-        myprint(blank(), "public ")
-
-    def visitFieldModProtected(self, fieldmod):
-        myprint(blank(), "protected ")
-
-    def visitFieldModPrivate(self, fieldmod):
-        myprint(blank(), "private ")
-
-    def visitFieldModStatic(self, fieldmod):
-        myprint(blank(), "static ")
-    
     def visitMethodDeclWithMod(self, methoddecl):
-        methoddecl.method_modifiers.accept(self)
+        methoddecl.modifiers_list.accept(self)
         methoddecl.type.accept(self)
         methoddecl.method_head.accept(self)
         methoddecl.block.accept(self)
@@ -785,25 +731,6 @@ class Visitor(AbstractVisitor):
         methoddecl.method_head.accept(self)
         methoddecl.block.accept(self)
     
-    def visitSingleMethodModifier(self, methodmod):
-        methodmod.method_modifier.accept(self)
-
-    def visitCompoundMethodModifier(self, methodmod):
-        methodmod.method_modifier.accept(self)
-        methodmod.method_modifiers.accept(self)
-    
-    def visitMethodModPublic(self, methodmod):
-        myprint(blank(), "public ")
-    
-    def visitMethodModProtected(self, methodmod):
-        myprint(blank(), "protected ")
-    
-    def visitMethodModPrivate(self, methodmod):
-        myprint(blank(), "private ")
-    
-    def visitMethodModStatic(self, methodmod):
-        myprint(blank(), "static ")
-    
     def visitMethodHeadConcrete(self, methodhead):
         myprint(methodhead.id, "(")
         if methodhead.param_list != None:
@@ -811,7 +738,7 @@ class Visitor(AbstractVisitor):
         myprint(")")
     
     def visitConstructorDeclWithMod(self, constructordecl):
-        constructordecl.constructor_modifier.accept(self)
+        constructordecl.modifiers.accept(self)
         constructordecl.constructor_head.accept(self)
         constructordecl.block.accept(self)
 
@@ -819,20 +746,21 @@ class Visitor(AbstractVisitor):
         constructordecl.constructor_head.accept(self)
         constructordecl.block.accept(self)
     
-    def visitConstructorModPublic(self, constructormod):
-        myprint(blank(), "public ")
-
-    def visitConstructorModProtected(self, constructormod):
-        myprint(blank(), "protected ")
-
-    def visitConstructorModPrivate(self, constructormod):
-        myprint(blank(), "private ")
-    
     def visitConstructorHeadConcrete(self, constructorhead):
         myprint(constructorhead.id, "(")
         if constructorhead.param_list != None:
             constructorhead.param_list.accept(self)
         myprint(")")
+    
+    def visitModifiersConcrete(self, modifiers):
+        myprint(blank(), modifiers.modifier)
+    
+    def visitSimpleModifiersList(self, modifierslist):
+        modifierslist.modifiers.accept(self)
+    
+    def visitCompoundModifiersList(self, modifierslist):
+        modifierslist.modifiers.accept(self)
+        modifierslist.modifiers_list.accept(self)
 
 
 def main():

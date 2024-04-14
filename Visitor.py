@@ -800,12 +800,12 @@ class Visitor(AbstractVisitor):
 
 
 def main():
-    f = open("teste_parser.cs", "r")
+    f = open("teste_visitor.cs", "r")
     lexer = lex.lex()
     lexer.input(f.read())
     parser = yacc.yacc()
     result = parser.parse(debug=False)
-    print(">>> Programa passado como entrada:")
+    print(">>> Programa passado como entrada:\n")
     visitor = Visitor()
     for r in result:
         r.accept(visitor)

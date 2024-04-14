@@ -830,13 +830,12 @@ def p_modifiers_list(p):
     else:
         p[0] = sa.CompoundModifiersList(p[1], p[2])
         
-
-
 def p_error(p):
     print("Syntax error in input!")
 
-f = open("teste_parser.cs", "r")
-lexer = lex.lex()
-lexer.input(f.read())
-parser = yacc.yacc()
-result = parser.parse(debug=False)
+if __name__ == "__main__":
+    f = open("teste_visitor.cs", "r")
+    lexer = lex.lex()
+    lexer.input(f.read())
+    parser = yacc.yacc()
+    result = parser.parse(debug=True)

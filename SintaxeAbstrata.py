@@ -1979,11 +1979,34 @@ class ClassBody(ABC):
 
 
 class ClassBodyConcrete(ClassBody):
+    def __init__(self, class_member_list):
+        self.class_member_list = class_member_list
+
+    def accept(self, visitor):
+        visitor.visitClassBodyConcrete(self)
+
+
+class ClassMemberList(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class SimpleClassMemberList(ClassMemberList):
     def __init__(self, class_member_decl):
         self.class_member_decl = class_member_decl
 
     def accept(self, visitor):
-        visitor.visitClassBodyConcrete(self)
+        visitor.visitSimpleClassMemberList(self)
+
+
+class CompoundClassMemberList(ClassMemberList):
+    def __init__(self, class_member_decl, class_member_list):
+        self.class_member_decl = class_member_decl
+        self.class_member_list = class_member_list
+
+    def accept(self, visitor):
+        visitor.visitCompoundClassMemberList(self)
 
 
 class ClassMemberDeclaration(ABC):

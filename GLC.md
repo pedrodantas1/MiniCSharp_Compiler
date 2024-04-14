@@ -298,8 +298,11 @@ assignment_operator -> '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' |
 class_declaration -> modifiers CLASS ID class_body |
                      CLASS ID class_body
 
-class_body -> '{' class_member_decl '}' |
+class_body -> '{' class_member_list '}' |
               '{' '}'
+
+class_member_list -> class_member_decl |
+                     class_member_decl class_member_list
 
 class_member_decl -> constant_declaration |
                      field_declaration |

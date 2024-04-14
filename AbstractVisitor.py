@@ -667,6 +667,14 @@ class AbstractVisitor(ABC):
         pass
 
     @abstractmethod
+    def visitSimpleClassMemberList(self, classmemberlist):
+        pass
+
+    @abstractmethod
+    def visitCompoundClassMemberList(self, classmemberlist):
+        pass
+
+    @abstractmethod
     def visitClassMemberConstant(self, classmember):
         pass
 

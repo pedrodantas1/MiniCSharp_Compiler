@@ -28,42 +28,42 @@
 //     int a,b,c;
 // }
 public class teste{
-    
+    private string s = new string("olá");
     int func(){
         const int a = 43, b=32,c=11;
-        // int a=12,b=22,c=2;
-        // func2(a,b,c);
-        // func();
-        // string a = new string("ola mundo!");
-        // string b = new string();
-        // switch (a){
-        //     case < 30:
-        //         b = 50;
-        //         break;
-        //     case 50:
-        //         b = 20;
-        //         break;
-        //     case null:
-        //         b = 100;
-        //         break;
-        //     default:
-        //         b = 0;
-        //         break;
-        // }
-        // while(cliente == true){
-        //     i++;
-        // }
-        // do{
-        //     a = a*2;
-        // }while(a<250 && b > 45);
-        // int cont = 0;
-        // foreach(char c in "palavra"){
-        //     cont++;
-        //     continue;
-        // }
-        // double d = 3.2;
-        // int n = (int) d;
-        // int y = x << 4;
-        // return (a != 3) ? 1 : 22;
+        int a=12,b=22,c=2;
+        func2(a,b,c);
+        func();
+        string a = new string("ola mundo!");
+        string b = new string();
+        switch (a){
+            case < 30:
+                b = 50;
+                break;
+            case 50:
+                b = 20;
+                break;
+            case null:
+                b = 100;
+                break;
+            default:
+                b = 0;
+                break;
+        }
+        while(cliente == true){
+            i++;
+        }
+        do{
+            a = a*2;
+        }while(a<250 && b > 45);
+        int cont = 0;
+        foreach(char c in "palavra"){
+            cont++;
+            continue;
+        }
+        double d = 3.2;
+        int n = (int) d;
+        int y = x << 4;
+        return (a != 3) ? 1 : 22;
     }
 }

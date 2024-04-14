@@ -737,12 +737,20 @@ def p_class_declaration(p):
         p[0] = sa.ClassDeclSimple(p[2], p[3])
 
 def p_class_body(p):
-    '''class_body : LBRACE class_member_decl RBRACE
+    '''class_body : LBRACE class_member_list RBRACE
                   | LBRACE RBRACE'''
     if (len(p) == 4):
         p[0] = sa.ClassBodyConcrete(p[2])
     else:
         p[0] = sa.ClassBodyConcrete(None)
+
+def p_class_member_list(p):
+    '''class_member_list : class_member_decl
+                         | class_member_decl class_member_list'''
+    if (len(p) == 2):
+        p[0] = sa.SimpleClassMemberList(p[1])
+    else:
+        p[0] = sa.CompoundClassMemberList(p[1], p[2])
 
 def p_class_member_declaration(p):
     '''class_member_decl : constant_declaration
@@ -831,4 +839,4 @@ f = open("teste_parser.cs", "r")
 lexer = lex.lex()
 lexer.input(f.read())
 parser = yacc.yacc()
-result = parser.parse(debug=True)
+result = parser.parse(debug=False)

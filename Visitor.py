@@ -688,7 +688,22 @@ class Visitor(AbstractVisitor):
         classdecl.class_body.accept(self)
     
     def visitClassBodyConcrete(self, classbody):
-        classbody.class_member_decl.accept(self)
+        global tab
+        myprint("\n")
+        myprint(blank(), "{\n")
+        tab = tab + 4
+        if classbody.class_member_list != None:
+            classbody.class_member_list.accept(self)
+        tab = tab - 4
+        myprint(blank(), "}\n")
+        
+    
+    def visitSimpleClassMemberList(self, classmemberlist):
+        classmemberlist.class_member_decl.accept(self)
+        
+    def visitCompoundClassMemberList(self, classmemberlist):
+        classmemberlist.class_member_decl.accept(self)
+        classmemberlist.class_member_list.accept(self)
     
     def visitClassMemberConstant(self, classmember):
         classmember.constant_declaration.accept(self)
@@ -705,44 +720,57 @@ class Visitor(AbstractVisitor):
     def visitConstDeclWithMod(self, constdecl):
         constdecl.modifiers.accept(self)
         constdecl.type.accept(self)
+        myprint(" ")
         constdecl.const_declarators.accept(self)
+        myprint(";\n")
 
     def visitConstDeclSimple(self, constdecl):
         constdecl.type.accept(self)
+        myprint(" ")
         constdecl.const_declarators.accept(self)
+        myprint(";\n")
     
     def visitFieldDeclWithMod(self, fielddecl):
         fielddecl.modifiers_list.accept(self)
         fielddecl.type.accept(self)
+        myprint(" ")
         fielddecl.var_declarators.accept(self)
+        myprint(";\n")
 
     def visitFieldDeclSimple(self, fielddecl):
         fielddecl.type.accept(self)
+        myprint(" ")
         fielddecl.var_declarators.accept(self)
+        myprint(";\n")
     
     def visitMethodDeclWithMod(self, methoddecl):
+        myprint(blank())
         methoddecl.modifiers_list.accept(self)
         methoddecl.type.accept(self)
         methoddecl.method_head.accept(self)
         methoddecl.block.accept(self)
     
     def visitMethodDeclSimple(self, methoddecl):
+        myprint(blank())
         methoddecl.type.accept(self)
         methoddecl.method_head.accept(self)
         methoddecl.block.accept(self)
     
     def visitMethodHeadConcrete(self, methodhead):
+        myprint(" ")
         myprint(methodhead.id, "(")
         if methodhead.param_list != None:
             methodhead.param_list.accept(self)
         myprint(")")
     
     def visitConstructorDeclWithMod(self, constructordecl):
+        myprint(blank())
         constructordecl.modifiers.accept(self)
         constructordecl.constructor_head.accept(self)
         constructordecl.block.accept(self)
 
     def visitConstructorDeclSimple(self, constructordecl):
+        myprint(blank())
         constructordecl.constructor_head.accept(self)
         constructordecl.block.accept(self)
     
@@ -753,7 +781,7 @@ class Visitor(AbstractVisitor):
         myprint(")")
     
     def visitModifiersConcrete(self, modifiers):
-        myprint(blank(), modifiers.modifier)
+        myprint(blank(), modifiers.modifier, " ")
     
     def visitSimpleModifiersList(self, modifierslist):
         modifierslist.modifiers.accept(self)
